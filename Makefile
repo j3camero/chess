@@ -1,5 +1,6 @@
 CC=$(CXX)
-CPPFLAGS = -Wall #-O3 -funroll-loops
+GIT_VERSION="$(shell git describe --always)"
+CPPFLAGS = -Wall -DGIT_VERSION=\"$(GIT_VERSION)\" #-O3 -funroll-loops
 
 all: test uci
 
