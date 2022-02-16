@@ -1,6 +1,11 @@
 #include "std.h"
 #include "string-util.h"
 
+// Command is "isready". Answer with "readyok".
+void IsReady(const string& command) {
+  cout << "readyok" << endl;
+}
+
 // Command is "quit". Exit the program.
 void Quit(const string& command) {
   exit(0);
@@ -33,6 +38,7 @@ void Dispatch(const string& line) {
 int main(int argc, char **argv) {
   // Register UCI commands.
   commands["exit"] = Quit;
+  commands["isready"] = IsReady;
   commands["quit"] = Quit;
   commands["uci"] = Uci;
   // Process the input line-by-line.
