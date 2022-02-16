@@ -2,6 +2,7 @@
 #define _STD_H_
 
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
 
