@@ -1,11 +1,9 @@
-#include <iostream>
-#include <string>
-
-using namespace std;
+#include "std.h"
 
 int main(int argc, char **argv) {
   string line;
   while (getline(cin, line)) {
+    
     if (line == "uci") {
       cout << "id name jeffchess " << GIT_VERSION << endl;
       cout << "id author Jeff Cameron jcameron.ca" << endl;

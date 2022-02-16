@@ -33,6 +33,8 @@
 
 # Emacs temp files
 *~
+*[#]*[#]
+*[#]*
 
 # Compiled executables
 uci
