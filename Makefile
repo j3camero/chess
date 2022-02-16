@@ -2,10 +2,13 @@ CC=$(CXX)
 GIT_VERSION="$(shell git describe --always)"
 CPPFLAGS = -Wall -DGIT_VERSION=\"$(GIT_VERSION)\" #-O3 -funroll-loops
 
-all: test uci
+all: randombot test
 
 clean:
-	rm -rf *.o test-main uci
+	rm -rf *.o *~ randombot test-main
+
+randombot: randombot.o \
+           string-util.o
 
 test: test-main
 	./test-main
@@ -13,5 +16,3 @@ test: test-main
 test-main: string-util.o string-util-test.o \
            test-main.o \
            fake-test.o
-
-uci: uci.o
