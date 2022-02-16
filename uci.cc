@@ -3,11 +3,11 @@
 int main(int argc, char **argv) {
   string line;
   while (getline(cin, line)) {
-    
-    if (line == "uci") {
+    vector<string> tokens = StringUtil::Split(line);
+    if (tokens[0] == "uci") {
       cout << "id name jeffchess " << GIT_VERSION << endl;
       cout << "id author Jeff Cameron jcameron.ca" << endl;
-    } else if (line == "quit") {
+    } else if (tokens[0] == "quit") {
       break;
     }
   }

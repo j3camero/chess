@@ -7,7 +7,7 @@
 class StringUtil {
  public:
   // Split s into tokens delimited by delim.
-  static vector<string> Split(const string& s, char delim);
+  static vector<string> Split(const string& s, char delim = ' ');
 };
 
 #endif
