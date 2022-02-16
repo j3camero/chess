@@ -1,9 +1,19 @@
 #include "std.h"
 #include "string-util.h"
 
+// Command is "go". Output a randomly chosen legal move.
+void Go(const string& command) {
+  cout << "bestmove e2e4" << endl;
+}
+
 // Command is "isready". Answer with "readyok".
 void IsReady(const string& command) {
   cout << "readyok" << endl;
+}
+
+// Command is "position". Set up a board position.
+void Position(const string& command) {
+  // startpos moves || fen
 }
 
 // Command is "quit". Exit the program.
@@ -15,6 +25,12 @@ void Quit(const string& command) {
 void Uci(const string& command) {
   cout << "id name randombot " << GIT_VERSION << endl;
   cout << "id author Jeff Cameron jcameron.ca" << endl;
+}
+
+// Command is "ucinewgame". Reset the board.
+void UciNewGame(const string& command) {
+  // Reset the board here.
+  cout << "isready" << endl;
 }
 
 // UCI commands are registered in this map.
