@@ -10,7 +10,8 @@ clean:
 test: test-main
 	./test-main
 
-test-main: test-main.o \
+test-main: string-util.o string-util-test.o \
+           test-main.o \
            fake-test.o
 
 uci: uci.o
