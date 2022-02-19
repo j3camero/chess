@@ -4,7 +4,8 @@
 #include "std.h"
 
 // Represents a board position.
-struct Board {
+class Board {
+ public:
   // Initialize the default chess opening position.
   Board();
 
@@ -41,6 +42,10 @@ struct Board {
 
   // Starts at 1 and is incremented after every Black move.
   int fullMoveNumber;
+
+ private:
+  // Initialize a position based on a string in FEN format.
+  void SetupFen(const string& fen);
 };
 
 #endif

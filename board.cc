@@ -1,24 +1,17 @@
 #include "board.h"
+#include "std.h"
+#include "string-util.h"
 
-Board::Board() :
-  squares {
-    {BlackRook, BlackKnight, BlackBishop, BlackQueen,
-     BlackKing, BlackBishop, BlackKnight, BlackRook},
-    {BlackPawn, BlackPawn, BlackPawn, BlackPawn,
-     BlackPawn, BlackPawn, BlackPawn, BlackPawn},
-    {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty},
-    {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty},
-    {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty},
-    {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty},
-    {WhitePawn, WhitePawn, WhitePawn, WhitePawn,
-     WhitePawn, WhitePawn, WhitePawn, WhitePawn},
-    {WhiteRook, WhiteKnight, WhiteBishop, WhiteQueen,
-     WhiteKing, WhiteBishop, WhiteKnight, WhiteRook}
-  }
-{
-
+Board::Board() {
+  // Use a FEN string representing the default chess starting position.
+  SetupFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 }
 
 Board::Board(const string& fen) {
+  SetupFen(fen);
+}
 
+void Board::SetupFen(const string& fen) {
+  vector<string> tokens = StringUtil::Split(fen);
+  squares[0][0] = BlackRook;
 }
