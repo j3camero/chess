@@ -14,6 +14,7 @@ test: test-main
 	./test-main
 
 test-main: fen.o fen-test.o \
+           point.o point-test.o \
            piece.o piece-test.o \
            string-util.o string-util-test.o \
            test-main.o \

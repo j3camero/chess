@@ -1,5 +1,6 @@
 #include "board.h"
 #include "fen.h"
+#include "point.h"
 #include "piece.h"
 #include "std.h"
 #include "string-util.h"
@@ -85,6 +86,15 @@ Board FenToBoard(const string& fen) {
     }
   }
   const string enPassantTargetString = tokens[3];
+  if (enPassantTargetString == "-") {
+    // -1 means there is no en-passant move available.
+    board.enPassantFile = -1;
+  } else if (enPassantTargetString.size() == 2) {
+    Point p(enPassantTargetString);
+    board.enPassantFile = p.file;
+  } else {
+    throw "Invalid FEN string.";
+  }
   const string halfmoveClockString = tokens[4];
   const string fullMoveNumberString = tokens[5];
   return board;
