@@ -11,11 +11,6 @@ Board FenToBoard(const string& fen) {
     throw "Invalid FEN string.";
   }
   const string piecePlacement = tokens[0];
-  const string activeColorString = tokens[1];
-  const string castleString = tokens[2];
-  const string enPassantTargetString = tokens[3];
-  const string halfmoveClockString = tokens[4];
-  const string fullMoveNumberString = tokens[5];
   const vector<string> ranks = StringUtil::Split(piecePlacement, '/');
   if (ranks.size() != 8) {
     throw "Invalid FEN string.";
@@ -46,6 +41,7 @@ Board FenToBoard(const string& fen) {
     }
     rank++;
   }
+  const string activeColorString = tokens[1];
   if (activeColorString.size() != 1) {
     throw "Invalid FEN string.";
   }
@@ -60,6 +56,37 @@ Board FenToBoard(const string& fen) {
   default:
     throw "Invalid FEN string.";
   }
+  const string castleString = tokens[2];
+  if (castleString.size() > 4) {
+    throw "Invalid FEN string.";
+  }
+  board.whiteKingCastle = false;
+  board.whiteQueenCastle = false;
+  board.blackKingCastle = false;
+  board.blackQueenCastle = false;
+  for (const char c : castleString) {
+    switch (c) {
+    case 'K':
+      board.whiteKingCastle = true;
+      break;
+    case 'Q':
+      board.whiteQueenCastle = true;
+      break;
+    case 'k':
+      board.blackKingCastle = true;
+      break;
+    case 'q':
+      board.blackQueenCastle = true;
+      break;
+    case '-':
+      break;
+    default:
+      throw "Invalid FEN string.";
+    }
+  }
+  const string enPassantTargetString = tokens[3];
+  const string halfmoveClockString = tokens[4];
+  const string fullMoveNumberString = tokens[5];
   return board;
 }
 

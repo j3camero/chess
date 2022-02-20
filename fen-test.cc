@@ -38,3 +38,35 @@ TEST_CASE("Unparseable side to move", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 r KQkq - 0 1";
   REQUIRE_THROWS(FenToBoard(fen));
 }
+
+TEST_CASE("Castle", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 b KQkq - 0 1";
+  Board b = FenToBoard(fen);
+  REQUIRE(b.whiteKingCastle == true);
+  REQUIRE(b.whiteQueenCastle == true);
+  REQUIRE(b.blackKingCastle == true);
+  REQUIRE(b.blackQueenCastle == true);
+}
+
+TEST_CASE("Castle: no castle allowed", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 b - - 0 1";
+  Board b = FenToBoard(fen);
+  REQUIRE(b.whiteKingCastle == false);
+  REQUIRE(b.whiteQueenCastle == false);
+  REQUIRE(b.blackKingCastle == false);
+  REQUIRE(b.blackQueenCastle == false);
+}
+
+TEST_CASE("Castle: unparseable", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 b Krkq - 0 1";
+  REQUIRE_THROWS(FenToBoard(fen));
+}
+
+TEST_CASE("Castle: mixed values", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 b kQ - 0 1";
+  Board b = FenToBoard(fen);
+  REQUIRE(b.whiteKingCastle == false);
+  REQUIRE(b.whiteQueenCastle == true);
+  REQUIRE(b.blackKingCastle == true);
+  REQUIRE(b.blackQueenCastle == false);
+}
