@@ -37,3 +37,23 @@ TEST_CASE("String split empty string", "[StringUtil]") {
   REQUIRE(tokens.size() == 1);
   REQUIRE(tokens[0] == "");
 }
+
+TEST_CASE("IsDigit", "[StringUtil]") {
+  REQUIRE(StringUtil::IsDigit('0'));
+  REQUIRE(StringUtil::IsDigit('1'));
+  REQUIRE(StringUtil::IsDigit('5'));
+  REQUIRE(StringUtil::IsDigit('8'));
+  REQUIRE(StringUtil::IsDigit('9'));
+  REQUIRE_FALSE(StringUtil::IsDigit('a'));
+  REQUIRE_FALSE(StringUtil::IsDigit('Z'));
+  REQUIRE_FALSE(StringUtil::IsDigit('/'));
+  REQUIRE_FALSE(StringUtil::IsDigit(':'));
+  REQUIRE_FALSE(StringUtil::IsDigit('+'));
+}
+
+TEST_CASE("DigitToInt", "[StringUtil]") {
+  REQUIRE(StringUtil::DigitToInt('0') == 0);
+  REQUIRE(StringUtil::DigitToInt('1') == 1);
+  REQUIRE(StringUtil::DigitToInt('7') == 7);
+  REQUIRE(StringUtil::DigitToInt('9') == 9);
+}

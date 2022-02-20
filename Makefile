@@ -13,7 +13,8 @@ randombot: randombot.o \
 test: test-main
 	./test-main
 
-test-main: board.o board-test.o \
+test-main: fen.o fen-test.o \
+           piece.o piece-test.o \
            string-util.o string-util-test.o \
            test-main.o \
            fake-test.o

@@ -15,3 +15,11 @@ vector<string> StringUtil::Split(const string& s, char delim) {
   tokens.push_back(token);
   return tokens;
 }
+
+bool StringUtil::IsDigit(char c) {
+  return c >= '0' && c <= '9';
+}
+
+int StringUtil::DigitToInt(char c) {
+  return int(c) - int('0');
+}
