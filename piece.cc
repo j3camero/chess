@@ -50,6 +50,8 @@ char PieceToChar(Piece p) {
     return 'k';
   case Empty:
     return ' ';
+  default:
+    throw "Invalid chess piece.";
   }
 }
 
