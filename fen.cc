@@ -46,6 +46,20 @@ Board FenToBoard(const string& fen) {
     }
     rank++;
   }
+  if (activeColorString.size() != 1) {
+    throw "Invalid FEN string.";
+  }
+  char activeColorChar = activeColorString[0];
+  switch (activeColorChar) {
+  case 'b':
+    board.move = Black;
+    break;
+  case 'w':
+    board.move = White;
+    break;
+  default:
+    throw "Invalid FEN string.";
+  }
   return board;
 }
 

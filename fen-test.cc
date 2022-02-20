@@ -21,3 +21,20 @@ TEST_CASE("Read position with only one piece", "[FEN]") {
   REQUIRE(b.squares[2][2] == Empty);
   REQUIRE(b.squares[4][2] == Empty);
 }
+
+TEST_CASE("White to move", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 w KQkq - 0 1";
+  Board b = FenToBoard(fen);
+  REQUIRE(b.move == White);
+}
+
+TEST_CASE("Black to move", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 b KQkq - 0 1";
+  Board b = FenToBoard(fen);
+  REQUIRE(b.move == Black);
+}
+
+TEST_CASE("Unparseable side to move", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 r KQkq - 0 1";
+  REQUIRE_THROWS(FenToBoard(fen));
+}
