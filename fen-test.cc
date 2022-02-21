@@ -17,6 +17,14 @@ TEST_CASE("Read default start position", "[FEN]") {
   REQUIRE(b.squares[7][0] == WhiteRook);
   REQUIRE(b.squares[7][4] == WhiteKing);
   REQUIRE(b.squares[7][7] == WhiteRook);
+  REQUIRE(b.move == White);
+  REQUIRE(b.whiteKingCastle == true);
+  REQUIRE(b.whiteQueenCastle == true);
+  REQUIRE(b.blackKingCastle == true);
+  REQUIRE(b.blackQueenCastle == true);
+  REQUIRE(b.enPassantFile == -1);
+  REQUIRE(b.halfmoveClock == 0);
+  REQUIRE(b.moveCount == 1);
 }
 
 TEST_CASE("Read position with only one piece", "[FEN]") {
@@ -97,6 +105,12 @@ TEST_CASE("En passant black side", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 b - h4 7 1";
   Board b = FenToBoard(fen);
   REQUIRE(b.enPassantFile == 7);
+}
+
+TEST_CASE("En passant unavailable", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 b - - 7 1";
+  Board b = FenToBoard(fen);
+  REQUIRE(b.enPassantFile == -1);
 }
 
 TEST_CASE("En passant unparseable", "[FEN]") {
