@@ -21,10 +21,10 @@ struct Board {
   int enPassantFile;
 
   // Halfmove clock for the fifty-move rule.
-  int halfMoveClock;
+  int halfmoveClock;
 
   // Starts at 1 and is incremented after every Black move.
-  int fullMoveNumber;
+  int moveCount;
 };
 
 #endif
