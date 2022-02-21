@@ -70,3 +70,24 @@ TEST_CASE("Castle: mixed values", "[FEN]") {
   REQUIRE(b.blackKingCastle == true);
   REQUIRE(b.blackQueenCastle == false);
 }
+
+TEST_CASE("Castle: Black Queen", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 b q - 0 1";
+  Board b = FenToBoard(fen);
+  REQUIRE(b.whiteKingCastle == false);
+  REQUIRE(b.whiteQueenCastle == false);
+  REQUIRE(b.blackKingCastle == false);
+  REQUIRE(b.blackQueenCastle == true);
+}
+
+TEST_CASE("Halfmove clock", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 w KQkq - 7 1";
+  Board b = FenToBoard(fen);
+  REQUIRE(b.halfmoveClock == 7);
+}
+
+TEST_CASE("Move count", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 b KQkq - 7 42";
+  Board b = FenToBoard(fen);
+  REQUIRE(b.moveCount == 42);
+}
