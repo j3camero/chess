@@ -2,6 +2,7 @@
 #include "board.h"
 #include "fen.h"
 #include "piece.h"
+#include "std.h"
 
 TEST_CASE("Read default start position", "[FEN]") {
   const string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -78,6 +79,23 @@ TEST_CASE("Castle: Black Queen", "[FEN]") {
   REQUIRE(b.whiteQueenCastle == false);
   REQUIRE(b.blackKingCastle == false);
   REQUIRE(b.blackQueenCastle == true);
+}
+
+TEST_CASE("En passant white side", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 w - e5 7 1";
+  Board b = FenToBoard(fen);
+  REQUIRE(b.enPassantFile == 4);
+}
+
+TEST_CASE("En passant black side", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 b - h4 7 1";
+  Board b = FenToBoard(fen);
+  REQUIRE(b.enPassantFile == 7);
+}
+
+TEST_CASE("En passant unparseable", "[FEN]") {
+  const string fen = "8/8/8/8/8/8/8/8 w - i5 7 1";
+  REQUIRE_THROWS(FenToBoard(fen));
 }
 
 TEST_CASE("Halfmove clock", "[FEN]") {
