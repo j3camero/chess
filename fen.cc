@@ -160,5 +160,5 @@ Board FenToBoard(const string& fen) {
 }
 
 string BoardToFen(const Board& b) {
-  return "";
+  throw "Not implemented.";
 }
