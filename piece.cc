@@ -22,6 +22,17 @@ Color PieceColor(Piece p) {
   }
 }
 
+Color InvertColor(Color c) {
+  switch (c) {
+  case White:
+    return Black;
+  case Black:
+    return White;
+  default:
+    throw "Unkown piece color.";
+  }
+}
+
 char PieceToChar(Piece p) {
   switch (p) {
   case WhitePawn:

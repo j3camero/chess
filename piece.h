@@ -14,6 +14,9 @@ enum Color {White, Black};
 // Gets the color of a piece.
 Color PieceColor(Piece p);
 
+// Reverses a color. White -> Black and Black -> White.
+Color InvertColor(Color c);
+
 // Gets a human-readable FEN character to represent a chess piece.
 char PieceToChar(Piece p);
 

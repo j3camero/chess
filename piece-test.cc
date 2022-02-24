@@ -6,6 +6,11 @@ TEST_CASE("PieceColor", "[Piece]") {
   REQUIRE(PieceColor(BlackPawn) == Black);
 }
 
+TEST_CASE("InvertColor", "[Piece]") {
+  REQUIRE(InvertColor(White) == Black);
+  REQUIRE(InvertColor(Black) == White);
+}
+
 TEST_CASE("PieceToChar", "[Piece]") {
   REQUIRE(PieceToChar(WhiteKing) == 'K');
   REQUIRE(PieceToChar(BlackPawn) == 'p');
