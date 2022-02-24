@@ -1,5 +1,8 @@
+#include "board.h"
 #include "catch.hpp"
+#include "fen.h"
 #include "move.h"
+#include "std.h"
 
 TEST_CASE("Basic move constructor", "[Move]") {
   Move move(Point(7, 1), Point(5, 2));
@@ -10,5 +13,8 @@ TEST_CASE("Basic move constructor", "[Move]") {
 }
 
 TEST_CASE("Move generation: opening position", "[Move]") {
-  REQUIRE(2 + 2 == 4);
+  const string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+  Board b = FenToBoard(fen);
+  vector<Move> moves = GenerateLegalMoves(b);
+  REQUIRE(moves.size() == 4);
 }

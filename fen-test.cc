@@ -1,5 +1,5 @@
-#include "catch.hpp"
 #include "board.h"
+#include "catch.hpp"
 #include "fen.h"
 #include "piece.h"
 #include "std.h"

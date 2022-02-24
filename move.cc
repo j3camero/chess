@@ -13,9 +13,18 @@ void GenerateKnightMoves(const Board& board, Point from, vector<Move>& moves) {
   };
   for (const Point& d : directions) {
     Point to(from.rank + d.rank, from.file + d.file);
+    if (to.rank < 0 || to.rank > 7 || to.file < 0 || to.file > 7) {
+      // Move is off the board.
+      continue;
+    }
     Piece p = board.squares[to.rank][to.file];
     Move move(from, to);
-    if (p == Empty || PieceColor(p) == enemy) {
+    if (p == Empty) {
+      moves.push_back(move);
+      continue;
+    }
+    Color attackedPieceColor = PieceColor(p);
+    if (attackedPieceColor == enemy) {
       moves.push_back(move);
     }
   }
@@ -24,12 +33,20 @@ void GenerateKnightMoves(const Board& board, Point from, vector<Move>& moves) {
 void GenerateLegalMovesFrom(const Board& board,
                             Point from,
                             vector<Move>& moves) {
-  // Generate pawn moves/captures.
-  GenerateKnightMoves(board, from, moves);
-  // Rook.
-  // Bishop.
-  // Queen.
-  // King.
+  Piece piece = board.squares[from.rank][from.file];
+  if (piece == Empty) {
+    return;
+  }
+  Color color = PieceColor(piece);
+  if (color != board.move) {
+    return;
+  }
+  switch (piece) {
+  case BlackKnight:
+  case WhiteKnight:
+    GenerateKnightMoves(board, from, moves);
+    break;
+  }
 }
 
 vector<Move> GenerateLegalMoves(const Board& board) {
