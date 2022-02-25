@@ -25,6 +25,12 @@ TEST_CASE("String constructor h6", "[Point]") {
   REQUIRE(p.file == 7);
 }
 
+TEST_CASE("ToString", "[Point]") {
+  REQUIRE(Point(7, 0).ToString() == "a1");
+  REQUIRE(Point("b7").ToString() == "b7");
+  REQUIRE(Point("f5").ToString() == "f5");
+}
+
 TEST_CASE("String constructor fail", "[Point]") {
   REQUIRE_THROWS(Point("i5"));
   REQUIRE_THROWS(Point("47"));

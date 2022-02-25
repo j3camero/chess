@@ -17,11 +17,17 @@ struct Move {
   // Accepts strings like e2e4 where both squares are fully specified.
   Move(const string& s);
 
+  // Outputs a string representation of the move like g8f6.
+  string ToString() const;
+
   Point from;
   Point to;
 };
 
 vector<Move> GenerateLegalMoves(const Board& board);
+
+// Converts a list of moves to a list of strings.
+vector<string> MovesToStrings(const vector<Move>& moves);
 
 // Equality operator.
 bool operator==(const Point& a, const Point& b);

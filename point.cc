@@ -29,6 +29,13 @@ Point::Point(const string& s) {
   }
 }
 
+string Point::ToString() const {
+  char fileChar = 'a' + file;
+  string fileString(1, fileChar);
+  string rankString = to_string(8 - rank);
+  return fileString + rankString;
+}
+
 bool operator==(const Point& a, const Point& b) {
   return (a.rank == b.rank) && (a.file == b.file);
 }

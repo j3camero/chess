@@ -17,6 +17,9 @@ struct Point {
   // Initialize a point based on a chess string like "e2" or "h6".
   Point(const string& s);
 
+  // Generates a human-readable string like e2.
+  string ToString() const;
+
   // The zero-based rank, from 0 to 7.
   int rank;
 

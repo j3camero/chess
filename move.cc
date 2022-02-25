@@ -13,6 +13,20 @@ Move::Move(const string& s) {
   to = Point(s.substr(2));
 }
 
+string Move::ToString() const {
+  return from.ToString() + to.ToString();
+}
+
+vector<string> MovesToStrings(const vector<Move>& moves) {
+  vector<string> moveStrings;
+  for (const Move& move : moves) {
+    const string s = move.ToString();
+    moveStrings.push_back(s);
+  }
+  sort(moveStrings.begin(), moveStrings.end());
+  return moveStrings;
+}
+
 void GenerateKnightMoves(const Board& board, Point from, vector<Move>& moves) {
   Color enemy = InvertColor(board.move);
   Point directions[8] = {
