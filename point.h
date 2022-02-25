@@ -8,6 +8,9 @@
 #include "std.h"
 
 struct Point {
+  // Default initializer for callers that want to populate the fields inline.
+  Point();
+
   // Initialize a point.
   Point(int rank, int file);
 
@@ -20,5 +23,9 @@ struct Point {
   // The zero-based file, from 0 to 7.
   int file;
 };
+
+// Equality operator.
+bool operator==(const Point& a, const Point& b);
+bool operator!=(const Point& a, const Point& b);
 
 #endif

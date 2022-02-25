@@ -5,6 +5,14 @@
 
 Move::Move(Point from, Point to) : from(from), to(to) {}
 
+Move::Move(const string& s) {
+  if (s.length() != 4) {
+    throw "Invalid move string format. Must be formatted like e2e4.";
+  }
+  from = Point(s.substr(0, 2));
+  to = Point(s.substr(2));
+}
+
 void GenerateKnightMoves(const Board& board, Point from, vector<Move>& moves) {
   Color enemy = InvertColor(board.move);
   Point directions[8] = {
@@ -58,4 +66,12 @@ vector<Move> GenerateLegalMoves(const Board& board) {
     }
   }
   return moves;
+}
+
+bool operator==(const Move& a, const Move& b) {
+  return (a.from == b.from) && (a.to == b.to);
+}
+
+bool operator!=(const Move& a, const Move& b) {
+  return !(a == b);
 }
