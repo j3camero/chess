@@ -47,3 +47,11 @@ TEST_CASE("Equality operator (Point)", "[Point]") {
   REQUIRE(Point(3, 4) != Point(2, 4));
   REQUIRE(Point(3, 4) != Point(3, 5));
 }
+
+TEST_CASE("Addition operators (Point)", "[Point]") {
+  REQUIRE(Point("e2") + Point(-2, 0) == Point("e4"));
+  REQUIRE(Point(1, 2) + Point("b6") == Point("d5"));
+  Point p(3, 7);
+  p += Point(2, -3);
+  REQUIRE(p == Point(5, 4));
+}

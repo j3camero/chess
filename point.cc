@@ -43,3 +43,13 @@ bool Point::operator==(const Point& other) const {
 bool Point::operator!=(const Point& other) const {
   return !(*this == other);
 }
+
+Point Point::operator+(const Point& other) const {
+  return Point(this->rank + other.rank, this->file + other.file);
+}
+
+Point& Point::operator+=(const Point& other) {
+  this->rank += other.rank;
+  this->file += other.file;
+  return *this;
+}

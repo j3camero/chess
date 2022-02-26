@@ -20,9 +20,11 @@ struct Point {
   // Generates a human-readable string like e2.
   string ToString() const;
 
-  // Equality operator.
+  // Operator overloads.
   bool operator==(const Point& other) const;
   bool operator!=(const Point& other) const;
+  Point operator+(const Point& other) const;
+  Point& operator+=(const Point& other);
 
   // The zero-based rank, from 0 to 7.
   int rank;
