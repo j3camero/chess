@@ -17,6 +17,14 @@ string Move::ToString() const {
   return from.ToString() + to.ToString();
 }
 
+bool Move::operator==(const Move& other) const {
+  return (this->from == other.from) && (this->to == other.to);
+}
+
+bool Move::operator!=(const Move& other) const {
+  return !(*this == other);
+}
+
 vector<string> MovesToStrings(const vector<Move>& moves) {
   vector<string> moveStrings;
   for (const Move& move : moves) {
@@ -63,8 +71,8 @@ bool TryMove(const Board& board, Move move, vector<Move>& moves) {
 }
 
 void GenerateKnightMoves(const Board& board, Point from, vector<Move>& moves) {
-  for (const Point& d : knightMoves) {
-    Point to(from.rank + d.rank, from.file + d.file);
+  for (const Point& k : knightMoves) {
+    Point to = from + k;
     Move move(from, to);
     TryMove(board, move, moves);
   }
@@ -75,8 +83,7 @@ void GenerateSlidingPieceMoves(const Board& board,
                                Point to,
                                Point direction,
                                vector<Move>& moves) {
-  to.rank += direction.rank;
-  to.file += direction.file;
+  to += direction;
   Move move(from, to);
   bool keepGoing = TryMove(board, move, moves);
   if (keepGoing) {
@@ -104,7 +111,7 @@ void GenerateQueenMoves(const Board& board, Point from, vector<Move>& moves) {
 
 void GenerateKingMoves(const Board& board, Point from, vector<Move>& moves) {
   for (const Point& direction : queenMoves) {
-    Point to(from.rank + direction.rank, from.file + direction.file);
+    Point to = from + direction;
     Move move(from, to);
     TryMove(board, move, moves);
   }
@@ -165,12 +172,4 @@ vector<Move> GenerateLegalMoves(const Board& board) {
     }
   }
   return moves;
-}
-
-bool Move::operator==(const Move& other) const {
-  return (this->from == other.from) && (this->to == other.to);
-}
-
-bool Move::operator!=(const Move& other) const {
-  return !(*this == other);
 }
