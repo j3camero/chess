@@ -20,6 +20,10 @@ struct Point {
   // Generates a human-readable string like e2.
   string ToString() const;
 
+  // Equality operator.
+  bool operator==(const Point& other) const;
+  bool operator!=(const Point& other) const;
+
   // The zero-based rank, from 0 to 7.
   int rank;
 
@@ -28,7 +32,7 @@ struct Point {
 };
 
 // Equality operator.
-bool operator==(const Point& a, const Point& b);
-bool operator!=(const Point& a, const Point& b);
+//bool operator==(const Point& a, const Point& b);
+//bool operator!=(const Point& a, const Point& b);
 
 #endif

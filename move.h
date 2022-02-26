@@ -20,6 +20,10 @@ struct Move {
   // Outputs a string representation of the move like g8f6.
   string ToString() const;
 
+  // Equality operator.
+  bool operator==(const Move& other) const;
+  bool operator!=(const Move& other) const;
+
   Point from;
   Point to;
 };
@@ -28,9 +32,5 @@ vector<Move> GenerateLegalMoves(const Board& board);
 
 // Converts a list of moves to a list of strings.
 vector<string> MovesToStrings(const vector<Move>& moves);
-
-// Equality operator.
-bool operator==(const Point& a, const Point& b);
-bool operator!=(const Point& a, const Point& b);
 
 #endif

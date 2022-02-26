@@ -167,10 +167,10 @@ vector<Move> GenerateLegalMoves(const Board& board) {
   return moves;
 }
 
-bool operator==(const Move& a, const Move& b) {
-  return (a.from == b.from) && (a.to == b.to);
+bool Move::operator==(const Move& other) const {
+  return (this->from == other.from) && (this->to == other.to);
 }
 
-bool operator!=(const Move& a, const Move& b) {
-  return !(a == b);
+bool Move::operator!=(const Move& other) const {
+  return !(*this == other);
 }

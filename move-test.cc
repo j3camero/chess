@@ -29,13 +29,11 @@ TEST_CASE("Algebraic knight move", "[Move]") {
 }
 
 TEST_CASE("Equality operator (Move)", "[Move]") {
-  REQUIRE(Point("e4") == Point("e4"));
-  REQUIRE(Point("e4") != Point("e3"));
-  REQUIRE(Point("e4") != Point("d4"));
-  REQUIRE(Point("b6") != Point("c7"));
-  REQUIRE(Point(3, 4) == Point(3, 4));
-  REQUIRE(Point(3, 4) != Point(2, 4));
-  REQUIRE(Point(3, 4) != Point(3, 5));
+  REQUIRE(Move("e2e4") == Move("e2e4"));
+  REQUIRE(Move("e2e4") != Move("e2e3"));
+  REQUIRE(Move("e2e4") != Move("d4e4"));
+  REQUIRE(Move("a3b6") != Move("c7a1"));
+  REQUIRE(Move("h6f7") == Move(Point(2, 7), Point(1, 5)));
 }
 
 TEST_CASE("MovesToStrings", "[Move]") {

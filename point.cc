@@ -36,10 +36,10 @@ string Point::ToString() const {
   return fileString + rankString;
 }
 
-bool operator==(const Point& a, const Point& b) {
-  return (a.rank == b.rank) && (a.file == b.file);
+bool Point::operator==(const Point& other) const {
+  return (this->rank == other.rank) && (this->file == other.file);
 }
 
-bool operator!=(const Point& a, const Point& b) {
-  return !(a == b);
+bool Point::operator!=(const Point& other) const {
+  return !(*this == other);
 }
