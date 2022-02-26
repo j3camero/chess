@@ -27,29 +27,91 @@ vector<string> MovesToStrings(const vector<Move>& moves) {
   return moveStrings;
 }
 
-void GenerateKnightMoves(const Board& board, Point from, vector<Move>& moves) {
-  Color enemy = InvertColor(board.move);
-  Point directions[8] = {
-    Point(1, 2), Point(2, 1), Point(2, -1), Point(1, -2),
-    Point(-1, -2), Point(-2, -1), Point(-2, 1), Point(-1, 2)
-  };
-  for (const Point& d : directions) {
-    Point to(from.rank + d.rank, from.file + d.file);
-    if (to.rank < 0 || to.rank > 7 || to.file < 0 || to.file > 7) {
-      // Move is off the board.
-      continue;
-    }
-    Piece p = board.squares[to.rank][to.file];
-    Move move(from, to);
-    if (p == Empty) {
-      moves.push_back(move);
-      continue;
-    }
-    Color attackedPieceColor = PieceColor(p);
-    if (attackedPieceColor == enemy) {
-      moves.push_back(move);
-    }
+Point knightMoves[8] = {
+  Point(1, 2), Point(2, 1), Point(2, -1), Point(1, -2),
+  Point(-1, -2), Point(-2, -1), Point(-2, 1), Point(-1, 2)
+};
+Point rookMoves[4] = {
+  Point(1, 0), Point(0, 1), Point(-1, 0), Point(0, -1)
+};
+Point bishopMoves[4] = {
+  Point(1, 1), Point(-1, 1), Point(1, -1), Point(-1, -1)
+};
+Point queenMoves[8] = {
+  Point(1, 0), Point(0, 1), Point(-1, 0), Point(0, -1),
+  Point(1, 1), Point(-1, 1), Point(1, -1), Point(-1, -1)
+};
+
+// Add the given move to the list if the destination square is available or
+// is an enemy piece. Does not check the moving piece or consider check. This
+// is a helper function for generating moves that emerged from refactoring.
+// Returns true if the destination square is empty.
+bool TryMove(const Board& board, Move move, vector<Move>& moves) {
+  if (move.to.rank < 0 || move.to.rank > 7 ||
+      move.to.file < 0 || move.to.file > 7) {
+    return false;
   }
+  const Piece piece = board.squares[move.to.rank][move.to.file];
+  if (piece == Empty) {
+    moves.push_back(move);
+    return true;
+  }
+  if (PieceColor(piece) != board.move) {
+    moves.push_back(move);
+  }
+  return false;
+}
+
+void GenerateKnightMoves(const Board& board, Point from, vector<Move>& moves) {
+  for (const Point& d : knightMoves) {
+    Point to(from.rank + d.rank, from.file + d.file);
+    Move move(from, to);
+    TryMove(board, move, moves);
+  }
+}
+
+void GenerateSlidingPieceMoves(const Board& board,
+                               Point from,
+                               Point to,
+                               Point direction,
+                               vector<Move>& moves) {
+  to.rank += direction.rank;
+  to.file += direction.file;
+  Move move(from, to);
+  bool keepGoing = TryMove(board, move, moves);
+  if (keepGoing) {
+    GenerateSlidingPieceMoves(board, from, to, direction, moves);
+  }
+}
+
+void GenerateRookMoves(const Board& board, Point from, vector<Move>& moves) {
+  for (const Point& direction : rookMoves) {
+    GenerateSlidingPieceMoves(board, from, from, direction, moves);
+  }
+}
+
+void GenerateBishopMoves(const Board& board, Point from, vector<Move>& moves) {
+  for (const Point& direction : bishopMoves) {
+    GenerateSlidingPieceMoves(board, from, from, direction, moves);
+  }
+}
+
+void GenerateQueenMoves(const Board& board, Point from, vector<Move>& moves) {
+  for (const Point& direction : queenMoves) {
+    GenerateSlidingPieceMoves(board, from, from, direction, moves);
+  }
+}
+
+void GenerateKingMoves(const Board& board, Point from, vector<Move>& moves) {
+  for (const Point& direction : queenMoves) {
+    Point to(from.rank + direction.rank, from.file + direction.file);
+    Move move(from, to);
+    TryMove(board, move, moves);
+  }
+}
+
+void GeneratePawnMoves(const Board& board, Point from, vector<Move>& moves) {
+
 }
 
 void GenerateLegalMovesFrom(const Board& board,
@@ -67,6 +129,29 @@ void GenerateLegalMovesFrom(const Board& board,
   case BlackKnight:
   case WhiteKnight:
     GenerateKnightMoves(board, from, moves);
+    break;
+  case BlackRook:
+  case WhiteRook:
+    GenerateRookMoves(board, from, moves);
+    break;
+  case BlackBishop:
+  case WhiteBishop:
+    GenerateBishopMoves(board, from, moves);
+    break;
+  case BlackQueen:
+  case WhiteQueen:
+    GenerateQueenMoves(board, from, moves);
+    break;
+  case BlackKing:
+  case WhiteKing:
+    GenerateKingMoves(board, from, moves);
+    break;
+  case BlackPawn:
+  case WhitePawn:
+    GeneratePawnMoves(board, from, moves);
+    break;
+  default:
+    // Empty square. Skip it.
     break;
   }
 }
