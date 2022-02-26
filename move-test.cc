@@ -1,8 +1,5 @@
-#include "board.h"
 #include "catch.hpp"
-#include "fen.h"
 #include "move.h"
-#include "std.h"
 
 TEST_CASE("Basic move constructor", "[Move]") {
   Move move(Point(7, 1), Point(5, 2));
@@ -34,20 +31,4 @@ TEST_CASE("Equality operator (Move)", "[Move]") {
   REQUIRE(Move("e2e4") != Move("d4e4"));
   REQUIRE(Move("a3b6") != Move("c7a1"));
   REQUIRE(Move("h6f7") == Move(Point(2, 7), Point(1, 5)));
-}
-
-TEST_CASE("MovesToStrings", "[Move]") {
-  const vector<Move> moves = { Move("b1a3"), Move("g8h6") };
-  const vector<string> actual = MovesToStrings(moves);
-  const vector<string> expected = {"b1a3", "g8h6"};
-  REQUIRE(actual == expected);
-}
-
-TEST_CASE("Move generation: opening position", "[Move]") {
-  const string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-  const Board b = FenToBoard(fen);
-  const vector<Move> moves = GenerateLegalMoves(b);
-  const vector<string> actual = MovesToStrings(moves);
-  const vector<string> expected = {"b1a3", "b1c3", "g1f3", "g1h3"};
-  REQUIRE(actual == expected);
 }

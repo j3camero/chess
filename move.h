@@ -28,9 +28,4 @@ struct Move {
   Point to;
 };
 
-vector<Move> GenerateLegalMoves(const Board& board);
-
-// Converts a list of moves to a list of strings.
-vector<string> MovesToStrings(const vector<Move>& moves);
-
 #endif

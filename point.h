@@ -33,8 +33,4 @@ struct Point {
   int file;
 };
 
-// Equality operator.
-//bool operator==(const Point& a, const Point& b);
-//bool operator!=(const Point& a, const Point& b);
-
 #endif
