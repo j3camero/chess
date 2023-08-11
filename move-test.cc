@@ -1,5 +1,6 @@
 #include "catch.hpp"
 #include "move.h"
+#include "std.h"
 
 TEST_CASE("Basic move constructor", "[Move]") {
   Move move(Point(7, 1), Point(5, 2));
@@ -31,4 +32,11 @@ TEST_CASE("Equality operator (Move)", "[Move]") {
   REQUIRE(Move("e2e4") != Move("d4e4"));
   REQUIRE(Move("a3b6") != Move("c7a1"));
   REQUIRE(Move("h6f7") == Move(Point(2, 7), Point(1, 5)));
+}
+
+TEST_CASE("MovesToStrings", "[Move]") {
+  const vector<Move> moves = { Move("b1a3"), Move("g8h6") };
+  const vector<string> actual = MovesToStrings(moves);
+  const vector<string> expected = { "b1a3", "g8h6" };
+  REQUIRE(actual == expected);
 }

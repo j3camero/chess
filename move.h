@@ -1,7 +1,6 @@
 #ifndef _MOVE_H_
 #define _MOVE_H_
 
-#include "board.h"
 #include "point.h"
 #include "std.h"
 
@@ -27,5 +26,8 @@ struct Move {
   Point from;
   Point to;
 };
+
+// Converts a list of moves to a list of strings.
+vector<string> MovesToStrings(const vector<Move>& moves);
 
 #endif

@@ -10,28 +10,31 @@
 // rank - which rank to place the encoded piece on the chessboard.
 // board (output) - one rank of the given Board's squares will be overwritten.
 void ParseOneRank(const string& fen, int rank, Board& board) {
-    int file = 0;
-    for (const char& c : fen) {
-      if (StringUtil::IsDigit(c)) {
-	const int digit = StringUtil::DigitToInt(c);
-	for (int j = 0; j < digit; j++) {
-	  board.squares[rank][file] = Empty;
-	  file++;
-	}
-      } else {
-	Piece piece = CharToPiece(c);
-	board.squares[rank][file] = piece;
-	file++;
-      }
-      // Bail early if a rank of FEN tries to specify more than 8 squares.
-      if (file >= 8) {
-	break;
-      }
+  int file = 0;
+  for (const char& c : fen) {
+    if (StringUtil::IsDigit(c)) {
+  	  const int digit = StringUtil::DigitToInt(c);
+	    for (int j = 0; j < digit; j++) {
+	      board.color[rank][file] = Empty;
+	      file++;
+  	  }
+    } else {
+      Color color;
+  	  Piece piece;
+      CharToPiece(c, color, piece);
+  	  board.color[rank][file] = color;
+  	  board.piece[rank][file] = piece;
+	    file++;
     }
-    // Each rank of FEN should specify exactly 8 squares.
-    if (file != 8) {
-      throw "Wrong number of squares. Should be 8.";
+    // Bail early if a rank of FEN tries to specify more than 8 squares.
+    if (file >= 8) {
+  	  break;
     }
+  }
+  // Each rank of FEN should specify exactly 8 squares.
+  if (file != 8) {
+    throw "Wrong number of squares. Should be 8.";
+  }
 }
 
 // Parses the first token of a FEN string, piece placement.
@@ -59,10 +62,10 @@ void ParseSideToMove(const string& sideToMove, Board& board) {
   char c = sideToMove[0];
   switch (c) {
   case 'b':
-    board.move = Black;
+    board.turn = Black;
     break;
   case 'w':
-    board.move = White;
+    board.turn = White;
     break;
   default:
     throw "Invalid side-to-move. Must be w or b.";

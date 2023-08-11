@@ -5,11 +5,14 @@
 
 // Represents a board position.
 struct Board {
-  // Store the positions of the pieces on the chessboard.
-  Piece squares[8][8];
+  // The color of each square - White, Black, or Empty.
+  Color color[8][8];
+
+  // Which type of piece is on each square.
+  Piece piece[8][8];
 
   // Whose turn it is to move.
-  Color move;
+  Color turn;
 
   // Castling availability.
   bool whiteKingCastle;

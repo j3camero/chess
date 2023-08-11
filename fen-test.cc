@@ -7,17 +7,25 @@
 TEST_CASE("Read default start position", "[FEN]") {
   const string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
   Board b = FenToBoard(fen);
-  REQUIRE(b.squares[0][0] == BlackRook);
-  REQUIRE(b.squares[0][4] == BlackKing);
-  REQUIRE(b.squares[0][7] == BlackRook);
-  REQUIRE(b.squares[1][3] == BlackPawn);
-  REQUIRE(b.squares[2][5] == Empty);
-  REQUIRE(b.squares[5][1] == Empty);
-  REQUIRE(b.squares[6][2] == WhitePawn);
-  REQUIRE(b.squares[7][0] == WhiteRook);
-  REQUIRE(b.squares[7][4] == WhiteKing);
-  REQUIRE(b.squares[7][7] == WhiteRook);
-  REQUIRE(b.move == White);
+  REQUIRE(b.color[0][0] == Black);
+  REQUIRE(b.piece[0][0] == Rook);
+  REQUIRE(b.color[0][4] == Black);
+  REQUIRE(b.piece[0][4] == King);
+  REQUIRE(b.color[0][7] == Black);
+  REQUIRE(b.piece[0][7] == Rook);
+  REQUIRE(b.color[1][3] == Black);
+  REQUIRE(b.piece[1][3] == Pawn);
+  REQUIRE(b.color[2][5] == Empty);
+  REQUIRE(b.color[5][1] == Empty);
+  REQUIRE(b.color[6][2] == White);
+  REQUIRE(b.piece[6][2] == Pawn);
+  REQUIRE(b.color[7][0] == White);
+  REQUIRE(b.piece[7][0] == Rook);
+  REQUIRE(b.color[7][4] == White);
+  REQUIRE(b.piece[7][4] == King);
+  REQUIRE(b.color[7][7] == White);
+  REQUIRE(b.piece[7][7] == Rook);
+  REQUIRE(b.turn == White);
   REQUIRE(b.whiteKingCastle == true);
   REQUIRE(b.whiteQueenCastle == true);
   REQUIRE(b.blackKingCastle == true);
@@ -30,23 +38,24 @@ TEST_CASE("Read default start position", "[FEN]") {
 TEST_CASE("Read position with only one piece", "[FEN]") {
   const string fen = "8/8/8/2k5/8/8/8/8 w KQkq - 0 1";
   Board b = FenToBoard(fen);
-  REQUIRE(b.squares[3][2] == BlackKing);
-  REQUIRE(b.squares[3][3] == Empty);
-  REQUIRE(b.squares[3][1] == Empty);
-  REQUIRE(b.squares[2][2] == Empty);
-  REQUIRE(b.squares[4][2] == Empty);
+  REQUIRE(b.color[3][2] == Black);
+  REQUIRE(b.piece[3][2] == King);
+  REQUIRE(b.color[3][3] == Empty);
+  REQUIRE(b.color[3][1] == Empty);
+  REQUIRE(b.color[2][2] == Empty);
+  REQUIRE(b.color[4][2] == Empty);
 }
 
 TEST_CASE("White to move", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 w KQkq - 0 1";
   Board b = FenToBoard(fen);
-  REQUIRE(b.move == White);
+  REQUIRE(b.turn == White);
 }
 
 TEST_CASE("Black to move", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 b KQkq - 0 1";
   Board b = FenToBoard(fen);
-  REQUIRE(b.move == Black);
+  REQUIRE(b.turn == Black);
 }
 
 TEST_CASE("Unparseable side to move", "[FEN]") {

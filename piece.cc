@@ -1,97 +1,99 @@
+#include "color.h"
 #include "piece.h"
 #include "std.h"
 
-Color PieceColor(Piece p) {
-  switch (p) {
-  case WhitePawn:
-  case WhiteKnight:
-  case WhiteBishop:
-  case WhiteRook:
-  case WhiteQueen:
-  case WhiteKing:
-    return White;
-  case BlackPawn:
-  case BlackKnight:
-  case BlackBishop:
-  case BlackRook:
-  case BlackQueen:
-  case BlackKing:
-    return Black;
-  default:
-    throw "Empty piece has no color.";
-  }
-}
-
-Color InvertColor(Color c) {
+char PieceToChar(Color c, Piece p) {
   switch (c) {
-  case White:
-    return Black;
-  case Black:
-    return White;
-  default:
-    throw "Unkown piece color.";
-  }
-}
-
-char PieceToChar(Piece p) {
-  switch (p) {
-  case WhitePawn:
-    return 'P';
-  case WhiteKnight:
-    return 'N';
-  case WhiteBishop:
-    return 'B';
-  case WhiteRook:
-    return 'R';
-  case WhiteQueen:
-    return 'Q';
-  case WhiteKing:
-    return 'K';
-  case BlackPawn:
-    return 'p';
-  case BlackKnight:
-    return 'n';
-  case BlackBishop:
-    return 'b';
-  case BlackRook:
-    return 'r';
-  case BlackQueen:
-    return 'q';
-  case BlackKing:
-    return 'k';
   case Empty:
     return ' ';
-  default:
-    throw "Invalid chess piece.";
+  case White:
+    switch (p) {
+    case Pawn:
+      return 'P';
+    case Knight:
+      return 'N';
+    case Bishop:
+      return 'B';
+    case Rook:
+      return 'R';
+    case Queen:
+      return 'Q';
+    case King:
+      return 'K';
+    }
+  case Black:
+    switch (p) {
+    case Pawn:
+      return 'p';
+    case Knight:
+      return 'n';
+    case Bishop:
+      return 'b';
+    case Rook:
+      return 'r';
+    case Queen:
+      return 'q';
+    case King:
+      return 'k';
+    }
   }
+  // Should never get here.
+  throw "Invalid chess piece";
 }
 
-Piece CharToPiece(char c) {
+void CharToPiece(char c, Color& color, Piece& piece) {
   switch (c) {
+  case ' ':
+    color = Empty;
+    piece = Pawn;
+    return;
   case 'P':
-    return WhitePawn;
+    color = White;
+    piece = Pawn;
+    return;
   case 'N':
-    return WhiteKnight;
+    color = White;
+    piece = Knight;
+    return;
   case 'B':
-    return WhiteBishop;
+    color = White;
+    piece = Bishop;
+    return;
   case 'R':
-    return WhiteRook;
+    color = White;
+    piece = Rook;
+    return;
   case 'Q':
-    return WhiteQueen;
+    color = White;
+    piece = Queen;
+    return;
   case 'K':
-    return WhiteKing;
+    color = White;
+    piece = King;
+    return;
   case 'p':
-    return BlackPawn;
+    color = Black;
+    piece = Pawn;
+    return;
   case 'n':
-    return BlackKnight;
+    color = Black;
+    piece = Knight;
   case 'b':
-    return BlackBishop;
+    color = Black;
+    piece = Bishop;
+    return;
   case 'r':
-    return BlackRook;
+    color = Black;
+    piece = Rook;
+    return;
   case 'q':
-    return BlackQueen;
+    color = Black;
+    piece = Queen;
+    return;
   case 'k':
-    return BlackKing;
+    color = Black;
+    piece = King;
+    return;
   default:
     string exception = "Invalid character for chess piece: ";
     exception += c;

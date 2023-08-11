@@ -1,22 +1,19 @@
 #include "catch.hpp"
+#include "color.h"
 #include "piece.h"
 
-TEST_CASE("PieceColor", "[Piece]") {
-  REQUIRE(PieceColor(WhiteKing) == White);
-  REQUIRE(PieceColor(BlackPawn) == Black);
-}
-
-TEST_CASE("InvertColor", "[Piece]") {
-  REQUIRE(InvertColor(White) == Black);
-  REQUIRE(InvertColor(Black) == White);
-}
-
 TEST_CASE("PieceToChar", "[Piece]") {
-  REQUIRE(PieceToChar(WhiteKing) == 'K');
-  REQUIRE(PieceToChar(BlackPawn) == 'p');
+  REQUIRE(PieceToChar(White, King) == 'K');
+  REQUIRE(PieceToChar(Black, Pawn) == 'p');
 }
 
 TEST_CASE("CharToPiece", "[Piece]") {
-  REQUIRE(CharToPiece('R') == WhiteRook);
-  REQUIRE(CharToPiece('r') == BlackRook);
+  Color c;
+  Piece p;
+  CharToPiece('R', c, p);
+  REQUIRE(c == White);
+  REQUIRE(p == Rook);
+  CharToPiece('r', c, p);
+  REQUIRE(c == Black);
+  REQUIRE(p == Rook);
 }

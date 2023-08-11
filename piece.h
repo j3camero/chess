@@ -1,26 +1,18 @@
 #ifndef _PIECE_H_
 #define _PIECE_H_
 
+#include "color.h"
+
 // Define the different types of pieces there are in chess.
-enum Piece {
-  WhitePawn, WhiteKnight, WhiteBishop, WhiteRook, WhiteQueen, WhiteKing,
-  BlackPawn, BlackKnight, BlackBishop, BlackRook, BlackQueen, BlackKing,
-  Empty
-};
-
-// Define the two colors of pieces in chess.
-enum Color {White, Black};
-
-// Gets the color of a piece.
-Color PieceColor(Piece p);
-
-// Reverses a color. White -> Black and Black -> White.
-Color InvertColor(Color c);
+enum Piece {Pawn, Knight, Bishop, Rook, Queen, King};
 
 // Gets a human-readable FEN character to represent a chess piece.
-char PieceToChar(Piece p);
+char PieceToChar(Color c, Piece p);
 
 // Read a chess piece from a character in FEN notation.
-Piece CharToPiece(char c);
+// c (input): an ASCII character
+// color (output): the color represented by the character.
+// piece (output): the piece type represented by the character.
+void CharToPiece(char c, Color& color, Piece& piece);
 
 #endif

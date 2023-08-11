@@ -9,7 +9,4 @@
 // that this function does not check for check.
 vector<Move> GeneratePseudoLegalMoves(const Board& board);
 
-// Converts a list of moves to a list of strings.
-vector<string> MovesToStrings(const vector<Move>& moves);
-
 #endif

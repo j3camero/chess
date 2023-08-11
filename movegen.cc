@@ -1,15 +1,5 @@
 #include "movegen.h"
 
-vector<string> MovesToStrings(const vector<Move>& moves) {
-  vector<string> moveStrings;
-  for (const Move& move : moves) {
-    const string s = move.ToString();
-    moveStrings.push_back(s);
-  }
-  sort(moveStrings.begin(), moveStrings.end());
-  return moveStrings;
-}
-
 Point knightMoves[8] = {
   Point(1, 2), Point(2, 1), Point(2, -1), Point(1, -2),
   Point(-1, -2), Point(-2, -1), Point(-2, 1), Point(-1, 2)
@@ -34,12 +24,12 @@ bool TryMove(const Board& board, Move move, vector<Move>& moves) {
       move.to.file < 0 || move.to.file > 7) {
     return false;
   }
-  const Piece piece = board.squares[move.to.rank][move.to.file];
-  if (piece == Empty) {
+  const Color color = board.color[move.to.rank][move.to.file];
+  if (color == Empty) {
     moves.push_back(move);
     return true;
   }
-  if (PieceColor(piece) != board.move) {
+  if (color != board.turn) {
     moves.push_back(move);
   }
   return false;
@@ -96,44 +86,30 @@ void GeneratePawnMoves(const Board& board, Point from, vector<Move>& moves) {
 
 }
 
-void GenerateLegalMovesFrom(const Board& board,
-                            Point from,
-                            vector<Move>& moves) {
-  Piece piece = board.squares[from.rank][from.file];
-  if (piece == Empty) {
+void GenerateMovesFrom(const Board& board, Point from, vector<Move>& moves) {
+  const Color color = board.color[from.rank][from.file];
+  if (color != board.turn) {
     return;
   }
-  Color color = PieceColor(piece);
-  if (color != board.move) {
-    return;
-  }
+  const Piece piece = board.piece[from.rank][from.file];
   switch (piece) {
-  case BlackKnight:
-  case WhiteKnight:
+  case Knight:
     GenerateKnightMoves(board, from, moves);
     break;
-  case BlackRook:
-  case WhiteRook:
+  case Rook:
     GenerateRookMoves(board, from, moves);
     break;
-  case BlackBishop:
-  case WhiteBishop:
+  case Bishop:
     GenerateBishopMoves(board, from, moves);
     break;
-  case BlackQueen:
-  case WhiteQueen:
+  case Queen:
     GenerateQueenMoves(board, from, moves);
     break;
-  case BlackKing:
-  case WhiteKing:
+  case King:
     GenerateKingMoves(board, from, moves);
     break;
-  case BlackPawn:
-  case WhitePawn:
+  case Pawn:
     GeneratePawnMoves(board, from, moves);
-    break;
-  default:
-    // Empty square. Skip it.
     break;
   }
 }
@@ -143,7 +119,7 @@ vector<Move> GeneratePseudoLegalMoves(const Board& board) {
   for (int rank = 0; rank < 8; rank++) {
     for (int file = 0; file < 8; file++) {
       Point from(rank, file);
-      GenerateLegalMovesFrom(board, from, moves);
+      GenerateMovesFrom(board, from, moves);
     }
   }
   return moves;

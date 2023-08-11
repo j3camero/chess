@@ -13,9 +13,10 @@ randombot: randombot.o \
 test: test-main
 	./test-main
 
-test-main: fen.o fen-test.o \
-	         move.o move-test.o \
-	         movegen.o movegen-test.o \
+test-main: color.o color-test.o \
+           fen.o fen-test.o \
+           move.o move-test.o \
+           movegen.o movegen-test.o \
            point.o point-test.o \
            piece.o piece-test.o \
            string-util.o string-util-test.o \

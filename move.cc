@@ -1,4 +1,3 @@
-#include "board.h"
 #include "move.h"
 #include "piece.h"
 #include "std.h"
@@ -23,4 +22,14 @@ bool Move::operator==(const Move& other) const {
 
 bool Move::operator!=(const Move& other) const {
   return !(*this == other);
+}
+
+vector<string> MovesToStrings(const vector<Move>& moves) {
+  vector<string> moveStrings;
+  for (const Move& move : moves) {
+    const string s = move.ToString();
+    moveStrings.push_back(s);
+  }
+  sort(moveStrings.begin(), moveStrings.end());
+  return moveStrings;
 }
