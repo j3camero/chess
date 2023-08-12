@@ -43,6 +43,14 @@ void GenerateKnightMoves(const Board& board, Point from, vector<Move>& moves) {
   }
 }
 
+void GenerateKingMoves(const Board& board, Point from, vector<Move>& moves) {
+  for (const Point& direction : queenMoves) {
+    Point to = from + direction;
+    Move move(from, to);
+    TryMove(board, move, moves);
+  }
+}
+
 void GenerateSlidingPieceMoves(const Board& board,
                                Point from,
                                Point to,
@@ -74,16 +82,51 @@ void GenerateQueenMoves(const Board& board, Point from, vector<Move>& moves) {
   }
 }
 
-void GenerateKingMoves(const Board& board, Point from, vector<Move>& moves) {
-  for (const Point& direction : queenMoves) {
-    Point to = from + direction;
+// Helper function for generating pawn moves and captures.
+// Does not do any bounds checking. The caller must ensure the destination
+// square is within the edges of the board.
+// Returns true if the move was valid.
+bool TryPawnMove(const Board& board,
+                 Point from,
+                 Point to,
+                 Color targetColor,
+                 vector<Move>& moves) {
+  const Color color = board.color[to.rank][to.file];
+  if (color == targetColor) {
     Move move(from, to);
-    TryMove(board, move, moves);
+    moves.push_back(move);
+    return true;
   }
+  return false;
 }
 
 void GeneratePawnMoves(const Board& board, Point from, vector<Move>& moves) {
-
+  // Pawns are the only piece for which color/direction matter.
+  const int direction = board.turn == White ? -1 : 1;
+  // Try right capture.
+  if (from.file < 7) {
+    Point right = from + Point(direction, 1);
+    TryPawnMove(board, from, right, board.opp, moves);
+  }
+  // Try left capture.
+  if (from.file > 0) {
+    Point left = from + Point(direction, -1);
+    TryPawnMove(board, from, left, board.opp, moves);
+  }
+  // Try normal pawn move forward.
+  Point forward(direction, 0);
+  Point to = from + forward;
+  bool canMove = TryPawnMove(board, from, to, Empty, moves);
+  if (!canMove) {
+    return;
+  }
+  // Try pawn push (move 2 forward).
+  int secondRank = board.turn == White ? 6 : 1;
+  if (from.rank != secondRank) {
+    return;
+  }
+  Point two = to + forward;
+  TryPawnMove(board, from, two, Empty, moves);
 }
 
 void GenerateMovesFrom(const Board& board, Point from, vector<Move>& moves) {

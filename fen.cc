@@ -63,9 +63,11 @@ void ParseSideToMove(const string& sideToMove, Board& board) {
   switch (c) {
   case 'b':
     board.turn = Black;
+    board.opp = White;
     break;
   case 'w':
     board.turn = White;
+    board.opp = Black;
     break;
   default:
     throw "Invalid side-to-move. Must be w or b.";

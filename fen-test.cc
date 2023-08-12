@@ -26,6 +26,7 @@ TEST_CASE("Read default start position", "[FEN]") {
   REQUIRE(b.color[7][7] == White);
   REQUIRE(b.piece[7][7] == Rook);
   REQUIRE(b.turn == White);
+  REQUIRE(b.opp == Black);
   REQUIRE(b.whiteKingCastle == true);
   REQUIRE(b.whiteQueenCastle == true);
   REQUIRE(b.blackKingCastle == true);
@@ -50,12 +51,14 @@ TEST_CASE("White to move", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 w KQkq - 0 1";
   Board b = FenToBoard(fen);
   REQUIRE(b.turn == White);
+  REQUIRE(b.opp == Black);
 }
 
 TEST_CASE("Black to move", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 b KQkq - 0 1";
   Board b = FenToBoard(fen);
   REQUIRE(b.turn == Black);
+  REQUIRE(b.opp == White);
 }
 
 TEST_CASE("Unparseable side to move", "[FEN]") {

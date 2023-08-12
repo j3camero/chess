@@ -14,6 +14,9 @@ struct Board {
   // Whose turn it is to move.
   Color turn;
 
+  // Opponent color. Always the opposite of turn.
+  Color opp;
+
   // Castling availability.
   bool whiteKingCastle;
   bool whiteQueenCastle;
