@@ -129,6 +129,44 @@ void GeneratePawnMoves(const Board& board, Point from, vector<Move>& moves) {
   TryPawnMove(board, from, two, Empty, moves);
 }
 
+// Helper function for generating en-passant capture moves for pawns.
+// Assumptions:
+// (1) The target square (to) is Empty.
+// (2) from and to are both on the board.
+// Only has to check that the capturing piece is a friendly pawn.
+void TryEnPassant(const Board& board,
+                  Point from,
+                  Point to,
+                  vector<Move>& moves) {
+  const Color color = board.color[from.rank][from.file];
+  if (color != board.turn) {
+    return;
+  }
+  const Piece piece = board.piece[from.rank][from.file];
+  if (piece != Pawn) {
+    return;
+  }
+  Move move(from, to);
+  moves.push_back(move);
+}
+
+void GenerateEnPassantCaptures(const Board& board, vector<Move>& moves) {
+  if (board.enPassantFile < 0) {
+    return;
+  }
+  const int toRank = board.turn == White ? 2 : 5;
+  const int fromRank = board.turn == White ? 3 : 4;
+  Point to(toRank, board.enPassantFile);
+  if (board.enPassantFile > 0) {
+    Point left(fromRank, board.enPassantFile - 1);
+    TryEnPassant(board, left, to, moves);
+  }
+  if (board.enPassantFile < 7) {
+    Point right(fromRank, board.enPassantFile + 1);
+    TryEnPassant(board, right, to, moves);
+  }
+}
+
 void GenerateMovesFrom(const Board& board, Point from, vector<Move>& moves) {
   const Color color = board.color[from.rank][from.file];
   if (color != board.turn) {
@@ -165,5 +203,6 @@ vector<Move> GeneratePseudoLegalMoves(const Board& board) {
       GenerateMovesFrom(board, from, moves);
     }
   }
+  GenerateEnPassantCaptures(board, moves);
   return moves;
 }
