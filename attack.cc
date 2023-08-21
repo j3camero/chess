@@ -30,8 +30,7 @@ bool IsSquareUnderAttackByKnight(const Board& b,
                                  Color attacker) {
   for (const Point& k : knightMoves) {
     Point from = p + k;
-    if (from.rank >= 0 && from.rank < 8 &&
-        from.file >= 0 && from.file < 8 &&
+    if (from.IsOnBoard() &&
         b.color[from.rank][from.file] == attacker &&
         b.piece[from.rank][from.file] == Knight) {
       return true;
@@ -43,8 +42,7 @@ bool IsSquareUnderAttackByKnight(const Board& b,
 bool IsSquareUnderAttackByKing(const Board& b, const Point& p, Color attacker) {
   for (const Point& direction : queenMoves) {
     Point from = p + direction;
-    if (from.rank >= 0 && from.rank < 8 &&
-        from.file >= 0 && from.file < 8 &&
+    if (from.IsOnBoard() &&
         b.color[from.rank][from.file] == attacker &&
         b.piece[from.rank][from.file] == King) {
       return true;
@@ -58,7 +56,7 @@ bool FindSlidingPiece(const Board& b,
                       const Point& direction,
                       Color attacker,
                       Piece nonQueenPiece) {
-  if (p.rank < 0 || p.rank > 7 || p.file < 0 || p.file > 7) {
+  if (!p.IsOnBoard()) {
     return false;
   }
   const Color c = b.color[p.rank][p.file];

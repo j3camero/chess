@@ -6,8 +6,7 @@
 // is a helper function for generating moves that emerged from refactoring.
 // Returns true if the destination square is empty.
 bool TryMove(const Board& board, Move move, vector<Move>& moves) {
-  if (move.to.rank < 0 || move.to.rank > 7 ||
-      move.to.file < 0 || move.to.file > 7) {
+  if (!move.to.IsOnBoard()) {
     return false;
   }
   const Color color = board.color[move.to.rank][move.to.file];
