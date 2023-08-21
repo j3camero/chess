@@ -36,6 +36,10 @@ string Point::ToString() const {
   return fileString + rankString;
 }
 
+bool Point::IsOnBoard() const {
+  return (rank >= 0) && (rank < 8) && (file >= 0) && (file < 8);
+}
+
 bool Point::operator==(const Point& other) const {
   return (this->rank == other.rank) && (this->file == other.file);
 }

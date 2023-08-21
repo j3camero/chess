@@ -17,6 +17,10 @@ struct Point {
   // Initialize a point based on a chess string like "e2" or "h6".
   Point(const string& s);
 
+  // Returns true if this point is "on the board" according to zero-based
+  // coords. Returns false if the point is out of bounds.
+  bool IsOnBoard() const;
+
   // Generates a human-readable string like e2.
   string ToString() const;
 

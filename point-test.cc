@@ -31,6 +31,23 @@ TEST_CASE("ToString", "[Point]") {
   REQUIRE(Point("f5").ToString() == "f5");
 }
 
+TEST_CASE("IsOnBoard", "[Point]") {
+  REQUIRE(Point(0, 0).IsOnBoard());
+  REQUIRE(Point(1, 0).IsOnBoard());
+  REQUIRE(Point(0, 1).IsOnBoard());
+  REQUIRE(Point(7, 0).IsOnBoard());
+  REQUIRE(Point(0, 7).IsOnBoard());
+  REQUIRE(Point(7, 7).IsOnBoard());
+  REQUIRE(Point(2, 3).IsOnBoard());
+  REQUIRE(Point(6, 4).IsOnBoard());
+  REQUIRE_FALSE(Point(-1, 4).IsOnBoard());
+  REQUIRE_FALSE(Point(6, -2).IsOnBoard());
+  REQUIRE_FALSE(Point(-1, -1).IsOnBoard());
+  REQUIRE_FALSE(Point(8, 4).IsOnBoard());
+  REQUIRE_FALSE(Point(6, 9).IsOnBoard());
+  REQUIRE_FALSE(Point(9, 8).IsOnBoard());
+}
+
 TEST_CASE("String constructor fail", "[Point]") {
   REQUIRE_THROWS(Point("i5"));
   REQUIRE_THROWS(Point("47"));
