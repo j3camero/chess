@@ -1,7 +1,9 @@
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
+#include "color.h"
 #include "piece.h"
+#include "point.h"
 
 // Represents a board position.
 struct Board {
@@ -31,6 +33,10 @@ struct Board {
 
   // Starts at 1 and is incremented after every Black move.
   int moveCount;
+
+  // Stores the locations of both kings.
+  Point whiteKingLocation;
+  Point blackKingLocation;
 };
 
 #endif

@@ -24,6 +24,13 @@ void ParseOneRank(const string& fen, int rank, Board& board) {
       CharToPiece(c, color, piece);
   	  board.color[rank][file] = color;
   	  board.piece[rank][file] = piece;
+      if (piece == King) {
+        if (color == White) {
+          board.whiteKingLocation = Point(rank, file);
+        } else {
+          board.blackKingLocation = Point(rank, file);
+        }
+      }
 	    file++;
     }
     // Bail early if a rank of FEN tries to specify more than 8 squares.
@@ -41,6 +48,8 @@ void ParseOneRank(const string& fen, int rank, Board& board) {
 // piecePLacement: the first token of a FEN string.
 // board (output): the given Board's squares will be overwritten.
 void ParsePiecePlacement(const string& piecePlacement, Board& board) {
+  board.whiteKingLocation = Point(-1, -1);
+  board.blackKingLocation = Point(-1, -1);
   const vector<string> tokens = StringUtil::Split(piecePlacement, '/');
   if (tokens.size() != 8) {
     throw "Wrong number of ranks. Should be 8.";

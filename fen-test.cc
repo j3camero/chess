@@ -34,6 +34,8 @@ TEST_CASE("Read default start position", "[FEN]") {
   REQUIRE(b.enPassantFile == -1);
   REQUIRE(b.halfmoveClock == 0);
   REQUIRE(b.moveCount == 1);
+  REQUIRE(b.whiteKingLocation == Point(7, 4));
+  REQUIRE(b.blackKingLocation == Point(0, 4));
 }
 
 TEST_CASE("Read position with assorted scattered pieces", "[FEN]") {
@@ -55,6 +57,8 @@ TEST_CASE("Read position with assorted scattered pieces", "[FEN]") {
     }
   }
   REQUIRE(b.piece[0][1] == Knight);
+  REQUIRE(b.whiteKingLocation == Point(6, 4));
+  REQUIRE(b.blackKingLocation == Point(2, 7));
 }
 
 TEST_CASE("Read position with only one piece", "[FEN]") {
@@ -66,6 +70,8 @@ TEST_CASE("Read position with only one piece", "[FEN]") {
   REQUIRE(b.color[3][1] == Empty);
   REQUIRE(b.color[2][2] == Empty);
   REQUIRE(b.color[4][2] == Empty);
+  REQUIRE(b.whiteKingLocation == Point(-1, -1));
+  REQUIRE(b.blackKingLocation == Point(3, 2));
 }
 
 TEST_CASE("White to move", "[FEN]") {
