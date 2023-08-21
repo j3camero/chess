@@ -19,5 +19,6 @@ test-main: color.o color-test.o \
            movegen.o movegen-test.o \
            point.o point-test.o \
            piece.o piece-test.o \
+           piece-moves.o \
            string-util.o string-util-test.o \
            test-main.o

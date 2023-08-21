@@ -1,19 +1,5 @@
 #include "movegen.h"
-
-Point knightMoves[8] = {
-  Point(1, 2), Point(2, 1), Point(2, -1), Point(1, -2),
-  Point(-1, -2), Point(-2, -1), Point(-2, 1), Point(-1, 2)
-};
-Point rookMoves[4] = {
-  Point(1, 0), Point(0, 1), Point(-1, 0), Point(0, -1)
-};
-Point bishopMoves[4] = {
-  Point(1, 1), Point(-1, 1), Point(1, -1), Point(-1, -1)
-};
-Point queenMoves[8] = {
-  Point(1, 0), Point(0, 1), Point(-1, 0), Point(0, -1),
-  Point(1, 1), Point(-1, 1), Point(1, -1), Point(-1, -1)
-};
+#include "piece-moves.h"
 
 // Add the given move to the list if the destination square is available or
 // is an enemy piece. Does not check the moving piece or consider check. This
@@ -195,6 +181,16 @@ void GenerateMovesFrom(const Board& board, Point from, vector<Move>& moves) {
   }
 }
 
+void GenerateCastleMoves(const Board& board, vector<Move>& moves) {
+  if (board.turn == White) {
+    if (board.whiteKingCastle) {
+      
+    }
+  } else {
+
+  }
+}
+
 vector<Move> GeneratePseudoLegalMoves(const Board& board) {
   vector<Move> moves;
   for (int rank = 0; rank < 8; rank++) {
@@ -204,5 +200,6 @@ vector<Move> GeneratePseudoLegalMoves(const Board& board) {
     }
   }
   GenerateEnPassantCaptures(board, moves);
+  GenerateCastleMoves(board, moves);
   return moves;
 }
