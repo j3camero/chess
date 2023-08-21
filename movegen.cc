@@ -253,8 +253,10 @@ vector<Move> GenerateLegalMoves(const Board& board) {
   vector<Move> pseudo = GeneratePseudoLegalMoves(board);
   vector<Move> legal;
   for (const Move& move : pseudo) {
-    // Check moves for legality.
+    // Makemove
+    // Check for opp in check
     legal.push_back(move);
+    // Unmakemove
   }
   return legal;
 }
