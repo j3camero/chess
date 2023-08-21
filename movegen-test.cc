@@ -5,7 +5,7 @@
 #include "movegen.h"
 #include "std.h"
 
-TEST_CASE("Move generation: opening position", "[Move]") {
+TEST_CASE("Movegen: opening position", "[Movegen]") {
   const string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);

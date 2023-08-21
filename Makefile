@@ -13,7 +13,8 @@ randombot: randombot.o \
 test: test-main
 	./test-main
 
-test-main: color.o color-test.o \
+test-main: attack.o attack-test.o \
+           color.o color-test.o \
            fen.o fen-test.o \
            move.o move-test.o \
            movegen.o movegen-test.o \
