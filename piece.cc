@@ -78,6 +78,7 @@ void CharToPiece(char c, Color& color, Piece& piece) {
   case 'n':
     color = Black;
     piece = Knight;
+    return;
   case 'b':
     color = Black;
     piece = Bishop;

@@ -36,6 +36,27 @@ TEST_CASE("Read default start position", "[FEN]") {
   REQUIRE(b.moveCount == 1);
 }
 
+TEST_CASE("Read position with assorted scattered pieces", "[FEN]") {
+  const string fen = "1n3n2/1p3p2/R2Q2bk/8/8/r2q2B1/1P2KP2/P1N5 w KQkq - 0 1";
+  Board b = FenToBoard(fen);
+  Color expectedColor[8][8] = {
+    {Empty, Black, Empty, Empty, Empty, Black, Empty, Empty},
+    {Empty, Black, Empty, Empty, Empty, Black, Empty, Empty},
+    {White, Empty, Empty, White, Empty, Empty, Black, Black},
+    {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty},
+    {Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty},
+    {Black, Empty, Empty, Black, Empty, Empty, White, Empty},
+    {Empty, White, Empty, Empty, White, White, Empty, Empty},
+    {White, Empty, White, Empty, Empty, Empty, Empty, Empty}
+  };
+  for (int rank = 0; rank < 8; rank++) {
+    for (int file = 0; file < 8; file++) {
+      REQUIRE(b.color[rank][file] == expectedColor[rank][file]);
+    }
+  }
+  REQUIRE(b.piece[0][1] == Knight);
+}
+
 TEST_CASE("Read position with only one piece", "[FEN]") {
   const string fen = "8/8/8/2k5/8/8/8/8 w KQkq - 0 1";
   Board b = FenToBoard(fen);

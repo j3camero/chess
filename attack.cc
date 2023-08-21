@@ -98,6 +98,9 @@ bool IsSquareUnderAttackByBishop(const Board& b,
 bool IsSquareUnderAttackByColor(const Board& b,
                                 const Point& p,
                                 Color attacker) {
+  if (b.color[p.rank][p.file] == attacker) {
+    return false;
+  }
   if (IsSquareUnderAttackByPawn(b, p, attacker)) {
     return true;
   }

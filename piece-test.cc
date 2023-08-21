@@ -16,4 +16,7 @@ TEST_CASE("CharToPiece", "[Piece]") {
   CharToPiece('r', c, p);
   REQUIRE(c == Black);
   REQUIRE(p == Rook);
+  CharToPiece('n', c, p);
+  REQUIRE(c == Black);
+  REQUIRE(p == Knight);
 }
