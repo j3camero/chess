@@ -14,6 +14,7 @@ test: test-main
 	./test-main
 
 test-main: attack.o attack-test.o \
+           check.o check-test.o \
            color.o color-test.o \
            fen.o fen-test.o \
            move.o move-test.o \
