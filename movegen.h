@@ -9,4 +9,8 @@
 // that this function does not check for check.
 vector<Move> GeneratePseudoLegalMoves(const Board& board);
 
+// Generate all legal moves from a board position. This function checks for
+// check which is more expensive than pseudo-legal move generation.
+vector<Move> GenerateLegalMoves(const Board& board);
+
 #endif

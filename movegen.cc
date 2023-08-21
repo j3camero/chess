@@ -1,3 +1,5 @@
+#include "attack.h"
+#include "check.h"
 #include "movegen.h"
 #include "piece-moves.h"
 
@@ -180,13 +182,57 @@ void GenerateMovesFrom(const Board& board, Point from, vector<Move>& moves) {
   }
 }
 
+// Generates pseudo-legal castle moves. This function skips checking the
+// destination square for check to save calculation time.
 void GenerateCastleMoves(const Board& board, vector<Move>& moves) {
   if (board.turn == White) {
+    if (!board.whiteKingCastle && !board.whiteQueenCastle) {
+      return;
+    }
+    bool e1Attacked = IsSquareUnderAttackByColor(board, e1, Black);
+    if (e1Attacked) {
+      return;
+    }
     if (board.whiteKingCastle) {
-      
+      if (board.color[7][5] == Empty && board.color[7][6] == Empty) {
+        bool f1Attacked = IsSquareUnderAttackByColor(board, f1, Black);
+        if (!f1Attacked) {
+          moves.push_back(whiteKingCastle);
+        }
+      }
+    }
+    if (board.whiteQueenCastle) {
+      if (board.color[7][3] == Empty && board.color[7][2] == Empty) {
+        bool d1Attacked = IsSquareUnderAttackByColor(board, d1, Black);
+        if (!d1Attacked) {
+          moves.push_back(whiteQueenCastle);
+        }
+      }
     }
   } else {
-
+    if (!board.blackKingCastle && !board.blackQueenCastle) {
+      return;
+    }
+    bool e8Attacked = IsSquareUnderAttackByColor(board, e8, White);
+    if (e8Attacked) {
+      return;
+    }
+    if (board.blackKingCastle) {
+      if (board.color[0][5] == Empty && board.color[0][6] == Empty) {
+        bool f8Attacked = IsSquareUnderAttackByColor(board, f8, White);
+        if (!f8Attacked) {
+          moves.push_back(blackKingCastle);
+        }
+      }
+    }
+    if (board.blackQueenCastle) {
+      if (board.color[0][3] == Empty && board.color[0][2] == Empty) {
+        bool d8Attacked = IsSquareUnderAttackByColor(board, d8, White);
+        if (!d8Attacked) {
+          moves.push_back(blackQueenCastle);
+        }
+      }
+    }
   }
 }
 
@@ -201,4 +247,14 @@ vector<Move> GeneratePseudoLegalMoves(const Board& board) {
   GenerateEnPassantCaptures(board, moves);
   GenerateCastleMoves(board, moves);
   return moves;
+}
+
+vector<Move> GenerateLegalMoves(const Board& board) {
+  vector<Move> pseudo = GeneratePseudoLegalMoves(board);
+  vector<Move> legal;
+  for (const Move& move : pseudo) {
+    // Check moves for legality.
+    legal.push_back(move);
+  }
+  return legal;
 }
