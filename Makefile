@@ -17,6 +17,7 @@ test-main: attack.o attack-test.o \
            check.o check-test.o \
            color.o color-test.o \
            fen.o fen-test.o \
+           irreversible.o irreversible-test.o \
            move.o move-test.o \
            movegen.o movegen-test.o \
            point.o point-test.o \
