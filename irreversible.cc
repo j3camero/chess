@@ -3,50 +3,50 @@
 Irreversible::Irreversible()
   : castleBits(0), enPassantFile(-1), halfmoveClock(0) {}
 
-inline bool Irreversible::WhiteKingCastleAllowed() const {
+bool Irreversible::WhiteKingCastleAllowed() const {
     return castleBits & 1;
 }
 
-inline bool Irreversible::WhiteQueenCastleAllowed() const {
+bool Irreversible::WhiteQueenCastleAllowed() const {
     return castleBits & 2;
 }
 
-inline bool Irreversible::BlackKingCastleAllowed() const {
+bool Irreversible::BlackKingCastleAllowed() const {
     return castleBits & 4;
 }
 
-inline bool Irreversible::BlackQueenCastleAllowed() const {
+bool Irreversible::BlackQueenCastleAllowed() const {
     return castleBits & 8;
 }
 
-inline void Irreversible::SetWhiteKingCastle() {
+void Irreversible::SetWhiteKingCastle() {
     castleBits |= 1;
 }
 
-inline void Irreversible::SetWhiteQueenCastle() {
+void Irreversible::SetWhiteQueenCastle() {
     castleBits |= 2;
 }
 
-inline void Irreversible::SetBlackKingCastle() {
+void Irreversible::SetBlackKingCastle() {
     castleBits |= 4;
 }
 
-inline void Irreversible::SetBlackQueenCastle() {
+void Irreversible::SetBlackQueenCastle() {
     castleBits |= 8;
 }
 
-inline void Irreversible::ClearWhiteKingCastle() {
-    castleBits ^= 254;
+void Irreversible::ClearWhiteKingCastle() {
+    castleBits &= 254;
 }
 
-inline void Irreversible::ClearWhiteQueenCastle() {
-    castleBits ^= 253;
+void Irreversible::ClearWhiteQueenCastle() {
+    castleBits &= 253;
 }
 
-inline void Irreversible::ClearBlackKingCastle() {
-    castleBits ^= 251;
+void Irreversible::ClearBlackKingCastle() {
+    castleBits &= 251;
 }
 
-inline void Irreversible::ClearBlackQueenCastle() {
-    castleBits ^= 247;
+void Irreversible::ClearBlackQueenCastle() {
+    castleBits &= 247;
 }
