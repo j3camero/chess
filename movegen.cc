@@ -138,18 +138,18 @@ void TryEnPassant(const Board& board,
 }
 
 void GenerateEnPassantCaptures(const Board& board, vector<Move>& moves) {
-  if (board.enPassantFile < 0) {
+  if (board.irreversible.enPassantFile < 0) {
     return;
   }
   const int toRank = board.turn == White ? 2 : 5;
   const int fromRank = board.turn == White ? 3 : 4;
-  Point to(toRank, board.enPassantFile);
-  if (board.enPassantFile > 0) {
-    Point left(fromRank, board.enPassantFile - 1);
+  Point to(toRank, board.irreversible.enPassantFile);
+  if (board.irreversible.enPassantFile > 0) {
+    Point left(fromRank, board.irreversible.enPassantFile - 1);
     TryEnPassant(board, left, to, moves);
   }
-  if (board.enPassantFile < 7) {
-    Point right(fromRank, board.enPassantFile + 1);
+  if (board.irreversible.enPassantFile < 7) {
+    Point right(fromRank, board.irreversible.enPassantFile + 1);
     TryEnPassant(board, right, to, moves);
   }
 }
@@ -186,14 +186,14 @@ void GenerateMovesFrom(const Board& board, Point from, vector<Move>& moves) {
 // destination square for check to save calculation time.
 void GenerateCastleMoves(const Board& board, vector<Move>& moves) {
   if (board.turn == White) {
-    if (!board.whiteKingCastle && !board.whiteQueenCastle) {
+    if (!board.irreversible.WhiteKingCastleAllowed() && !board.irreversible.WhiteQueenCastleAllowed()) {
       return;
     }
     bool e1Attacked = IsSquareUnderAttackByColor(board, e1, Black);
     if (e1Attacked) {
       return;
     }
-    if (board.whiteKingCastle) {
+    if (board.irreversible.WhiteKingCastleAllowed()) {
       if (board.color[7][5] == Empty && board.color[7][6] == Empty) {
         bool f1Attacked = IsSquareUnderAttackByColor(board, f1, Black);
         if (!f1Attacked) {
@@ -201,7 +201,7 @@ void GenerateCastleMoves(const Board& board, vector<Move>& moves) {
         }
       }
     }
-    if (board.whiteQueenCastle) {
+    if (board.irreversible.WhiteQueenCastleAllowed()) {
       if (board.color[7][3] == Empty && board.color[7][2] == Empty) {
         bool d1Attacked = IsSquareUnderAttackByColor(board, d1, Black);
         if (!d1Attacked) {
@@ -210,14 +210,14 @@ void GenerateCastleMoves(const Board& board, vector<Move>& moves) {
       }
     }
   } else {
-    if (!board.blackKingCastle && !board.blackQueenCastle) {
+    if (!board.irreversible.BlackKingCastleAllowed() && !board.irreversible.BlackQueenCastleAllowed()) {
       return;
     }
     bool e8Attacked = IsSquareUnderAttackByColor(board, e8, White);
     if (e8Attacked) {
       return;
     }
-    if (board.blackKingCastle) {
+    if (board.irreversible.BlackKingCastleAllowed()) {
       if (board.color[0][5] == Empty && board.color[0][6] == Empty) {
         bool f8Attacked = IsSquareUnderAttackByColor(board, f8, White);
         if (!f8Attacked) {
@@ -225,7 +225,7 @@ void GenerateCastleMoves(const Board& board, vector<Move>& moves) {
         }
       }
     }
-    if (board.blackQueenCastle) {
+    if (board.irreversible.BlackQueenCastleAllowed()) {
       if (board.color[0][3] == Empty && board.color[0][2] == Empty) {
         bool d8Attacked = IsSquareUnderAttackByColor(board, d8, White);
         if (!d8Attacked) {

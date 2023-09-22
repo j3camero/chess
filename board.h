@@ -4,6 +4,7 @@
 #include "color.h"
 #include "piece.h"
 #include "point.h"
+#include "irreversible.h"
 
 // Represents a board position.
 struct Board {
@@ -19,20 +20,15 @@ struct Board {
   // Opponent color. Always the opposite of turn.
   Color opp;
 
-  // Castling availability.
-  bool whiteKingCastle;
-  bool whiteQueenCastle;
-  bool blackKingCastle;
-  bool blackQueenCastle;
-
-  // En-passant target file. -1 if no en-passant capture is available.
-  int enPassantFile;
-
-  // Halfmove clock for the fifty-move rule.
-  int halfmoveClock;
-
   // Starts at 1 and is incremented after every Black move.
   int moveCount;
+
+  // Castling rights, en passant file, and half-move clock are grouped together
+  // into a single struct, called Irreversible. It is kept small enough that they
+  // can be copied together in one machine instruction. These are the
+  // irreversible aspects of chess game state. They are copied rather than
+  // being incrementally updated.
+  Irreversible irreversible;
 
   // Stores the locations of both kings.
   Point whiteKingLocation;

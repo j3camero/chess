@@ -37,7 +37,7 @@ struct Irreversible {
   char enPassantFile;
 
   // Halfmove clock for the fifty-move rule.
-  char halfmoveClock;
+  unsigned char halfmoveClock;
 };
 
 #endif

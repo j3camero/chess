@@ -27,12 +27,12 @@ TEST_CASE("Read default start position", "[FEN]") {
   REQUIRE(b.piece[7][7] == Rook);
   REQUIRE(b.turn == White);
   REQUIRE(b.opp == Black);
-  REQUIRE(b.whiteKingCastle == true);
-  REQUIRE(b.whiteQueenCastle == true);
-  REQUIRE(b.blackKingCastle == true);
-  REQUIRE(b.blackQueenCastle == true);
-  REQUIRE(b.enPassantFile == -1);
-  REQUIRE(b.halfmoveClock == 0);
+  REQUIRE(b.irreversible.WhiteKingCastleAllowed());
+  REQUIRE(b.irreversible.WhiteQueenCastleAllowed());
+  REQUIRE(b.irreversible.BlackKingCastleAllowed());
+  REQUIRE(b.irreversible.BlackQueenCastleAllowed());
+  REQUIRE(b.irreversible.enPassantFile == -1);
+  REQUIRE(b.irreversible.halfmoveClock == 0);
   REQUIRE(b.moveCount == 1);
   REQUIRE(b.whiteKingLocation == Point(7, 4));
   REQUIRE(b.blackKingLocation == Point(0, 4));
@@ -96,19 +96,19 @@ TEST_CASE("Unparseable side to move", "[FEN]") {
 TEST_CASE("Castle", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 b KQkq - 0 1";
   Board b = FenToBoard(fen);
-  REQUIRE(b.whiteKingCastle == true);
-  REQUIRE(b.whiteQueenCastle == true);
-  REQUIRE(b.blackKingCastle == true);
-  REQUIRE(b.blackQueenCastle == true);
+  REQUIRE(b.irreversible.WhiteKingCastleAllowed());
+  REQUIRE(b.irreversible.WhiteQueenCastleAllowed());
+  REQUIRE(b.irreversible.BlackKingCastleAllowed());
+  REQUIRE(b.irreversible.BlackQueenCastleAllowed());
 }
 
 TEST_CASE("Castle: no castle allowed", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 b - - 0 1";
   Board b = FenToBoard(fen);
-  REQUIRE(b.whiteKingCastle == false);
-  REQUIRE(b.whiteQueenCastle == false);
-  REQUIRE(b.blackKingCastle == false);
-  REQUIRE(b.blackQueenCastle == false);
+  REQUIRE(b.irreversible.WhiteKingCastleAllowed() == false);
+  REQUIRE(b.irreversible.WhiteQueenCastleAllowed() == false);
+  REQUIRE(b.irreversible.BlackKingCastleAllowed() == false);
+  REQUIRE(b.irreversible.BlackQueenCastleAllowed() == false);
 }
 
 TEST_CASE("Castle: unparseable", "[FEN]") {
@@ -119,37 +119,37 @@ TEST_CASE("Castle: unparseable", "[FEN]") {
 TEST_CASE("Castle: mixed values", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 b kQ - 0 1";
   Board b = FenToBoard(fen);
-  REQUIRE(b.whiteKingCastle == false);
-  REQUIRE(b.whiteQueenCastle == true);
-  REQUIRE(b.blackKingCastle == true);
-  REQUIRE(b.blackQueenCastle == false);
+  REQUIRE(b.irreversible.WhiteKingCastleAllowed() == false);
+  REQUIRE(b.irreversible.WhiteQueenCastleAllowed() == true);
+  REQUIRE(b.irreversible.BlackKingCastleAllowed() == true);
+  REQUIRE(b.irreversible.BlackQueenCastleAllowed() == false);
 }
 
 TEST_CASE("Castle: Black Queen", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 b q - 0 1";
   Board b = FenToBoard(fen);
-  REQUIRE(b.whiteKingCastle == false);
-  REQUIRE(b.whiteQueenCastle == false);
-  REQUIRE(b.blackKingCastle == false);
-  REQUIRE(b.blackQueenCastle == true);
+  REQUIRE(b.irreversible.WhiteKingCastleAllowed() == false);
+  REQUIRE(b.irreversible.WhiteQueenCastleAllowed() == false);
+  REQUIRE(b.irreversible.BlackKingCastleAllowed() == false);
+  REQUIRE(b.irreversible.BlackQueenCastleAllowed() == true);
 }
 
 TEST_CASE("En passant white side", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 w - e5 7 1";
   Board b = FenToBoard(fen);
-  REQUIRE(b.enPassantFile == 4);
+  REQUIRE(b.irreversible.enPassantFile == 4);
 }
 
 TEST_CASE("En passant black side", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 b - h4 7 1";
   Board b = FenToBoard(fen);
-  REQUIRE(b.enPassantFile == 7);
+  REQUIRE(b.irreversible.enPassantFile == 7);
 }
 
 TEST_CASE("En passant unavailable", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 b - - 7 1";
   Board b = FenToBoard(fen);
-  REQUIRE(b.enPassantFile == -1);
+  REQUIRE(b.irreversible.enPassantFile == -1);
 }
 
 TEST_CASE("En passant unparseable", "[FEN]") {
@@ -160,7 +160,7 @@ TEST_CASE("En passant unparseable", "[FEN]") {
 TEST_CASE("Halfmove clock", "[FEN]") {
   const string fen = "8/8/8/8/8/8/8/8 w KQkq - 7 1";
   Board b = FenToBoard(fen);
-  REQUIRE(b.halfmoveClock == 7);
+  REQUIRE(b.irreversible.halfmoveClock == 7);
 }
 
 TEST_CASE("Move count", "[FEN]") {

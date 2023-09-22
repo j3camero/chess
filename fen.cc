@@ -90,23 +90,23 @@ void ParseCastleStatus(const string& castleStatus, Board& board) {
   if (castleStatus.size() > 4) {
     throw "Invalid castle status.";
   }
-  board.whiteKingCastle = false;
-  board.whiteQueenCastle = false;
-  board.blackKingCastle = false;
-  board.blackQueenCastle = false;
+  board.irreversible.ClearWhiteKingCastle();
+  board.irreversible.ClearWhiteQueenCastle();
+  board.irreversible.ClearBlackKingCastle();
+  board.irreversible.ClearBlackQueenCastle();
   for (const char c : castleStatus) {
     switch (c) {
     case 'K':
-      board.whiteKingCastle = true;
+      board.irreversible.SetWhiteKingCastle();
       break;
     case 'Q':
-      board.whiteQueenCastle = true;
+      board.irreversible.SetWhiteQueenCastle();
       break;
     case 'k':
-      board.blackKingCastle = true;
+      board.irreversible.SetBlackKingCastle();
       break;
     case 'q':
-      board.blackQueenCastle = true;
+      board.irreversible.SetBlackQueenCastle();
       break;
     case '-':
       break;
@@ -122,10 +122,10 @@ void ParseCastleStatus(const string& castleStatus, Board& board) {
 void ParseEnPassant(const string& enPassantTargetString, Board& board) {
   if (enPassantTargetString == "-") {
     // -1 means there is no en-passant move available.
-    board.enPassantFile = -1;
+    board.irreversible.enPassantFile = -1;
   } else if (enPassantTargetString.size() == 2) {
     Point p(enPassantTargetString);
-    board.enPassantFile = p.file;
+    board.irreversible.enPassantFile = p.file;
   } else {
     throw "Invalid en-passant target square.";
   }
@@ -137,7 +137,7 @@ void ParseEnPassant(const string& enPassantTargetString, Board& board) {
 // board (output): the given Board's halfmove clock will be overwritten.
 void ParseHalfmoveClock(const string& halfmove, Board& board) {
   try {
-    board.halfmoveClock = stoi(halfmove);
+    board.irreversible.halfmoveClock = (unsigned char)stoi(halfmove);
   } catch (...) {
     throw "Halfmove clock is not an integer: " + halfmove;
   }
