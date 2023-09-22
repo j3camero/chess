@@ -131,3 +131,31 @@ TEST_CASE("Movegen: black queen castle blocked by attack", "[Movegen]") {
   REQUIRE(HasMove(moves, blackKingCastle));
   REQUIRE_FALSE(HasMove(moves, blackQueenCastle));
 }
+
+TEST_CASE("Movegen: white en passant capture", "[Movegen]") {
+  const string fen = "k7/8/8/3pP3/8/8/8/K7 w KQkq d6 0 1";
+  const Board b = FenToBoard(fen);
+  const vector<Move> moves = GeneratePseudoLegalMoves(b);
+  REQUIRE(HasMove(moves, Move("e5d6")));
+}
+
+TEST_CASE("Movegen: white en passant unavailable", "[Movegen]") {
+  const string fen = "k7/8/8/3pP3/8/8/8/K7 w KQkq - 0 1";
+  const Board b = FenToBoard(fen);
+  const vector<Move> moves = GeneratePseudoLegalMoves(b);
+  REQUIRE_FALSE(HasMove(moves, Move("e5d6")));
+}
+
+TEST_CASE("Movegen: black en passant capture", "[Movegen]") {
+  const string fen = "k7/8/8/8/3pP3/8/8/K7 b KQkq e3 0 1";
+  const Board b = FenToBoard(fen);
+  const vector<Move> moves = GeneratePseudoLegalMoves(b);
+  REQUIRE(HasMove(moves, Move("d4e3")));
+}
+
+TEST_CASE("Movegen: black en passant unavailable", "[Movegen]") {
+  const string fen = "k7/8/8/8/3pP3/8/8/K7 b KQkq - 0 1";
+  const Board b = FenToBoard(fen);
+  const vector<Move> moves = GeneratePseudoLegalMoves(b);
+  REQUIRE_FALSE(HasMove(moves, Move("d4e3")));
+}
