@@ -1,6 +1,7 @@
 #ifndef _MOVE_H_
 #define _MOVE_H_
 
+#include "piece.h"
 #include "point.h"
 #include "std.h"
 
@@ -11,10 +12,15 @@
 // removal of the attacked pawn is implicit.
 struct Move {
   // Basic constructor.
-  Move(Point from, Point to);
+  Move(Point from,
+       Point to,
+       bool isCapture = false,
+       Piece capturedPiece = Pawn,
+       bool isPromotion = false,
+       Piece promotionPiece = Pawn);
 
   // Accepts strings like e2e4 where both squares are fully specified.
-  Move(const string& s);
+  Move(const string& s, bool isCapture = false, Piece capturedPiece = Pawn);
 
   // Outputs a string representation of the move like g8f6.
   string ToString() const;
@@ -25,6 +31,10 @@ struct Move {
 
   Point from;
   Point to;
+  bool isCapture;
+  Piece capturedPiece;
+  bool isPromotion;
+  Piece promotionPiece;
 };
 
 // Converts a list of moves to a list of strings.
