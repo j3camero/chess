@@ -30,17 +30,13 @@ TEST_CASE("Movegen: opening position", "[Movegen]") {
   REQUIRE(actual == expected);
 }
 
-TEST_CASE("Movegen: various pieces types moves and captures", "[Movegen]") {
-  const string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+TEST_CASE("Movegen: pawn promotion", "[Movegen]") {
+  const string fen = "8/4P3/8/8/8/8/8/8 w - - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
   const vector<string> actual = MovesToStrings(moves);
   // 20 possible moves from the opening position.
-  const vector<string> expected = { "a2a3", "a2a4", "b1a3", "b1c3",
-                                    "b2b3", "b2b4", "c2c3", "c2c4",
-                                    "d2d3", "d2d4", "e2e3", "e2e4",
-                                    "f2f3", "f2f4", "g1f3", "g1h3",
-                                    "g2g3", "g2g4", "h2h3", "h2h4" };
+  const vector<string> expected = { "e7e8b", "e7e8n", "e7e8q", "e7e8r" };
   REQUIRE(actual == expected);
 }
 
