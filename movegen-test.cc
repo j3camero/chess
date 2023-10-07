@@ -30,13 +30,45 @@ TEST_CASE("Movegen: opening position", "[Movegen]") {
   REQUIRE(actual == expected);
 }
 
-TEST_CASE("Movegen: pawn promotion", "[Movegen]") {
+TEST_CASE("Movegen: white pawn promotion without capture", "[Movegen]") {
   const string fen = "8/4P3/8/8/8/8/8/8 w - - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
   const vector<string> actual = MovesToStrings(moves);
   // 20 possible moves from the opening position.
   const vector<string> expected = { "e7e8b", "e7e8n", "e7e8q", "e7e8r" };
+  REQUIRE(actual == expected);
+}
+
+TEST_CASE("Movegen: white pawn promotion with capture", "[Movegen]") {
+  const string fen = "3qkb2/4P3/8/8/8/8/8/8 w - - 0 1";
+  const Board b = FenToBoard(fen);
+  const vector<Move> moves = GeneratePseudoLegalMoves(b);
+  const vector<string> actual = MovesToStrings(moves);
+  // 20 possible moves from the opening position.
+  const vector<string> expected = { "e7d8b", "e7d8n", "e7d8q", "e7d8r",
+                                    "e7f8b", "e7f8n", "e7f8q", "e7f8r" };
+  REQUIRE(actual == expected);
+}
+
+TEST_CASE("Movegen: black pawn promotion without capture", "[Movegen]") {
+  const string fen = "8/8/8/8/8/8/2p5/8 b - - 0 1";
+  const Board b = FenToBoard(fen);
+  const vector<Move> moves = GeneratePseudoLegalMoves(b);
+  const vector<string> actual = MovesToStrings(moves);
+  // 20 possible moves from the opening position.
+  const vector<string> expected = { "c2c1b", "c2c1n", "c2c1q", "c2c1r" };
+  REQUIRE(actual == expected);
+}
+
+TEST_CASE("Movegen: black pawn promotion with capture", "[Movegen]") {
+  const string fen = "8/8/8/8/8/8/6p1/5Q2 b - - 0 1";
+  const Board b = FenToBoard(fen);
+  const vector<Move> moves = GeneratePseudoLegalMoves(b);
+  const vector<string> actual = MovesToStrings(moves);
+  // 20 possible moves from the opening position.
+  const vector<string> expected = { "g2f1b", "g2f1n", "g2f1q", "g2f1r",
+                                    "g2g1b", "g2g1n", "g2g1q", "g2g1r" };
   REQUIRE(actual == expected);
 }
 
