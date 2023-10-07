@@ -7,17 +7,18 @@
 // is an enemy piece. Does not check the moving piece or consider check. This
 // is a helper function for generating moves that emerged from refactoring.
 // Returns true if the destination square is empty.
-bool TryMove(const Board& board, Move move, vector<Move>& moves) {
-  if (!move.to.IsOnBoard()) {
+bool TryMove(const Board& board, const Point& from, const Point& to, vector<Move>& moves) {
+  if (!to.IsOnBoard()) {
     return false;
   }
-  const Color color = board.color[move.to.rank][move.to.file];
+  const Color color = board.color[to.rank][to.file];
   if (color == Empty) {
-    moves.push_back(move);
+    moves.push_back(Move(from, to));
     return true;
   }
   if (color != board.turn) {
-    moves.push_back(move);
+    Piece capturedPiece = board.piece[to.rank][to.file];
+    moves.push_back(Move(from, to, true, capturedPiece));
   }
   return false;
 }
@@ -25,16 +26,14 @@ bool TryMove(const Board& board, Move move, vector<Move>& moves) {
 void GenerateKnightMoves(const Board& board, Point from, vector<Move>& moves) {
   for (const Point& k : knightMoves) {
     Point to = from + k;
-    Move move(from, to);
-    TryMove(board, move, moves);
+    TryMove(board, from, to, moves);
   }
 }
 
 void GenerateKingMoves(const Board& board, Point from, vector<Move>& moves) {
   for (const Point& direction : queenMoves) {
     Point to = from + direction;
-    Move move(from, to);
-    TryMove(board, move, moves);
+    TryMove(board, from, to, moves);
   }
 }
 
@@ -44,8 +43,7 @@ void GenerateSlidingPieceMoves(const Board& board,
                                Point direction,
                                vector<Move>& moves) {
   to += direction;
-  Move move(from, to);
-  bool keepGoing = TryMove(board, move, moves);
+  bool keepGoing = TryMove(board, from, to, moves);
   if (keepGoing) {
     GenerateSlidingPieceMoves(board, from, to, direction, moves);
   }
@@ -79,12 +77,21 @@ bool TryPawnMove(const Board& board,
                  Color targetColor,
                  vector<Move>& moves) {
   const Color color = board.color[to.rank][to.file];
-  if (color == targetColor) {
-    Move move(from, to);
-    moves.push_back(move);
-    return true;
+  if (color != targetColor) {
+    return false;
   }
-  return false;
+  bool isCapture = color != Empty;
+  Piece capturedPiece = board.piece[to.rank][to.file];
+  int promotionRank = board.turn == White ? 0 : 7;
+  if (to.rank == promotionRank) {
+    moves.push_back(Move(from, to, isCapture, capturedPiece, true, Queen));
+    moves.push_back(Move(from, to, isCapture, capturedPiece, true, Knight));
+    moves.push_back(Move(from, to, isCapture, capturedPiece, true, Rook));
+    moves.push_back(Move(from, to, isCapture, capturedPiece, true, Bishop));
+  } else {
+    moves.push_back(Move(from, to, isCapture, capturedPiece));
+  }
+  return true;
 }
 
 void GeneratePawnMoves(const Board& board, Point from, vector<Move>& moves) {
@@ -120,6 +127,8 @@ void GeneratePawnMoves(const Board& board, Point from, vector<Move>& moves) {
 // Assumptions:
 // (1) The target square (to) is Empty.
 // (2) from and to are both on the board.
+// (3) Most recent move was an enemy pawn push, as recorded in the en-passant
+//     file. The enemy pawn to be captured is found in the expected square.
 // Only has to check that the capturing piece is a friendly pawn.
 void TryEnPassant(const Board& board,
                   Point from,
@@ -133,7 +142,7 @@ void TryEnPassant(const Board& board,
   if (piece != Pawn) {
     return;
   }
-  Move move(from, to);
+  Move move(from, to, true, Pawn);
   moves.push_back(move);
 }
 

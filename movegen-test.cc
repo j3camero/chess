@@ -30,6 +30,20 @@ TEST_CASE("Movegen: opening position", "[Movegen]") {
   REQUIRE(actual == expected);
 }
 
+TEST_CASE("Movegen: various pieces types moves and captures", "[Movegen]") {
+  const string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+  const Board b = FenToBoard(fen);
+  const vector<Move> moves = GeneratePseudoLegalMoves(b);
+  const vector<string> actual = MovesToStrings(moves);
+  // 20 possible moves from the opening position.
+  const vector<string> expected = { "a2a3", "a2a4", "b1a3", "b1c3",
+                                    "b2b3", "b2b4", "c2c3", "c2c4",
+                                    "d2d3", "d2d4", "e2e3", "e2e4",
+                                    "f2f3", "f2f4", "g1f3", "g1h3",
+                                    "g2g3", "g2g4", "h2h3", "h2h4" };
+  REQUIRE(actual == expected);
+}
+
 TEST_CASE("Movegen: white castle with all options open", "[Movegen]") {
   const string fen = "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1";
   const Board b = FenToBoard(fen);
@@ -136,7 +150,7 @@ TEST_CASE("Movegen: white en passant capture", "[Movegen]") {
   const string fen = "k7/8/8/3pP3/8/8/8/K7 w KQkq d6 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
-  REQUIRE(HasMove(moves, Move("e5d6")));
+  REQUIRE(HasMove(moves, Move("e5d6", true, Pawn)));
 }
 
 TEST_CASE("Movegen: white en passant unavailable", "[Movegen]") {
@@ -150,7 +164,7 @@ TEST_CASE("Movegen: black en passant capture", "[Movegen]") {
   const string fen = "k7/8/8/8/3pP3/8/8/K7 b KQkq e3 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
-  REQUIRE(HasMove(moves, Move("d4e3")));
+  REQUIRE(HasMove(moves, Move("d4e3", true, Pawn)));
 }
 
 TEST_CASE("Movegen: black en passant unavailable", "[Movegen]") {
