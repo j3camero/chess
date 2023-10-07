@@ -72,6 +72,27 @@ TEST_CASE("Movegen: black pawn promotion with capture", "[Movegen]") {
   REQUIRE(actual == expected);
 }
 
+TEST_CASE("Movegen: sliding piece capture", "[Movegen]") {
+  const string fen = "8/8/8/1R3n2/8/8/8/8 w - - 0 1";
+  const Board b = FenToBoard(fen);
+  const vector<Move> moves = GeneratePseudoLegalMoves(b);
+  const vector<string> actual = MovesToStrings(moves);
+  // 20 possible moves from the opening position.
+  const vector<string> expected = { "b5a5", "b5b1", "b5b2", "b5b3",
+                                    "b5b4", "b5b6", "b5b7", "b5b8",
+                                    "b5c5", "b5d5", "b5e5", "b5f5" };
+  REQUIRE(actual == expected);
+  // Check capture b5f5 properly marked as a capture move.
+  REQUIRE(HasMove(moves, Move("b5f5", true, Knight)));
+  // Does not contain non-capture b5f5.
+  REQUIRE_FALSE(HasMove(moves, Move("b5f5")));
+  // Check capture b5f5 captures the right piece type, knight.
+  REQUIRE_FALSE(HasMove(moves, Move("b5f5", true, Bishop)));
+  // Check one of the non-capture moves to make sure it isn't a capture.
+  REQUIRE(HasMove(moves, Move("b5c5")));
+  REQUIRE_FALSE(HasMove(moves, Move("b5c5", true, Knight)));
+}
+
 TEST_CASE("Movegen: white castle with all options open", "[Movegen]") {
   const string fen = "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1";
   const Board b = FenToBoard(fen);
