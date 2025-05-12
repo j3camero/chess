@@ -39,6 +39,7 @@
 # Compiled executables
 randombot
 test-main
+test
 
 # vscode auto-generated stuff
 .vscode/

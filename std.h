@@ -2,6 +2,7 @@
 #define _STD_H_
 
 #include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <map>
 #include <string>
