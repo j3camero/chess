@@ -23,7 +23,7 @@ void Quit(const string& command) {
 
 // Command is "uci". Print basic info about this chess engine.
 void Uci(const string& command) {
-  cout << "id name randombot " << GIT_VERSION << endl;
+  cout << "id name randombot" << endl;
   cout << "id author Jeff Cameron jcameron.ca" << endl;
 }
 
