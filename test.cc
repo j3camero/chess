@@ -1,4 +1,4 @@
-#include "check-test.h"
+#include "check.h"
 #include "std.h"
 
 int main() {

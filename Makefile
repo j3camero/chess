@@ -27,7 +27,7 @@ runtest: test
 #   test-main.o
 
 test: attack.o \
-	check.o check-test.o \
+	check.o \
   color.o \
   fen.o \
   irreversible.o \
