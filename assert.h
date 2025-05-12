@@ -4,9 +4,12 @@
 
 #include "std.h"
 
+// These functions count the number of calls to ASSERT behind the scenes.
 void SetAssertCount(int newCount);
 int GetAssertCount();
 void IncrementAssertCount();
+
+// Unit tests.
 void TestAssert();
 
 // Assert is defined as a macro. This lets it print out helpful info when it
