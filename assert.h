@@ -18,8 +18,10 @@ void TestAssert();
 #define ASSERT(condition) \
   do { \
     if (!(condition)) { \
-      std::cerr << "Assertion failed: " #condition << " at line " << __LINE__ << " in file " << __FILE__ << std::endl; \
-      std::abort(); \
+      cerr << "Assertion failed: " #condition \
+           << " at line " << __LINE__ \
+           << " in file " << __FILE__ << endl; \
+      abort(); \
     } \
     IncrementAssertCount(); \
   } while (0)
