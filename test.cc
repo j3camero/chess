@@ -3,6 +3,7 @@
 #include "check.h"
 #include "color.h"
 #include "fen.h"
+#include "irreversible.h"
 #include "std.h"
 
 int main() {
@@ -11,6 +12,7 @@ int main() {
   TestCheck();
   TestColor();
   TestFen();
+  TestIrreversible();
   cout << "All " << GetAssertCount() << " tests pass :)" << endl;
   return 0;
 }
