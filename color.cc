@@ -1,3 +1,4 @@
+#include "assert.h"
 #include "color.h"
 
 Color InvertColor(Color c) {
@@ -10,4 +11,10 @@ Color InvertColor(Color c) {
     return Empty;
   }
   throw "Unknown color";
+}
+
+void TestColor() {
+  ASSERT(InvertColor(White) == Black);
+  ASSERT(InvertColor(Black) == White);
+  ASSERT(InvertColor(Empty) == Empty);
 }

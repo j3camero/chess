@@ -7,4 +7,7 @@ enum Color {White, Black, Empty};
 // Reverses a color. White -> Black, Black -> White, and Empty -> Empty.
 Color InvertColor(Color c);
 
+// Unit tests.
+void TestColor();
+
 #endif

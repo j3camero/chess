@@ -10,4 +10,7 @@ Board FenToBoard(const string& fen);
 // Returns a FEN string that represents the given board position.
 string BoardToFen(const Board& b);
 
+// Unit tests.
+void TestFen();
+
 #endif
