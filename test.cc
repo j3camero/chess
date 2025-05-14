@@ -4,6 +4,8 @@
 #include "color.h"
 #include "fen.h"
 #include "irreversible.h"
+#include "move.h"
+#include "movegen.h"
 #include "std.h"
 
 int main() {
@@ -13,6 +15,8 @@ int main() {
   TestColor();
   TestFen();
   TestIrreversible();
+  TestMove();
+  TestMovegen();
   cout << "All " << GetAssertCount() << " tests pass :)" << endl;
   return 0;
 }
