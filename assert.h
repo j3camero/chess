@@ -4,10 +4,11 @@
 
 #include "std.h"
 
-// These functions count the number of calls to ASSERT behind the scenes.
-void SetAssertCount(int newCount);
-int GetAssertCount();
+// Counts the number of calls to ASSERT behind the scenes.
 void IncrementAssertCount();
+
+// Returns the number of times that ASSERT has been called.
+int GetAssertCount();
 
 // Unit tests.
 void TestAssert();

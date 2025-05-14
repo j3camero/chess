@@ -2,16 +2,12 @@
 
 int assertCount = 0;
 
-void SetAssertCount(int newCount) {
-  assertCount = newCount;
+void IncrementAssertCount() {
+  assertCount++;
 }
 
 int GetAssertCount() {
     return assertCount;
-}
-
-void IncrementAssertCount() {
-  assertCount++;
 }
 
 void TestAssert() {
