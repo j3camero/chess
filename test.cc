@@ -1,6 +1,8 @@
 #include "std.h"
 #include "test.h"
 
+// A list of function pointers to all the unit tests. The TEST macro
+// automatically calls RegisterTest to add them to this list.
 vector<TestFunction> registry;
 
 // The assert counter counts how many times ASSERT is called.
@@ -33,7 +35,6 @@ TEST(AssertCount) {
 
 // Run all the registered unit tests.
 int main() {
-  cout << "Running " << registry.size() << " test cases" << endl;
   for (const TestFunction& testFunction : registry) {
     testFunction();
   }

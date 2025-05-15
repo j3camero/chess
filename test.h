@@ -6,6 +6,7 @@
 
 #include "std.h"
 
+// Use to create unit tests. Automatically registers every test.
 #define TEST(name) \
   void test_function_##name(); \
   struct RegisterTest##name { \
