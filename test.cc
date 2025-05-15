@@ -6,6 +6,7 @@
 #include "irreversible.h"
 #include "move.h"
 #include "movegen.h"
+#include "point.h"
 #include "std.h"
 
 int main() {
@@ -17,6 +18,7 @@ int main() {
   TestIrreversible();
   TestMove();
   TestMovegen();
+  TestPoint();
   cout << "All " << GetAssertCount() << " tests pass :)" << endl;
   return 0;
 }

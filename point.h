@@ -37,4 +37,6 @@ struct Point {
   int file;
 };
 
+void TestPoint();
+
 #endif
