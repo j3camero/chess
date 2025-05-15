@@ -24,7 +24,3 @@ test: attack.o \
   piece-moves.o \
   string-util.o string-util-test.o \
   test.o
-
-macro2: macro2.o
-
-macro3: macro3.o
