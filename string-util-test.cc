@@ -2,7 +2,7 @@
 #include "string-util.h"
 #include "test.h"
 
-TEST(StringSplitThreeItems) {
+TEST StringSplitThreeItems() {
   vector<string> tokens = StringUtil::Split("one,two,three", ',');
   ASSERT(tokens.size() == 3);
   ASSERT(tokens[0] == "one");
@@ -10,7 +10,7 @@ TEST(StringSplitThreeItems) {
   ASSERT(tokens[2] == "three");
 }
 
-TEST(StringSplitChangeDelimiter) {
+TEST StringSplitChangeDelimiter() {
   vector<string> tokens = StringUtil::Split("one|two| ,", '|');
   ASSERT(tokens.size() == 3);
   ASSERT(tokens[0] == "one");
@@ -18,13 +18,13 @@ TEST(StringSplitChangeDelimiter) {
   ASSERT(tokens[2] == " ,");
 }
 
-TEST(StringSplitWithOnlyOneItem) {
+TEST StringSplitWithOnlyOneItem() {
   vector<string> tokens = StringUtil::Split("word", ',');
   ASSERT(tokens.size() == 1);
   ASSERT(tokens[0] == "word");
 }
 
-TEST(StringSplitWithEmptyItems) {
+TEST StringSplitWithEmptyItems() {
   vector<string> tokens = StringUtil::Split(",,", ',');
   ASSERT(tokens.size() == 3);
   ASSERT(tokens[0] == "");
@@ -32,18 +32,21 @@ TEST(StringSplitWithEmptyItems) {
   ASSERT(tokens[2] == "");
 }
 
-TEST(StringSplitEmptyString) {
+TEST StringSplitEmptyString() {
   vector<string> tokens = StringUtil::Split("", ',');
   ASSERT(tokens.size() == 1);
   ASSERT(tokens[0] == "");
 }
 
-TEST(IsDigit) {
+TEST IsDigitTrue() {
   ASSERT(StringUtil::IsDigit('0'));
   ASSERT(StringUtil::IsDigit('1'));
   ASSERT(StringUtil::IsDigit('5'));
   ASSERT(StringUtil::IsDigit('8'));
   ASSERT(StringUtil::IsDigit('9'));
+}
+
+TEST IsDigitFalse() {
   ASSERT(!StringUtil::IsDigit('a'));
   ASSERT(!StringUtil::IsDigit('Z'));
   ASSERT(!StringUtil::IsDigit('/'));
@@ -51,7 +54,7 @@ TEST(IsDigit) {
   ASSERT(!StringUtil::IsDigit('+'));
 }
 
-TEST(DigitToInt) {
+TEST DigitToIntVariousCases() {
   ASSERT(StringUtil::DigitToInt('0') == 0);
   ASSERT(StringUtil::DigitToInt('1') == 1);
   ASSERT(StringUtil::DigitToInt('7') == 7);

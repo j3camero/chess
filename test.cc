@@ -13,12 +13,12 @@ int GetAssertCount() {
 }
 
 // Example unit test showing how to use ASSERT.
-TEST(ASSERT) {
+TEST AssertExample() {
   ASSERT(2 + 2 == 4);
 }
 
 // Test that calling ASSERT increments the assert counter behind the scenes.
-TEST(IncrementAssertCount) {
+TEST AssertCount() {
   int before = GetAssertCount();
   ASSERT(2 + 2 == 4);
   int after = GetAssertCount();

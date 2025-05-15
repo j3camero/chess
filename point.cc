@@ -1,7 +1,7 @@
-#include "assert.h"
 #include "point.h"
 #include "std.h"
 #include "string-util.h"
+#include "test.h"
 
 Point::Point() : rank(-1), file(-1) {}
 
@@ -59,37 +59,37 @@ Point& Point::operator+=(const Point& other) {
   return *this;
 }
 
-void TestPointDefaultConstructor() {
+TEST PointDefaultConstructor() {
   Point p;
   p.rank = 7;
   ASSERT(p.rank == 7);
 }
 
-void TestPointBasicConstructor() {
+TEST PointBasicConstructor() {
   Point p(1, 4);
   ASSERT(p.rank == 1);
   ASSERT(p.file == 4);
 }
 
-void TestPointStringConstructorE2() {
+TEST PointStringConstructorE2() {
   Point p("e2");
   ASSERT(p.rank == 6);
   ASSERT(p.file == 4);
 }
 
-void TestPointStringConstructorH6() {
+TEST PointStringConstructorH6() {
   Point p("h6");
   ASSERT(p.rank == 2);
   ASSERT(p.file == 7);
 }
 
-void TestPointToString() {
+TEST PointToString() {
   ASSERT(Point(7, 0).ToString() == "a1");
   ASSERT(Point("b7").ToString() == "b7");
   ASSERT(Point("f5").ToString() == "f5");
 }
 
-void TestPointIsOnBoard() {
+TEST PointIsOnBoard() {
   ASSERT(Point(0, 0).IsOnBoard());
   ASSERT(Point(1, 0).IsOnBoard());
   ASSERT(Point(0, 1).IsOnBoard());
@@ -106,14 +106,14 @@ void TestPointIsOnBoard() {
   ASSERT(!Point(9, 8).IsOnBoard());
 }
 
-void TestPointStringConstructorFail() {
+TEST PointStringConstructorFail() {
   ASSERT_EXCEPTION(Point("i5"));
   ASSERT_EXCEPTION(Point("47"));
   ASSERT_EXCEPTION(Point("ab"));
   ASSERT_EXCEPTION(Point("h6x"));
 }
 
-void TestPointEqualityOperator() {
+TEST PointEqualityOperator() {
   ASSERT(Point("e4") == Point("e4"));
   ASSERT(Point("e4") != Point("e3"));
   ASSERT(Point("e4") != Point("d4"));
@@ -123,22 +123,10 @@ void TestPointEqualityOperator() {
   ASSERT(Point(3, 4) != Point(3, 5));
 }
 
-void TestPointAdditionOperators() {
+TEST PointAdditionOperators() {
   ASSERT(Point("e2") + Point(-2, 0) == Point("e4"));
   ASSERT(Point(1, 2) + Point("b6") == Point("d5"));
   Point p(3, 7);
   p += Point(2, -3);
   ASSERT(p == Point(5, 4));
-}
-
-void TestPoint() {
-  TestPointDefaultConstructor();
-  TestPointBasicConstructor();
-  TestPointStringConstructorE2();
-  TestPointStringConstructorH6();
-  TestPointToString();
-  TestPointIsOnBoard();
-  TestPointStringConstructorFail();
-  TestPointEqualityOperator();
-  TestPointAdditionOperators();
 }
