@@ -20,7 +20,7 @@ test: attack.o \
   move.o \
   movegen.o \
   point.o \
-  piece.o \
+  piece.o piece-test.o \
   piece-moves.o \
   string-util.o string-util-test.o \
   test.o

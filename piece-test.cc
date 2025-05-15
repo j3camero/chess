@@ -1,22 +1,32 @@
-#include "catch.hpp"
 #include "color.h"
 #include "piece.h"
+#include "test.h"
 
-TEST_CASE("PieceToChar", "[Piece]") {
-  REQUIRE(PieceToChar(White, King) == 'K');
-  REQUIRE(PieceToChar(Black, Pawn) == 'p');
+TEST PieceToCharExamples() {
+  ASSERT(PieceToChar(White, King) == 'K');
+  ASSERT(PieceToChar(Black, Pawn) == 'p');
 }
 
-TEST_CASE("CharToPiece", "[Piece]") {
+TEST CharToPieceWhiteRook() {
   Color c;
   Piece p;
   CharToPiece('R', c, p);
-  REQUIRE(c == White);
-  REQUIRE(p == Rook);
+  ASSERT(c == White);
+  ASSERT(p == Rook);
+}
+
+TEST CharToPieceBlackRook() {
+  Color c;
+  Piece p;
   CharToPiece('r', c, p);
-  REQUIRE(c == Black);
-  REQUIRE(p == Rook);
+  ASSERT(c == Black);
+  ASSERT(p == Rook);
+}
+
+TEST CharToPieceBlackKnight() {
+  Color c;
+  Piece p;
   CharToPiece('n', c, p);
-  REQUIRE(c == Black);
-  REQUIRE(p == Knight);
+  ASSERT(c == Black);
+  ASSERT(p == Knight);
 }
