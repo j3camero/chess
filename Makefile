@@ -19,7 +19,7 @@ test: attack.o \
   irreversible.o \
   move.o \
   movegen.o \
-  point.o \
+  point.o point-test.o \
   piece.o piece-test.o \
   piece-moves.o \
   string-util.o string-util-test.o \
