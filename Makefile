@@ -12,13 +12,13 @@ randombot: randombot.o \
 runtest: test
 	./test
 
-test: attack.o \
-	check.o \
-  color.o \
-  fen.o \
-  irreversible.o \
-  move.o \
-  movegen.o \
+test: attack.o attack-test.o \
+	check.o check-test.o \
+  color.o color-test.o \
+  fen.o fen-test.o \
+  irreversible.o irreversible-test.o \
+  move.o move-test.o \
+  movegen.o movegen-test.o \
   point.o point-test.o \
   piece.o piece-test.o \
   piece-moves.o \
