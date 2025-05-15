@@ -1,7 +1,7 @@
-#include "assert.h"
 #include "attack.h"
 #include "fen.h"
 #include "piece-moves.h"
+#include "test.h"
 
 bool IsSquareUnderAttackByPawn(const Board& b, const Point& p, Color attacker) {
   // Opposite of usual move direction because we're searching backwards along
@@ -119,7 +119,7 @@ bool IsSquareUnderAttackByColor(const Board& b,
   return false;
 }
 
-void TestAttackOpeningPosition() {
+TEST(AttackDetectionOpeningPosition) {
   const string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
   const Board b = FenToBoard(fen);
   ASSERT(IsSquareUnderAttackByColor(b, Point("e3"), White));
@@ -130,7 +130,7 @@ void TestAttackOpeningPosition() {
   ASSERT(!IsSquareUnderAttackByColor(b, Point("e5"), Black));
 }
 
-void TestAttackDiagonalAgainstBackRank() {
+TEST(AttackDetectionDiagonalAttackAgainstBackRank) {
   const string fen = "8/8/b7/8/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1";
   const Board b = FenToBoard(fen);
   ASSERT(IsSquareUnderAttackByColor(b, Point("f1"), Black));
@@ -143,7 +143,7 @@ void TestAttackDiagonalAgainstBackRank() {
   ASSERT(!IsSquareUnderAttackByColor(b, Point("a6"), Black));
 }
 
-void TestAttackAllPiecesTypes() {
+TEST(AttackAllPieceTypes) {
   // Board position designed to exercise as many different cases as possible.
   // Pawn - both colors & directions, off board
   // Knight - various directions & off board
@@ -181,10 +181,4 @@ void TestAttackAllPiecesTypes() {
       ASSERT(blackAttack == (bool)expectedBlackAttacks[rank][file]);
     }
   }
-}
-
-void TestAttack() {
-  TestAttackOpeningPosition();
-  TestAttackDiagonalAgainstBackRank();
-  TestAttackAllPiecesTypes();
 }

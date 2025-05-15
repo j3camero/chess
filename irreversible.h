@@ -40,7 +40,4 @@ struct Irreversible {
   unsigned char halfmoveClock;
 };
 
-// Unit tests.
-void TestIrreversible();
-
 #endif

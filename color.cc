@@ -1,5 +1,5 @@
-#include "assert.h"
 #include "color.h"
+#include "test.h"
 
 Color InvertColor(Color c) {
   switch (c) {
@@ -13,8 +13,14 @@ Color InvertColor(Color c) {
   throw "Unknown color";
 }
 
-void TestColor() {
+TEST(InvertWhite) {
   ASSERT(InvertColor(White) == Black);
+}
+
+TEST(InvertBlack) {
   ASSERT(InvertColor(Black) == White);
+}
+
+TEST(InvertEmpty) {
   ASSERT(InvertColor(Empty) == Empty);
 }

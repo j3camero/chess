@@ -6,20 +6,22 @@
 
 #include "std.h"
 
-// Unit tests run before main(). Methods declared with the RUN_BEFORE_MAIN
-// or TEST return type are in effect auto-registered to run before main().
-#define RUN_BEFORE_MAIN void __attribute__ ((constructor))
-#define TEST RUN_BEFORE_MAIN
+#define TEST(name) \
+  void test_function_##name(); \
+  struct RegisterTest##name { \
+    RegisterTest##name() { \
+      RegisterTest(test_function_##name); \
+    } \
+  }; \
+  static RegisterTest##name register_test_##name; \
+  void test_function_##name()
 
 // Assert is defined as a macro. This lets it print out helpful info when it
 // fails, like what line of what file it's on.
 #define ASSERT(condition) \
   IncrementAssertCount(); \
   if (!(condition)) { \
-    cerr << "Assertion failed: " #condition \
-         << " at line " << __LINE__ \
-         << " in file " << __FILE__ << endl; \
-    abort(); \
+    FAIL(condition); \
   }
 
 // Accepts a statement or code block and asserts that it must throw an
@@ -31,11 +33,21 @@
   IncrementAssertCount(); \
   try { \
     statement; \
-    cerr << "Assertion failed: " #statement \
-         << " at line " << __LINE__ \
-         << " in file " << __FILE__ << endl; \
-    abort(); \
+    FAIL(statement); \
   } catch (...) {}
+
+// When a unit test fails, print out which file and line.
+#define FAIL(message) \
+  cerr << "Assertion failed: " #message \
+       << " at line " << __LINE__ \
+       << " in file " << __FILE__ << endl; \
+  abort();
+
+// Each unit test is a simple function with no parameters that returns nothing.
+typedef void (*TestFunction)();
+
+// Registers a unit test. Do not call this function. Use the TEST macro instead.
+void RegisterTest(TestFunction function);
 
 // Counts how many times ASSERT gets called behind the scenes.
 void IncrementAssertCount();

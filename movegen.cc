@@ -1,4 +1,3 @@
-#include "assert.h"
 #include "attack.h"
 #include "board.h"
 #include "check.h"
@@ -7,6 +6,7 @@
 #include "movegen.h"
 #include "piece-moves.h"
 #include "std.h"
+#include "test.h"
 
 // Add the given move to the list if the destination square is available or
 // is an enemy piece. Does not check the moving piece or consider check. This
@@ -285,7 +285,7 @@ bool HasMove(const vector<Move>& v, const Move& m) {
   return false;
 }
 
-void TestMovegenOpeningPosition() {
+TEST(MovegenOpeningPosition) {
   const string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -299,7 +299,7 @@ void TestMovegenOpeningPosition() {
   ASSERT(actual == expected);
 }
 
-void TestMovegenWhitePawnPromotionWithoutCapture() {
+TEST(MovegenWhitePawnPromotionWithoutCapture) {
   const string fen = "8/4P3/8/8/8/8/8/8 w - - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -309,7 +309,7 @@ void TestMovegenWhitePawnPromotionWithoutCapture() {
   ASSERT(actual == expected);
 }
 
-void TestMovegenWhitePawnPromotionWithCapture() {
+TEST(MovegenWhitePawnPromotionWithCapture) {
   const string fen = "3qkb2/4P3/8/8/8/8/8/8 w - - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -320,7 +320,7 @@ void TestMovegenWhitePawnPromotionWithCapture() {
   ASSERT(actual == expected);
 }
 
-void TestMovegenBlackPawnPromotionWithoutCapture() {
+TEST(MovegenBlackPawnPromotionWithoutCapture) {
   const string fen = "8/8/8/8/8/8/2p5/8 b - - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -330,7 +330,7 @@ void TestMovegenBlackPawnPromotionWithoutCapture() {
   ASSERT(actual == expected);
 }
 
-void TestMovegenBlackPawnPromotionWithCapture() {
+TEST(MovegenBlackPawnPromotionWithCapture) {
   const string fen = "8/8/8/8/8/8/6p1/5Q2 b - - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -341,7 +341,7 @@ void TestMovegenBlackPawnPromotionWithCapture() {
   ASSERT(actual == expected);
 }
 
-void TestMovegenSlidingPieceCapture() {
+TEST(MovegenSlidingPieceCapture) {
   const string fen = "8/8/8/1R3n2/8/8/8/8 w - - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -362,7 +362,7 @@ void TestMovegenSlidingPieceCapture() {
   ASSERT(!HasMove(moves, Move("b5c5", true, Knight)));
 }
 
-void TestMovegenWhiteCastleWithAllOptionsOpen() {
+TEST(MovegenWhiteCastleWithAllOptionsOpen) {
   const string fen = "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -373,7 +373,7 @@ void TestMovegenWhiteCastleWithAllOptionsOpen() {
   ASSERT(!HasMove(moves, blackQueenCastle));
 }
 
-void TestMovegenBlackCastleWithAllOptionsOpen() {
+TEST(MovegenBlackCastleWithAllOptionsOpen) {
   const string fen = "r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -384,7 +384,7 @@ void TestMovegenBlackCastleWithAllOptionsOpen() {
   ASSERT(!HasMove(moves, whiteQueenCastle));
 }
 
-void TestMovegenWhiteCastleBlackedByFlags() {
+TEST(MovegenWhiteCastleBlackedByFlags) {
   const string fen = "r3k2r/8/8/8/8/8/8/R3K2R w - - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -392,7 +392,7 @@ void TestMovegenWhiteCastleBlackedByFlags() {
   ASSERT(!HasMove(moves, whiteQueenCastle));
 }
 
-void TestMovegenBlackCastleBlockedByFlags() {
+TEST(MovegenBlackCastleBlockedByFlags) {
   const string fen = "r3k2r/8/8/8/8/8/8/R3K2R b - - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -400,7 +400,7 @@ void TestMovegenBlackCastleBlockedByFlags() {
   ASSERT(!HasMove(moves, blackQueenCastle));
 }
 
-void TestMovegenWhiteCastleDifferingFlags() {
+TEST(MovegenWhiteCastleDifferingFlags) {
   const string fen = "r3k2r/8/8/8/8/8/8/R3K2R w Q - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -408,7 +408,7 @@ void TestMovegenWhiteCastleDifferingFlags() {
   ASSERT(HasMove(moves, whiteQueenCastle));
 }
 
-void TestMovegenBlackCastleDifferingFlags() {
+TEST(MovegenBlackCastleDifferingFlags) {
   const string fen = "r3k2r/8/8/8/8/8/8/R3K2R b k - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -416,7 +416,7 @@ void TestMovegenBlackCastleDifferingFlags() {
   ASSERT(!HasMove(moves, blackQueenCastle));
 }
 
-void TestMovegenWhiteCastleBlockedByCheck() {
+TEST(MovegenWhiteCastleBlockedByCheck) {
   const string fen = "r3k2r/8/8/8/8/8/3p4/R3K2R w KQkq - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -424,7 +424,7 @@ void TestMovegenWhiteCastleBlockedByCheck() {
   ASSERT(!HasMove(moves, whiteQueenCastle));
 }
 
-void TestMovegenWhiteKingCastleBlockedByAttack() {
+TEST(MovegenWhiteKingCastleBlockedByAttack) {
   const string fen = "r3k2r/8/8/8/8/3b4/8/R3K2R w KQkq - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -432,7 +432,7 @@ void TestMovegenWhiteKingCastleBlockedByAttack() {
   ASSERT(HasMove(moves, whiteQueenCastle));
 }
 
-void TestMovegenWhiteQueenCastleBlockedByAttack() {
+TEST(MovegenWhiteQueenCastleBlockedByAttack) {
   const string fen = "r3k2r/8/8/8/8/2n5/8/R3K2R w KQkq - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -440,7 +440,7 @@ void TestMovegenWhiteQueenCastleBlockedByAttack() {
   ASSERT(!HasMove(moves, whiteQueenCastle));
 }
 
-void TestMovegenBlackCastleBlockedByCheck() {
+TEST(MovegenBlackCastleBlockedByCheck) {
   const string fen = "r3k2r/8/8/8/Q7/8/8/R3K2R b KQkq - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -448,7 +448,7 @@ void TestMovegenBlackCastleBlockedByCheck() {
   ASSERT(!HasMove(moves, blackQueenCastle));
 }
 
-void TestMovegenBlackKingCastleBlockedByAttack() {
+TEST(MovegenBlackKingCastleBlockedByAttack) {
   const string fen = "r3k2r/8/6N1/8/8/8/8/R3K2R b KQkq - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -456,7 +456,7 @@ void TestMovegenBlackKingCastleBlockedByAttack() {
   ASSERT(HasMove(moves, blackQueenCastle));
 }
 
-void TestMovegenBlackQueenCastleBlockedByAttack() {
+TEST(MovegenBlackQueenCastleBlockedByAttack) {
   const string fen = "r3k2r/3R4/8/8/8/8/8/4K3 b KQkq - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
@@ -464,55 +464,30 @@ void TestMovegenBlackQueenCastleBlockedByAttack() {
   ASSERT(!HasMove(moves, blackQueenCastle));
 }
 
-void TestMovegenWhiteEnPassantCapture() {
+TEST(MovegenWhiteEnPassantCapture) {
   const string fen = "k7/8/8/3pP3/8/8/8/K7 w KQkq d6 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
   ASSERT(HasMove(moves, Move("e5d6", true, Pawn)));
 }
 
-void TestMovegenWhiteEnPassantUnavailable() {
+TEST(MovegenWhiteEnPassantUnavailable) {
   const string fen = "k7/8/8/3pP3/8/8/8/K7 w KQkq - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
   ASSERT(!HasMove(moves, Move("e5d6")));
 }
 
-void TestMovegenBlackEnPassantCapture() {
+TEST(MovegenBlackEnPassantCapture) {
   const string fen = "k7/8/8/8/3pP3/8/8/K7 b KQkq e3 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
   ASSERT(HasMove(moves, Move("d4e3", true, Pawn)));
 }
 
-void TestMovegenBlackEnPassantUnavailable() {
+TEST(MovegenBlackEnPassantUnavailable) {
   const string fen = "k7/8/8/8/3pP3/8/8/K7 b KQkq - 0 1";
   const Board b = FenToBoard(fen);
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
   ASSERT(!HasMove(moves, Move("d4e3")));
-}
-
-void TestMovegen() {
-  TestMovegenOpeningPosition();
-  TestMovegenWhitePawnPromotionWithoutCapture();
-  TestMovegenWhitePawnPromotionWithCapture();
-  TestMovegenBlackPawnPromotionWithoutCapture();
-  TestMovegenBlackPawnPromotionWithCapture();
-  TestMovegenSlidingPieceCapture();
-  TestMovegenWhiteCastleWithAllOptionsOpen();
-  TestMovegenBlackCastleWithAllOptionsOpen();
-  TestMovegenWhiteCastleBlackedByFlags();
-  TestMovegenBlackCastleBlockedByFlags();
-  TestMovegenWhiteCastleDifferingFlags();
-  TestMovegenBlackCastleDifferingFlags();
-  TestMovegenWhiteCastleBlockedByCheck();
-  TestMovegenWhiteKingCastleBlockedByAttack();
-  TestMovegenWhiteQueenCastleBlockedByAttack();
-  TestMovegenBlackCastleBlockedByCheck();
-  TestMovegenBlackKingCastleBlockedByAttack();
-  TestMovegenBlackQueenCastleBlockedByAttack();
-  TestMovegenWhiteEnPassantCapture();
-  TestMovegenWhiteEnPassantUnavailable();
-  TestMovegenBlackEnPassantCapture();
-  TestMovegenBlackEnPassantUnavailable();
 }

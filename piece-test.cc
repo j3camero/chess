@@ -2,12 +2,12 @@
 #include "piece.h"
 #include "test.h"
 
-TEST PieceToCharExamples() {
+TEST(PieceToCharExamples) {
   ASSERT(PieceToChar(White, King) == 'K');
   ASSERT(PieceToChar(Black, Pawn) == 'p');
 }
 
-TEST CharToPieceWhiteRook() {
+TEST(CharToPieceWhiteRook) {
   Color c;
   Piece p;
   CharToPiece('R', c, p);
@@ -15,7 +15,7 @@ TEST CharToPieceWhiteRook() {
   ASSERT(p == Rook);
 }
 
-TEST CharToPieceBlackRook() {
+TEST(CharToPieceBlackRook) {
   Color c;
   Piece p;
   CharToPiece('r', c, p);
@@ -23,7 +23,7 @@ TEST CharToPieceBlackRook() {
   ASSERT(p == Rook);
 }
 
-TEST CharToPieceBlackKnight() {
+TEST(CharToPieceBlackKnight) {
   Color c;
   Piece p;
   CharToPiece('n', c, p);

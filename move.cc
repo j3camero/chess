@@ -1,7 +1,7 @@
-#include "assert.h"
 #include "move.h"
 #include "piece.h"
 #include "std.h"
+#include "test.h"
 
 Move::Move(
   Point from,
@@ -69,7 +69,7 @@ vector<string> MovesToStrings(const vector<Move>& moves) {
   return moveStrings;
 }
 
-void TestMoveBasicConstructor() {
+TEST(MoveBasicConstructor) {
   Move move(Point(7, 1), Point(5, 2));
   ASSERT(move.from.rank == 7);
   ASSERT(move.from.file == 1);
@@ -79,7 +79,7 @@ void TestMoveBasicConstructor() {
   ASSERT(!move.isPromotion);
 }
 
-void TestMoveCapturePromotion() {
+TEST(MoveCapturePromotion) {
   Move move(Point(7, 1), Point(5, 2), true, Bishop, true, Queen);
   ASSERT(move.from.rank == 7);
   ASSERT(move.from.file == 1);
@@ -91,7 +91,7 @@ void TestMoveCapturePromotion() {
   ASSERT(move.promotionPiece == Queen);
 }
 
-void TestMoveAlgebraicNotation() {
+TEST(MoveAlgebraicNotation) {
   Move move("e2e4");
   ASSERT(move.from.rank == 6);
   ASSERT(move.from.file == 4);
@@ -99,7 +99,7 @@ void TestMoveAlgebraicNotation() {
   ASSERT(move.to.file == 4);
 }
 
-void TestMoveAlgebraicKnight() {
+TEST(MoveAlgebraicKnight) {
   Move move("g8f6");
   ASSERT(move.from.rank == 0);
   ASSERT(move.from.file == 6);
@@ -107,7 +107,7 @@ void TestMoveAlgebraicKnight() {
   ASSERT(move.to.file == 5);
 }
 
-void TestMoveAlgebraicKnightPromotion() {
+TEST(MoveAlgebraicKnightPromotion) {
   Move move("g7g8n");
   ASSERT(move.from.rank == 1);
   ASSERT(move.from.file == 6);
@@ -118,7 +118,7 @@ void TestMoveAlgebraicKnightPromotion() {
   ASSERT(move.promotionPiece == Knight);
 }
 
-void TestMoveAlgebraicQueenPromotion() {
+TEST(MoveAlgebraicQueenPromotion) {
   Move move("g7g8Q");
   ASSERT(move.from.rank == 1);
   ASSERT(move.from.file == 6);
@@ -129,7 +129,7 @@ void TestMoveAlgebraicQueenPromotion() {
   ASSERT(move.promotionPiece == Queen);
 }
 
-void TestMoveAlgebraicCapturePromotion() {
+TEST(MoveAlgebraicCapturePromotion) {
   Move move("g7f8Q", true, Rook);
   ASSERT(move.from.rank == 1);
   ASSERT(move.from.file == 6);
@@ -141,7 +141,7 @@ void TestMoveAlgebraicCapturePromotion() {
   ASSERT(move.promotionPiece == Queen);
 }
 
-void TestMoveEqualityOperator() {
+TEST(MoveEqualityOperator) {
   ASSERT(Move("e2e4") == Move("e2e4"));
   ASSERT(Move("e2e4") != Move("e2e3"));
   ASSERT(Move("e2e4") != Move("d4e4"));
@@ -149,21 +149,9 @@ void TestMoveEqualityOperator() {
   ASSERT(Move("h6f7") == Move(Point(2, 7), Point(1, 5)));
 }
 
-void TestMovesToStrings() {
+TEST(MovesToStrings) {
   const vector<Move> moves = { Move("b1a3"), Move("g8h6") };
   const vector<string> actual = MovesToStrings(moves);
   const vector<string> expected = { "b1a3", "g8h6" };
   ASSERT(actual == expected);
-}
-
-void TestMove() {
-  TestMoveBasicConstructor();
-  TestMoveCapturePromotion();
-  TestMoveAlgebraicNotation();
-  TestMoveAlgebraicKnight();
-  TestMoveAlgebraicKnightPromotion();
-  TestMoveAlgebraicQueenPromotion();
-  TestMoveAlgebraicCapturePromotion();
-  TestMoveEqualityOperator();
-  TestMovesToStrings();
 }

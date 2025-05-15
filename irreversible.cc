@@ -1,5 +1,5 @@
-#include "assert.h"
 #include "irreversible.h"
+#include "test.h"
 
 Irreversible::Irreversible()
   : castleBits(0), enPassantFile(-1), halfmoveClock(0) {}
@@ -52,14 +52,14 @@ void Irreversible::ClearBlackQueenCastle() {
     castleBits &= 247;
 }
 
-void TestBasicIrreversibleStateConstructor() {
+TEST(BasicIrreversibleStateConstructor) {
   Irreversible i;
   ASSERT(i.castleBits == 0);
   ASSERT(i.enPassantFile == -1);
   ASSERT(i.halfmoveClock == 0);
 }
 
-void TestCastleBits() {
+TEST(CastleBits) {
   Irreversible i;
   ASSERT(i.castleBits == 0);
   i.SetWhiteKingCastle();
@@ -78,9 +78,4 @@ void TestCastleBits() {
   ASSERT(i.castleBits == 4);
   i.ClearBlackKingCastle();
   ASSERT(i.castleBits == 0);
-}
-
-void TestIrreversible() {
-  TestBasicIrreversibleStateConstructor();
-  TestCastleBits();
 }

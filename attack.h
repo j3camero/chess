@@ -9,7 +9,4 @@
 // Returns true if square p is under attack by a piece of the specified color.
 bool IsSquareUnderAttackByColor(const Board& b, const Point& p, Color attacker);
 
-// Unit tests.
-void TestAttack();
-
 #endif

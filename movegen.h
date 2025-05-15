@@ -13,7 +13,4 @@ vector<Move> GeneratePseudoLegalMoves(const Board& board);
 // check which is more expensive than pseudo-legal move generation.
 vector<Move> GenerateLegalMoves(const Board& board);
 
-// Unit tests.
-void TestMovegen();
-
 #endif

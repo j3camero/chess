@@ -9,6 +9,5 @@ bool IsWhiteKingInCheck(const Board& b);
 bool IsBlackKingInCheck(const Board& b);
 bool IsSideToMoveInCheck(const Board& b);
 bool IsOppInCheck(const Board& b);
-void TestCheck();
 
 #endif

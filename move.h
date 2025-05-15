@@ -40,7 +40,4 @@ struct Move {
 // Converts a list of moves to a list of strings.
 vector<string> MovesToStrings(const vector<Move>& moves);
 
-// Unit tests.
-void TestMove();
-
 #endif

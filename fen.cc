@@ -1,10 +1,10 @@
-#include "assert.h"
 #include "board.h"
 #include "fen.h"
 #include "point.h"
 #include "piece.h"
 #include "std.h"
 #include "string-util.h"
+#include "test.h"
 
 // Parses one rank of piece placement data from the first token of a FEN string.
 // fen - one rank of a chessboard. Ex: "rnbqkbnr", "PPPPPPPP", "4P3", "8".
@@ -178,7 +178,7 @@ string BoardToFen(const Board& b) {
   throw "Not implemented.";
 }
 
-void TestFenOpeningPosition() {
+TEST(FenOpeningPosition) {
   const string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
   Board b = FenToBoard(fen);
   ASSERT(b.color[0][0] == Black);
@@ -212,7 +212,7 @@ void TestFenOpeningPosition() {
   ASSERT(b.blackKingLocation == Point(0, 4));
 }
 
-void TestFenPositionWithAssortedScatteredPieces() {
+TEST(FenPositionWithAssortedScatteredPieces) {
   const string fen = "1n3n2/1p3p2/R2Q2bk/8/8/r2q2B1/1P2KP2/P1N5 w KQkq - 0 1";
   Board b = FenToBoard(fen);
   Color expectedColor[8][8] = {
@@ -235,7 +235,7 @@ void TestFenPositionWithAssortedScatteredPieces() {
   ASSERT(b.blackKingLocation == Point(2, 7));
 }
 
-void TestFenPositionWithOnlyOnePiece() {
+TEST(FenPositionWithOnlyOnePiece) {
   const string fen = "8/8/8/2k5/8/8/8/8 w KQkq - 0 1";
   Board b = FenToBoard(fen);
   ASSERT(b.color[3][2] == Black);
@@ -248,26 +248,26 @@ void TestFenPositionWithOnlyOnePiece() {
   ASSERT(b.blackKingLocation == Point(3, 2));
 }
 
-void TestFenWhiteToMove() {
+TEST(FenWhiteToMove) {
   const string fen = "8/8/8/8/8/8/8/8 w KQkq - 0 1";
   Board b = FenToBoard(fen);
   ASSERT(b.turn == White);
   ASSERT(b.opp == Black);
 }
 
-void TestFenBlackToMove() {
+TEST(FenBlackToMove) {
   const string fen = "8/8/8/8/8/8/8/8 b KQkq - 0 1";
   Board b = FenToBoard(fen);
   ASSERT(b.turn == Black);
   ASSERT(b.opp == White);
 }
 
-void TestFenUnparseableSideToMove() {
+TEST(FenUnparseableSideToMove) {
   const string fen = "8/8/8/8/8/8/8/8 r KQkq - 0 1";
   ASSERT_EXCEPTION(FenToBoard(fen));
 }
 
-void TestFenCastle() {
+TEST(FenCastle) {
   const string fen = "8/8/8/8/8/8/8/8 b KQkq - 0 1";
   Board b = FenToBoard(fen);
   ASSERT(b.irreversible.WhiteKingCastleAllowed());
@@ -276,7 +276,7 @@ void TestFenCastle() {
   ASSERT(b.irreversible.BlackQueenCastleAllowed());
 }
 
-void TestFenNoCastleAllowed() {
+TEST(FenNoCastleAllowed) {
   const string fen = "8/8/8/8/8/8/8/8 b - - 0 1";
   Board b = FenToBoard(fen);
   ASSERT(b.irreversible.WhiteKingCastleAllowed() == false);
@@ -285,12 +285,12 @@ void TestFenNoCastleAllowed() {
   ASSERT(b.irreversible.BlackQueenCastleAllowed() == false);
 }
 
-void TestFenCastleUnparseable() {
+TEST(FenCastleUnparseable) {
   const string fen = "8/8/8/8/8/8/8/8 b Krkq - 0 1";
   ASSERT_EXCEPTION(FenToBoard(fen));
 }
 
-void TestFenCastleMixedValues() {
+TEST(FenCastleMixedValues) {
   const string fen = "8/8/8/8/8/8/8/8 b kQ - 0 1";
   Board b = FenToBoard(fen);
   ASSERT(b.irreversible.WhiteKingCastleAllowed() == false);
@@ -299,7 +299,7 @@ void TestFenCastleMixedValues() {
   ASSERT(b.irreversible.BlackQueenCastleAllowed() == false);
 }
 
-void TestFenCastleBlackQueen() {
+TEST(FenCastleBlackQueen) {
   const string fen = "8/8/8/8/8/8/8/8 b q - 0 1";
   Board b = FenToBoard(fen);
   ASSERT(b.irreversible.WhiteKingCastleAllowed() == false);
@@ -308,57 +308,37 @@ void TestFenCastleBlackQueen() {
   ASSERT(b.irreversible.BlackQueenCastleAllowed() == true);
 }
 
-void TestFenEnPassantWhiteSide() {
+TEST(FenEnPassantWhiteSide) {
   const string fen = "8/8/8/8/8/8/8/8 w - e5 7 1";
   Board b = FenToBoard(fen);
   ASSERT(b.irreversible.enPassantFile == 4);
 }
 
-void TestFenEnPassantBlackSide() {
+TEST(FenEnPassantBlackSide) {
   const string fen = "8/8/8/8/8/8/8/8 b - h4 7 1";
   Board b = FenToBoard(fen);
   ASSERT(b.irreversible.enPassantFile == 7);
 }
 
-void TestFenEnPassantUnavailable() {
+TEST(FenEnPassantUnavailable) {
   const string fen = "8/8/8/8/8/8/8/8 b - - 7 1";
   Board b = FenToBoard(fen);
   ASSERT(b.irreversible.enPassantFile == -1);
 }
 
-void TestFenEnPassantUnparseable() {
+TEST(FenEnPassantUnparseable) {
   const string fen = "8/8/8/8/8/8/8/8 w - i5 7 1";
   ASSERT_EXCEPTION(FenToBoard(fen));
 }
 
-void TestFenHalfMoveClock() {
+TEST(FenHalfMoveClock) {
   const string fen = "8/8/8/8/8/8/8/8 w KQkq - 7 1";
   Board b = FenToBoard(fen);
   ASSERT(b.irreversible.halfmoveClock == 7);
 }
 
-void TestFenMoveCount() {
+TEST(FenMoveCount) {
   const string fen = "8/8/8/8/8/8/8/8 b KQkq - 7 42";
   Board b = FenToBoard(fen);
   ASSERT(b.moveCount == 42);
-}
-
-void TestFen() {
-  TestFenOpeningPosition();
-  TestFenPositionWithAssortedScatteredPieces();
-  TestFenPositionWithOnlyOnePiece();
-  TestFenWhiteToMove();
-  TestFenBlackToMove();
-  TestFenUnparseableSideToMove();
-  TestFenCastle();
-  TestFenNoCastleAllowed();
-  TestFenCastleUnparseable();
-  TestFenCastleMixedValues();
-  TestFenCastleBlackQueen();
-  TestFenEnPassantWhiteSide();
-  TestFenEnPassantBlackSide();
-  TestFenEnPassantUnavailable();
-  TestFenEnPassantUnparseable();
-  TestFenHalfMoveClock();
-  TestFenMoveCount();
 }
