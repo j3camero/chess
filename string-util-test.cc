@@ -1,59 +1,59 @@
-#include "catch.hpp"
 #include "std.h"
 #include "string-util.h"
+#include "test.h"
 
-TEST_CASE("String split three items", "[StringUtil]") {
+TEST(StringSplitThreeItems) {
   vector<string> tokens = StringUtil::Split("one,two,three", ',');
-  REQUIRE(tokens.size() == 3);
-  REQUIRE(tokens[0] == "one");
-  REQUIRE(tokens[1] == "two");
-  REQUIRE(tokens[2] == "three");
+  ASSERT(tokens.size() == 3);
+  ASSERT(tokens[0] == "one");
+  ASSERT(tokens[1] == "two");
+  ASSERT(tokens[2] == "three");
 }
 
-TEST_CASE("String split change delimiter", "[StringUtil]") {
+TEST(StringSplitChangeDelimiter) {
   vector<string> tokens = StringUtil::Split("one|two| ,", '|');
-  REQUIRE(tokens.size() == 3);
-  REQUIRE(tokens[0] == "one");
-  REQUIRE(tokens[1] == "two");
-  REQUIRE(tokens[2] == " ,");
+  ASSERT(tokens.size() == 3);
+  ASSERT(tokens[0] == "one");
+  ASSERT(tokens[1] == "two");
+  ASSERT(tokens[2] == " ,");
 }
 
-TEST_CASE("String split with only one item", "[StringUtil]") {
+TEST(StringSplitWithOnlyOneItem) {
   vector<string> tokens = StringUtil::Split("word", ',');
-  REQUIRE(tokens.size() == 1);
-  REQUIRE(tokens[0] == "word");
+  ASSERT(tokens.size() == 1);
+  ASSERT(tokens[0] == "word");
 }
 
-TEST_CASE("String split with empty items", "[StringUtil]") {
+TEST(StringSplitWithEmptyItems) {
   vector<string> tokens = StringUtil::Split(",,", ',');
-  REQUIRE(tokens.size() == 3);
-  REQUIRE(tokens[0] == "");
-  REQUIRE(tokens[1] == "");
-  REQUIRE(tokens[2] == "");
+  ASSERT(tokens.size() == 3);
+  ASSERT(tokens[0] == "");
+  ASSERT(tokens[1] == "");
+  ASSERT(tokens[2] == "");
 }
 
-TEST_CASE("String split empty string", "[StringUtil]") {
+TEST(StringSplitEmptyString) {
   vector<string> tokens = StringUtil::Split("", ',');
-  REQUIRE(tokens.size() == 1);
-  REQUIRE(tokens[0] == "");
+  ASSERT(tokens.size() == 1);
+  ASSERT(tokens[0] == "");
 }
 
-TEST_CASE("IsDigit", "[StringUtil]") {
-  REQUIRE(StringUtil::IsDigit('0'));
-  REQUIRE(StringUtil::IsDigit('1'));
-  REQUIRE(StringUtil::IsDigit('5'));
-  REQUIRE(StringUtil::IsDigit('8'));
-  REQUIRE(StringUtil::IsDigit('9'));
-  REQUIRE_FALSE(StringUtil::IsDigit('a'));
-  REQUIRE_FALSE(StringUtil::IsDigit('Z'));
-  REQUIRE_FALSE(StringUtil::IsDigit('/'));
-  REQUIRE_FALSE(StringUtil::IsDigit(':'));
-  REQUIRE_FALSE(StringUtil::IsDigit('+'));
+TEST(IsDigit) {
+  ASSERT(StringUtil::IsDigit('0'));
+  ASSERT(StringUtil::IsDigit('1'));
+  ASSERT(StringUtil::IsDigit('5'));
+  ASSERT(StringUtil::IsDigit('8'));
+  ASSERT(StringUtil::IsDigit('9'));
+  ASSERT(!StringUtil::IsDigit('a'));
+  ASSERT(!StringUtil::IsDigit('Z'));
+  ASSERT(!StringUtil::IsDigit('/'));
+  ASSERT(!StringUtil::IsDigit(':'));
+  ASSERT(!StringUtil::IsDigit('+'));
 }
 
-TEST_CASE("DigitToInt", "[StringUtil]") {
-  REQUIRE(StringUtil::DigitToInt('0') == 0);
-  REQUIRE(StringUtil::DigitToInt('1') == 1);
-  REQUIRE(StringUtil::DigitToInt('7') == 7);
-  REQUIRE(StringUtil::DigitToInt('9') == 9);
+TEST(DigitToInt) {
+  ASSERT(StringUtil::DigitToInt('0') == 0);
+  ASSERT(StringUtil::DigitToInt('1') == 1);
+  ASSERT(StringUtil::DigitToInt('7') == 7);
+  ASSERT(StringUtil::DigitToInt('9') == 9);
 }

@@ -12,8 +12,7 @@ randombot: randombot.o \
 runtest: test
 	./test
 
-test: assert.o \
-	attack.o \
+test: attack.o \
 	check.o \
   color.o \
   fen.o \
@@ -23,5 +22,9 @@ test: assert.o \
   point.o \
   piece.o \
   piece-moves.o \
-  string-util.o \
+  string-util.o string-util-test.o \
   test.o
+
+macro2: macro2.o
+
+macro3: macro3.o
