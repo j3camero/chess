@@ -19,6 +19,7 @@ test: attack.o attack-test.o \
   irreversible.o irreversible-test.o \
   move.o move-test.o \
   movegen.o movegen-test.o \
+	perft.o perft-test.o \
   point.o point-test.o \
   piece.o piece-test.o \
   piece-moves.o \
