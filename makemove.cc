@@ -98,5 +98,52 @@ void MakeMove(Board& b, const Move& m) {
 }
 
 void UndoMove(Board& b, const Move& m, const Irreversible i) {
-
+  Color sideThatMoved = b.opp;
+  Color sideThatDidNotMove = b.turn;
+  Piece movedPiece = m.isPromotion ? Pawn : b.piece[m.to.rank][m.to.file];
+  // Move the piece back.
+  b.piece[m.from.rank][m.from.file] = movedPiece;
+  // Update the colors of the squares.
+  b.color[m.from.rank][m.from.file] = sideThatMoved;
+  b.color[m.to.rank][m.to.file] = Empty;
+  // Flip the side-to-move.
+  b.opp = sideThatDidNotMove;
+  b.turn = sideThatMoved;
+  // Undo irreversible state by overwriting it.
+  b.irreversible = i;
+  // Decrement the moveCount when undoing a black move.
+  if (sideThatMoved == Black) {
+    b.moveCount--;
+  }
+  // Undo capture move. Put the enemy piece back where it was.
+  if (m.isCapture) {
+    int f = m.to.file;
+    int r = m.to.rank;
+    if (movedPiece == Pawn && f == i.enPassantFile) {
+      // En-passant.
+      r = m.from.rank;
+    }
+    b.piece[r][f] = m.capturedPiece;
+    b.color[r][f] = sideThatDidNotMove;
+  }
+  // Special handling for king moves.
+  if (movedPiece == King) {
+    if (sideThatMoved == White) {
+      b.whiteKingLocation = m.from;
+    } else {
+      b.blackKingLocation = m.from;
+    }
+    int r = m.from.rank;
+    if (m.from.file == 4 && m.to.file == 6) {
+      // King-side castle. Move rook.
+      b.color[r][7] = sideThatMoved;
+      b.color[r][5] = Empty;
+      b.piece[r][7] = Rook;
+    } else if (m.from.file == 4 && m.to.file == 2) {
+      // Queen-side castle. Move rook.
+      b.color[r][0] = sideThatMoved;
+      b.color[r][3] = Empty;
+      b.piece[r][0] = Rook;
+    }
+  }
 }
