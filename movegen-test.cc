@@ -222,3 +222,8 @@ TEST(MovegenBlackEnPassantUnavailable) {
   const vector<Move> moves = GeneratePseudoLegalMoves(b);
   ASSERT(!HasMove(moves, Move("d4e3")));
 }
+
+TEST(MovingIntoCheckIsIllegal) {
+  // TODO: make unit test for full-on legal move generation (not pseudo legal).
+  ASSERT(true);
+}

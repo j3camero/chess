@@ -1,5 +1,23 @@
+#include "check.h"
+#include "makemove.h"
+#include "move.h"
+#include "movegen.h"
 #include "perft.h"
+#include "std.h"
 
-int Perft(const Board& b, int depth) {
-  return 1;
+uint64_t Perft(Board& b, int depth) {
+  if (depth == 0) {
+    return 1;
+  }
+  uint64_t sum = 0;
+  vector<Move> pseudo = GeneratePseudoLegalMoves(b);
+  for (const Move& move : pseudo) {
+    Irreversible irr = b.irreversible;
+    MakeMove(b, move);
+    if (!IsOppInCheck(b)) {
+      sum += Perft(b, depth - 1);
+    }
+    UndoMove(b, move, irr);
+  }
+  return sum;
 }

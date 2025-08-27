@@ -3,7 +3,8 @@
 #define _PERFT_H_
 
 #include "board.h"
+#include "std.h"
 
-int Perft(const Board& b, int depth);
+uint64_t Perft(Board& b, int depth);
 
 #endif

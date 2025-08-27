@@ -2,6 +2,7 @@
 #include "board.h"
 #include "check.h"
 #include "fen.h"
+#include "makemove.h"
 #include "move.h"
 #include "movegen.h"
 #include "piece-moves.h"
@@ -262,14 +263,16 @@ vector<Move> GeneratePseudoLegalMoves(const Board& board) {
   return moves;
 }
 
-vector<Move> GenerateLegalMoves(const Board& board) {
+vector<Move> GenerateLegalMoves(Board& board) {
   vector<Move> pseudo = GeneratePseudoLegalMoves(board);
   vector<Move> legal;
   for (const Move& move : pseudo) {
-    // Makemove
-    // Check for opp in check
-    legal.push_back(move);
-    // Unmakemove
+    Irreversible irr = board.irreversible;
+    MakeMove(board, move);
+    if (!IsOppInCheck(board)) {
+      legal.push_back(move);
+    }
+    UndoMove(board, move, irr);
   }
   return legal;
 }
