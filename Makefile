@@ -17,6 +17,7 @@ test: attack.o attack-test.o \
   color.o color-test.o \
   fen.o fen-test.o \
   irreversible.o irreversible-test.o \
+	makemove.o makemove-test.o \
   move.o move-test.o \
   movegen.o movegen-test.o \
 	perft.o perft-test.o \
