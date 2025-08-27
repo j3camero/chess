@@ -46,11 +46,11 @@ TEST(PerftWithDepth3) {
 
 TEST(PerftWithDepth4) {
   // TODO: this test fails!
-  // string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-  // Board b = FenToBoard(fen);
-  // int depth = 4;
-  // uint64_t p = Perft(b, depth);
-  // ASSERT(p == 197281);
+  string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+  Board b = FenToBoard(fen);
+  int depth = 4;
+  uint64_t p = Perft(b, depth);
+  ASSERT(p == 197281);
   // Board original = FenToBoard(fen);
   // ASSERT(b == original);
 }
