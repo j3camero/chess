@@ -6,5 +6,6 @@
 #include "std.h"
 
 uint64_t Perft(Board& b, int depth);
+uint64_t PerftWithDebugOutput(Board& b, int depth);
 
 #endif

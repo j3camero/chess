@@ -13,6 +13,7 @@ runtest: test
 	./test
 
 test: attack.o attack-test.o \
+	board.o \
 	check.o check-test.o \
   color.o color-test.o \
   fen.o fen-test.o \

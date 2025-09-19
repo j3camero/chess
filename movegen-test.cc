@@ -223,6 +223,13 @@ TEST(MovegenBlackEnPassantUnavailable) {
   ASSERT(!HasMove(moves, Move("d4e3")));
 }
 
+// TEST(MovegenA2A3) {
+//   const string fen = "";
+//   const Board b = FenToBoard(fen);
+//   const vector<Move> moves = GeneratePseudoLegalMoves(b);
+//   ASSERT(!HasMove(moves, Move("d4e3")));
+// }
+
 TEST(MovingIntoCheckIsIllegal) {
   // TODO: make unit test for full-on legal move generation (not pseudo legal).
   ASSERT(true);

@@ -33,6 +33,10 @@ struct Board {
   // Stores the locations of both kings.
   Point whiteKingLocation;
   Point blackKingLocation;
+
+  // Equality operator.
+  bool operator==(const Board& other) const;
+  bool operator!=(const Board& other) const;
 };
 
 #endif

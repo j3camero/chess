@@ -21,3 +21,24 @@ uint64_t Perft(Board& b, int depth) {
   }
   return sum;
 }
+
+uint64_t PerftWithDebugOutput(Board& b, int depth) {
+  if (depth == 0) {
+    return 1;
+  }
+  uint64_t sum = 0;
+  vector<Move> pseudo = GeneratePseudoLegalMoves(b);
+  for (const Move& move : pseudo) {
+    Irreversible irr = b.irreversible;
+    MakeMove(b, move);
+    //cout << move.ToString() << endl;
+    if (!IsOppInCheck(b)) {
+      uint64_t p = Perft(b, depth - 1);
+      cout << move.ToString() << ": " << p << endl;
+      sum += p;
+    }
+    UndoMove(b, move, irr);
+  }
+  cout << endl << "Nodes searched: " << sum << endl;
+  return sum;
+}
