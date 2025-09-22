@@ -29,6 +29,8 @@ void MakeMove(Board& b, const Move& m) {
   if (m.isCapture) {
     b.irreversible.halfmoveClock = 0;
   }
+  // Reset the en-passant file. This has to be done even for non-pawn moves.
+  b.irreversible.enPassantFile = -1;
   // Special handling for pawn moves.
   if (movingPiece == Pawn) {
     // Pawn moves reset halfmoveClock.
@@ -121,7 +123,11 @@ void UndoMove(Board& b, const Move& m, const Irreversible i) {
     int r = m.to.rank;
     if (movedPiece == Pawn && f == i.enPassantFile) {
       // En-passant.
-      r = m.from.rank;
+      int epRank = (sideThatMoved == White) ? 5 : 2;
+      // We must check for the correct ep file but also the correct rank.
+      if (r == epRank) {
+        r = m.from.rank;
+      }
     }
     b.piece[r][f] = m.capturedPiece;
     b.color[r][f] = sideThatDidNotMove;

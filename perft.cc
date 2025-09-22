@@ -31,7 +31,6 @@ uint64_t PerftWithDebugOutput(Board& b, int depth) {
   for (const Move& move : pseudo) {
     Irreversible irr = b.irreversible;
     MakeMove(b, move);
-    //cout << move.ToString() << endl;
     if (!IsOppInCheck(b)) {
       uint64_t p = Perft(b, depth - 1);
       cout << move.ToString() << ": " << p << endl;
