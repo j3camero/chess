@@ -64,3 +64,31 @@ TEST(MakeMoveA2A4B8C6A4A5B7B5) {
   Board original = FenToBoard(fen);
   ASSERT(b == original);
 }
+
+TEST(MakeMoveA2A4B8C6) {
+  string fen = "r1bqkbnr/pppppppp/2n5/8/P7/8/1PPPPPPP/RNBQKBNR w KQkq - 0 2";
+  Board b = FenToBoard(fen);
+  Irreversible i = b.irreversible;
+  Move m("b2b4");
+  MakeMove(b, m);
+  string exp = "r1bqkbnr/pppppppp/2n5/8/PP6/8/2PPPPPP/RNBQKBNR b KQkq b3 0 2";
+  Board expected = FenToBoard(exp);
+  ASSERT(b == expected);
+  UndoMove(b, m, i);
+  Board original = FenToBoard(fen);
+  ASSERT(b == original);
+}
+
+TEST(MakeMoveA2A4B8C6B2B4A7A5) {
+  string fen = "r1bqkbnr/1ppppppp/2n5/p7/PP6/8/2PPPPPP/RNBQKBNR w KQkq a6 0 3";
+  Board b = FenToBoard(fen);
+  Irreversible i = b.irreversible;
+  Move m("b4a5", true, Pawn);
+  MakeMove(b, m);
+  string exp = "r1bqkbnr/1ppppppp/2n5/P7/P7/8/2PPPPPP/RNBQKBNR b KQkq - 0 3";
+  Board expected = FenToBoard(exp);
+  ASSERT(b == expected);
+  UndoMove(b, m, i);
+  Board original = FenToBoard(fen);
+  ASSERT(b == original);
+}

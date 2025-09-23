@@ -38,7 +38,10 @@ void MakeMove(Board& b, const Move& m) {
     b.irreversible.halfmoveClock = 0;
     // En-passant capture.
     if (m.isCapture && m.to.file == epf) {
-      b.color[m.from.rank][m.to.file] = Empty;
+      int epRank = (sideToMove == White) ? 2 : 5;
+      if (m.to.rank == epRank) {
+        b.color[m.from.rank][m.to.file] = Empty;
+      }
     }
     // Detect pawn push. Set EP file. This has to go after en-passant capture
     // because it mutates the enPassantFile field.

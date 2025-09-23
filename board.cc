@@ -1,7 +1,7 @@
 #include "board.h"
 
 bool Board::operator==(const Board& other) const {
-  bool debug = true;
+  bool debug = false;
   if (turn != other.turn) {
     if (debug) cout << "turn" << endl;
     return false;
