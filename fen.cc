@@ -174,5 +174,68 @@ Board FenToBoard(const string& fen) {
 }
 
 string BoardToFen(const Board& b) {
-  throw "Not implemented.";
+  string fen = "";
+  for (int rank = 0; rank < 8; rank++) {
+    int emptyCount = 0;
+    for (int file = 0; file < 8; file++) {
+      Color c = b.color[rank][file];
+      if (c == Empty) {
+        emptyCount++;
+      } else {
+        if (emptyCount > 0) {
+          fen += to_string(emptyCount);
+          emptyCount = 0;
+        }
+        Piece p = b.piece[rank][file];
+        fen += PieceToChar(c, p);
+      }
+    }
+    if (emptyCount > 0) {
+      fen += to_string(emptyCount);
+    }
+    if (rank < 7) {
+      fen += "/";
+    }
+  }
+  fen += " ";
+  if (b.turn == White) {
+    fen += "w";
+  } else {
+    fen += "b";
+  }
+  fen += " ";
+  bool anyCastle = false;
+  if (b.irreversible.WhiteKingCastleAllowed()) {
+    fen += "K";
+    anyCastle = true;
+  }
+  if (b.irreversible.WhiteQueenCastleAllowed()) {
+    fen += "Q";
+    anyCastle = true;
+  }
+  if (b.irreversible.BlackKingCastleAllowed()) {
+    fen += "k";
+    anyCastle = true;
+  }
+  if (b.irreversible.BlackQueenCastleAllowed()) {
+    fen += "q";
+    anyCastle = true;
+  }
+  if (!anyCastle) {
+    fen += "-";
+  }
+  fen += " ";
+  int epf = b.irreversible.enPassantFile;
+  if (epf < 0) {
+    fen += "-";
+  } else {
+    int epRank = (b.opp == White) ? 5 : 2;
+    Point p(epRank, epf);
+    fen += p.ToString();
+  }
+  fen += " ";
+  fen += to_string((int)b.irreversible.halfmoveClock);
+  fen += " ";
+  fen += to_string(b.moveCount);
+  return fen;
 }

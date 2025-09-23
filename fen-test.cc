@@ -37,6 +37,8 @@ TEST(FenOpeningPosition) {
   ASSERT(b.moveCount == 1);
   ASSERT(b.whiteKingLocation == Point(7, 4));
   ASSERT(b.blackKingLocation == Point(0, 4));
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
 
 TEST(FenPositionWithAssortedScatteredPieces) {
@@ -60,6 +62,8 @@ TEST(FenPositionWithAssortedScatteredPieces) {
   ASSERT(b.piece[0][1] == Knight);
   ASSERT(b.whiteKingLocation == Point(6, 4));
   ASSERT(b.blackKingLocation == Point(2, 7));
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
 
 TEST(FenPositionWithOnlyOnePiece) {
@@ -73,6 +77,8 @@ TEST(FenPositionWithOnlyOnePiece) {
   ASSERT(b.color[4][2] == Empty);
   ASSERT(b.whiteKingLocation == Point(-1, -1));
   ASSERT(b.blackKingLocation == Point(3, 2));
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
 
 TEST(FenWhiteToMove) {
@@ -80,6 +86,8 @@ TEST(FenWhiteToMove) {
   Board b = FenToBoard(fen);
   ASSERT(b.turn == White);
   ASSERT(b.opp == Black);
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
 
 TEST(FenBlackToMove) {
@@ -87,6 +95,8 @@ TEST(FenBlackToMove) {
   Board b = FenToBoard(fen);
   ASSERT(b.turn == Black);
   ASSERT(b.opp == White);
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
 
 TEST(FenUnparseableSideToMove) {
@@ -101,6 +111,8 @@ TEST(FenCastle) {
   ASSERT(b.irreversible.WhiteQueenCastleAllowed());
   ASSERT(b.irreversible.BlackKingCastleAllowed());
   ASSERT(b.irreversible.BlackQueenCastleAllowed());
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
 
 TEST(FenNoCastleAllowed) {
@@ -110,6 +122,8 @@ TEST(FenNoCastleAllowed) {
   ASSERT(b.irreversible.WhiteQueenCastleAllowed() == false);
   ASSERT(b.irreversible.BlackKingCastleAllowed() == false);
   ASSERT(b.irreversible.BlackQueenCastleAllowed() == false);
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
 
 TEST(FenCastleUnparseable) {
@@ -118,12 +132,14 @@ TEST(FenCastleUnparseable) {
 }
 
 TEST(FenCastleMixedValues) {
-  const string fen = "8/8/8/8/8/8/8/8 b kQ - 0 1";
+  const string fen = "8/8/8/8/8/8/8/8 b Qk - 0 1";
   Board b = FenToBoard(fen);
   ASSERT(b.irreversible.WhiteKingCastleAllowed() == false);
   ASSERT(b.irreversible.WhiteQueenCastleAllowed() == true);
   ASSERT(b.irreversible.BlackKingCastleAllowed() == true);
   ASSERT(b.irreversible.BlackQueenCastleAllowed() == false);
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
 
 TEST(FenCastleBlackQueen) {
@@ -133,24 +149,32 @@ TEST(FenCastleBlackQueen) {
   ASSERT(b.irreversible.WhiteQueenCastleAllowed() == false);
   ASSERT(b.irreversible.BlackKingCastleAllowed() == false);
   ASSERT(b.irreversible.BlackQueenCastleAllowed() == true);
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
 
 TEST(FenEnPassantWhiteSide) {
-  const string fen = "8/8/8/8/8/8/8/8 w - e5 7 1";
+  const string fen = "8/8/8/8/8/8/8/8 w - e6 7 1";
   Board b = FenToBoard(fen);
   ASSERT(b.irreversible.enPassantFile == 4);
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
 
 TEST(FenEnPassantBlackSide) {
-  const string fen = "8/8/8/8/8/8/8/8 b - h4 7 1";
+  const string fen = "8/8/8/8/8/8/8/8 b - h3 7 1";
   Board b = FenToBoard(fen);
   ASSERT(b.irreversible.enPassantFile == 7);
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
 
 TEST(FenEnPassantUnavailable) {
   const string fen = "8/8/8/8/8/8/8/8 b - - 7 1";
   Board b = FenToBoard(fen);
   ASSERT(b.irreversible.enPassantFile == -1);
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
 
 TEST(FenEnPassantUnparseable) {
@@ -162,10 +186,14 @@ TEST(FenHalfMoveClock) {
   const string fen = "8/8/8/8/8/8/8/8 w KQkq - 7 1";
   Board b = FenToBoard(fen);
   ASSERT(b.irreversible.halfmoveClock == 7);
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
 
 TEST(FenMoveCount) {
   const string fen = "8/8/8/8/8/8/8/8 b KQkq - 7 42";
   Board b = FenToBoard(fen);
   ASSERT(b.moveCount == 42);
+  string outputShouldMatchTheInput = BoardToFen(b);
+  ASSERT(outputShouldMatchTheInput == fen);
 }
