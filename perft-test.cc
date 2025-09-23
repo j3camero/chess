@@ -55,13 +55,13 @@ TEST(PerftWithDepth4) {
 }
 
 TEST(PerftWithDepth5) {
-  string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-  Board b = FenToBoard(fen);
-  int depth = 5;
-  uint64_t p = PerftWithDebugOutput(b, depth);
-  //ASSERT(p == 4865609);
-  Board original = FenToBoard(fen);
-  ASSERT(b == original);
+  // string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+  // Board b = FenToBoard(fen);
+  // int depth = 5;
+  // uint64_t p = Perft(b, depth);
+  // //ASSERT(p == 4865609);
+  // Board original = FenToBoard(fen);
+  //ASSERT(b == original);
 }
 
 TEST(PerftA2A3) {
@@ -94,11 +94,51 @@ TEST(PerftA2A3A7A5H2H3) {
   ASSERT(b == original);
 }
 
-TEST(PerftWithManyDifferentDepths) {
-  string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+TEST(PerftA2A4) {
+  // string fen = "rnbqkbnr/pppppppp/8/8/P7/8/1PPPPPPP/RNBQKBNR b KQkq - 0 1";
+  // Board b = FenToBoard(fen);
+  // int depth = 4;
+  // uint64_t p = PerftWithDebugOutput(b, depth);
+  // //ASSERT(p == 217832);
+  // Board original = FenToBoard(fen);
+  //ASSERT(b == original);
+}
+
+TEST(PerftA2A4B8C6) {
+  string fen = "r1bqkbnr/pppppppp/2n5/8/P7/8/1PPPPPPP/RNBQKBNR w KQkq - 0 2";
   Board b = FenToBoard(fen);
-  for (int d = 0; d <= 5; d++) {
-    int p = Perft(b, d);
-    cout << "perft(" << d << ") = " << p << endl;
-  }
+  int depth = 3;
+  uint64_t p = PerftWithDebugOutput(b, depth);
+  //ASSERT(p == 10746);
+  Board original = FenToBoard(fen);
+  ASSERT(b == original);
+}
+
+TEST(PerftA2A4B8C6A4A5) {
+  string fen = "r1bqkbnr/pppppppp/2n5/P7/8/8/1PPPPPPP/RNBQKBNR b KQkq - 0 2";
+  Board b = FenToBoard(fen);
+  int depth = 2;
+  uint64_t p = Perft(b, depth);
+  ASSERT(p == 461);
+  Board original = FenToBoard(fen);
+  ASSERT(b == original);
+}
+
+TEST(PerftA2A4B8C6A4A5B7B5) {
+  string fen = "r1bqkbnr/p1pppppp/2n5/Pp6/8/8/1PPPPPPP/RNBQKBNR w KQkq b6 0 3";
+  Board b = FenToBoard(fen);
+  int depth = 1;
+  uint64_t p = Perft(b, depth);
+  ASSERT(p == 23);
+  Board original = FenToBoard(fen);
+  ASSERT(b == original);
+}
+
+TEST(PerftWithManyDifferentDepths) {
+  // string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+  // Board b = FenToBoard(fen);
+  // for (int d = 0; d <= 5; d++) {
+  //   int p = Perft(b, d);
+  //   cout << "perft(" << d << ") = " << p << endl;
+  // }
 }

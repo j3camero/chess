@@ -26,6 +26,7 @@ uint64_t PerftWithDebugOutput(Board& b, int depth) {
   if (depth == 0) {
     return 1;
   }
+  Board original = b;
   uint64_t sum = 0;
   vector<Move> pseudo = GeneratePseudoLegalMoves(b);
   for (const Move& move : pseudo) {
@@ -37,6 +38,9 @@ uint64_t PerftWithDebugOutput(Board& b, int depth) {
       sum += p;
     }
     UndoMove(b, move, irr);
+    if (b != original) {
+      cout << "WARNING: UndoMove error caused by move " << move.ToString() << endl;
+    }
   }
   cout << endl << "Nodes searched: " << sum << endl;
   return sum;

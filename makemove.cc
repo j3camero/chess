@@ -8,6 +8,7 @@
 void MakeMove(Board& b, const Move& m) {
   Color sideToMove = b.turn;
   Piece movingPiece = b.piece[m.from.rank][m.from.file];
+  int epf = b.irreversible.enPassantFile;
   if (m.isPromotion) {
     // Pawn promotion.
     b.piece[m.to.rank][m.to.file] = m.promotionPiece;
@@ -36,7 +37,7 @@ void MakeMove(Board& b, const Move& m) {
     // Pawn moves reset halfmoveClock.
     b.irreversible.halfmoveClock = 0;
     // En-passant capture.
-    if (m.isCapture && m.to.file == b.irreversible.enPassantFile) {
+    if (m.isCapture && m.to.file == epf) {
       b.color[m.from.rank][m.to.file] = Empty;
     }
     // Detect pawn push. Set EP file. This has to go after en-passant capture
@@ -123,7 +124,7 @@ void UndoMove(Board& b, const Move& m, const Irreversible i) {
     int r = m.to.rank;
     if (movedPiece == Pawn && f == i.enPassantFile) {
       // En-passant.
-      int epRank = (sideThatMoved == White) ? 5 : 2;
+      int epRank = (sideThatMoved == White) ? 2 : 5;
       // We must check for the correct ep file but also the correct rank.
       if (r == epRank) {
         r = m.from.rank;
