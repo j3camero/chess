@@ -7,5 +7,6 @@
 
 uint64_t Perft(Board& b, int depth);
 uint64_t PerftWithDebugOutput(Board& b, int depth);
+uint64_t PerftWithMemory(Board& b, int depth);
 
 #endif
