@@ -2,6 +2,7 @@
 #define _STD_H_
 
 #include <algorithm>
+#include <chrono>
 #include <cstdint>
 #include <iostream>
 #include <map>
