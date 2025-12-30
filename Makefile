@@ -1,10 +1,26 @@
 CC=$(CXX)
 CPPFLAGS = -Wall #-O3 -funroll-loops
 
-all: randombot runtest
+all: perft-benchmark randombot runtest
 
 clean:
 	rm -rf *.o *.s *~ randombot test
+
+perft-benchmark: attack.o \
+	board.o \
+	check.o \
+  color.o \
+  fen.o \
+  irreversible.o \
+	makemove.o \
+  move.o \
+  movegen.o \
+	perft.o \
+	perft-benchmark.o \
+  point.o \
+  piece.o \
+  piece-moves.o \
+  string-util.o
 
 randombot: randombot.o \
            string-util.o

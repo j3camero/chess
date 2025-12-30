@@ -54,19 +54,6 @@ TEST(PerftWithDepth4) {
   ASSERT(b == original);
 }
 
-// This test takes too long to run so it has been disabled. Uncomment if needed
-// for debugging. The plan is to make a memory-assisted perft to check these
-// higher perft numbers more efficiently.
-// TEST(PerftWithDepth5) {
-//   string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-//   Board b = FenToBoard(fen);
-//   int depth = 5;
-//   uint64_t p = Perft(b, depth);
-//   ASSERT(p == 4865609);
-//   Board original = FenToBoard(fen);
-//   ASSERT(b == original);
-// }
-
 TEST(PerftA2A3) {
   string fen = "rnbqkbnr/pppppppp/8/8/8/P7/1PPPPPPP/RNBQKBNR b KQkq - 0 1";
   Board b = FenToBoard(fen);
