@@ -26,6 +26,8 @@ void MakeMove(Board& b, const Move& m) {
   if (sideToMove == Black) {
     b.moveCount++;
   }
+  // Increment the halfmoveClock.
+  b.irreversible.halfmoveClock++;
   // Captures reset the halfmoveClock.
   if (m.isCapture) {
     b.irreversible.halfmoveClock = 0;
@@ -75,14 +77,14 @@ void MakeMove(Board& b, const Move& m) {
       b.irreversible.ClearWhiteQueenCastle();
       if (m.from.file == 4 && m.to.file == 6) {
         // King-side castle. Move rook.
-        b.color[0][7] = Empty;
-        b.color[0][5] = White;
-        b.piece[0][5] = Rook;
+        b.color[7][7] = Empty;
+        b.color[7][5] = White;
+        b.piece[7][5] = Rook;
       } else if (m.from.file == 4 && m.to.file == 2) {
         // Queen-side castle. Move rook.
-        b.color[0][0] = Empty;
-        b.color[0][3] = White;
-        b.piece[0][3] = Rook;
+        b.color[7][0] = Empty;
+        b.color[7][3] = White;
+        b.piece[7][3] = Rook;
       }
     } else {
       b.blackKingLocation = m.to;
@@ -90,14 +92,14 @@ void MakeMove(Board& b, const Move& m) {
       b.irreversible.ClearBlackQueenCastle();
       if (m.from.file == 4 && m.to.file == 6) {
         // King-side castle. Move rook.
-        b.color[7][7] = Empty;
-        b.color[7][5] = Black;
-        b.piece[7][5] = Rook;
+        b.color[0][7] = Empty;
+        b.color[0][5] = Black;
+        b.piece[0][5] = Rook;
       } else if (m.from.file == 4 && m.to.file == 2) {
         // Queen-side castle. Move rook.
-        b.color[7][0] = Empty;
-        b.color[7][3] = Black;
-        b.piece[7][3] = Rook;
+        b.color[0][0] = Empty;
+        b.color[0][3] = Black;
+        b.piece[0][3] = Rook;
       }
     }
   }

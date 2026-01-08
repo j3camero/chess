@@ -92,3 +92,18 @@ TEST(MakeMoveA2A4B8C6B2B4A7A5) {
   Board original = FenToBoard(fen);
   ASSERT(b == original);
 }
+
+TEST(MakeMoveKiwipeteCastle) {
+  string fen = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1";
+  Board b = FenToBoard(fen);
+  Irreversible i = b.irreversible;
+  Move m("e1g1");
+  MakeMove(b, m);
+  cout << BoardToFen(b) << endl;
+  string exp = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R4RK1 b kq - 1 1";
+  Board expected = FenToBoard(exp);
+  ASSERT(b == expected);
+  UndoMove(b, m, i);
+  Board original = FenToBoard(fen);
+  ASSERT(b == original);
+}
