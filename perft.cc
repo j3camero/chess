@@ -94,3 +94,32 @@ uint64_t PerftWithMemory(Board& b, int depth) {
   // }
   return p;
 }
+
+bool FindUndoMoveInconsistencies(Board& b, int depth) {
+  if (depth == 0) {
+    return false;
+  }
+  Board original = b;
+  vector<Move> pseudo = GeneratePseudoLegalMoves(b);
+  for (const Move& move : pseudo) {
+    Irreversible irr = b.irreversible;
+    MakeMove(b, move);
+    if (!IsOppInCheck(b)) {
+      bool found = FindUndoMoveInconsistencies(b, depth - 1);
+      if (found) {
+        return true;
+      }
+    }
+    UndoMove(b, move, irr);
+    if (b != original) {
+      cout << "WARNING: UndoMove error. Original position and resulting position:" << endl
+           << BoardToFen(original) << endl
+           << BoardToFen(b) << endl
+           << "Move: " << move.ToString() << endl;
+      MakeMove(original, move);
+      cout << "Position after move:" << endl << BoardToFen(original) << endl;
+      return true;
+    }
+  }
+  return false;
+}

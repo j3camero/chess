@@ -4,6 +4,7 @@
 #include "makemove.h"
 #include "move.h"
 #include "piece.h"
+#include "piece-moves.h"
 
 void MakeMove(Board& b, const Move& m) {
   Color sideToMove = b.turn;
@@ -34,6 +35,16 @@ void MakeMove(Board& b, const Move& m) {
   }
   // Reset the en-passant file. This has to be done even for non-pawn moves.
   b.irreversible.enPassantFile = -1;
+  // Clear castling rights if any piece moves to or from any corner square.
+  if (m.from == a1 || m.to == a1) {
+    b.irreversible.ClearWhiteQueenCastle();
+  } else if (m.from == h1 || m.to == h1) {
+    b.irreversible.ClearWhiteKingCastle();
+  } else if (m.from == a8 || m.to == a8) {
+    b.irreversible.ClearBlackQueenCastle();
+  } else if (m.from == h8 || m.to == h8) {
+    b.irreversible.ClearBlackKingCastle();
+  }
   // Special handling for pawn moves.
   if (movingPiece == Pawn) {
     // Pawn moves reset halfmoveClock.
@@ -49,24 +60,6 @@ void MakeMove(Board& b, const Move& m) {
     // because it mutates the enPassantFile field.
     if (m.to.rank == m.from.rank + 2 || m.to.rank == m.from.rank - 2) {
       b.irreversible.enPassantFile = m.to.file;
-    }
-  }
-  // Special handling for rook moves.
-  else if (movingPiece == Rook) {
-    if (sideToMove == White) {
-      if (m.from.rank == 0 && m.from.file == 0) {
-        b.irreversible.ClearWhiteQueenCastle();
-      }
-      if (m.from.rank == 0 && m.from.file == 7) {
-        b.irreversible.ClearWhiteKingCastle();
-      }
-    } else {
-      if (m.from.rank == 7 && m.from.file == 0) {
-        b.irreversible.ClearBlackQueenCastle();
-      }
-      if (m.from.rank == 7 && m.from.file == 7) {
-        b.irreversible.ClearBlackKingCastle();
-      }
     }
   }
   // Special handling for king moves.
