@@ -144,21 +144,6 @@ TEST(PerftA2A4B8C6B2B4A7A5) {
   ASSERT(b == original);
 }
 
-TEST(PerftWithMemory) {
-  string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-  Board b = FenToBoard(fen);
-  ASSERT(PerftWithMemory(b, 0) == 1);
-  ASSERT(PerftWithMemory(b, 1) == 20);
-  ASSERT(PerftWithMemory(b, 2) == 400);
-  ASSERT(PerftWithMemory(b, 3) == 8902);
-  ASSERT(PerftWithMemory(b, 4) == 197281);
-  // ASSERT(PerftWithMemory(b, 5) == 4865609);
-  // ASSERT(PerftWithMemory(b, 6) == 119060324);
-  // ASSERT(PerftWithMemory(b, 7) == 3195901860);
-  Board original = FenToBoard(fen);
-  ASSERT(b == original);
-}
-
 TEST(PerftPosition2) {
   string fen = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1";
   Board b = FenToBoard(fen);
@@ -183,6 +168,21 @@ TEST(PerftPosition3) {
   //ASSERT(Perft(b, 4) == 43238);
   //ASSERT(Perft(b, 5) == 193690690);
   //ASSERT(Perft(b, 6) == 8031647685);
+  Board original = FenToBoard(fen);
+  ASSERT(b == original);
+}
+
+TEST(PerftWithMemory) {
+  string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+  Board b = FenToBoard(fen);
+  ASSERT(PerftWithMemory(b, 0) == 1);
+  ASSERT(PerftWithMemory(b, 1) == 20);
+  ASSERT(PerftWithMemory(b, 2) == 400);
+  ASSERT(PerftWithMemory(b, 3) == 8902);
+  ASSERT(PerftWithMemory(b, 4) == 197281);
+  // ASSERT(PerftWithMemory(b, 5) == 4865609);
+  // ASSERT(PerftWithMemory(b, 6) == 119060324);
+  // ASSERT(PerftWithMemory(b, 7) == 3195901860);
   Board original = FenToBoard(fen);
   ASSERT(b == original);
 }
