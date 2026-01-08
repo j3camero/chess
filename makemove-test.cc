@@ -99,7 +99,6 @@ TEST(MakeMoveKiwipeteCastle) {
   Irreversible i = b.irreversible;
   Move m("e1g1");
   MakeMove(b, m);
-  cout << BoardToFen(b) << endl;
   string exp = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R4RK1 b kq - 1 1";
   Board expected = FenToBoard(exp);
   ASSERT(b == expected);
