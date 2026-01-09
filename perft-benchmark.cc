@@ -12,13 +12,11 @@ int main() {
     auto endTime = chrono::high_resolution_clock::now();
     auto elapsedTime = endTime - startTime;
     auto ms = chrono::duration_cast<chrono::milliseconds>(elapsedTime).count();
-    cout << "perft(" << depth << ") = " << p << " [" << ms << "ms]" << endl;
+    auto knps = (ms == 0) ? 0 : (p / ms);
+    cout << "perft(" << depth << ") = " << p << " - " << ms << " ms - " << knps << " knps" << endl;
     Board original = FenToBoard(fen);
     if (b != original) {
       cout << "Board does not match original. This is bad!" << endl;
-    }
-    if (ms > 10000) {
-      break;
     }
   }
   return 0;
