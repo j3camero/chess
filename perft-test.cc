@@ -144,19 +144,37 @@ TEST(PerftA2A4B8C6B2B4A7A5) {
   ASSERT(b == original);
 }
 
-TEST(PerftPosition2) {
+TEST(PerftKiwipete) {
   string fen = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1";
   Board b = FenToBoard(fen);
-  //FindUndoMoveInconsistencies(b, 5);
   ASSERT(Perft(b, 0) == 1);
   ASSERT(Perft(b, 1) == 48);
   ASSERT(Perft(b, 2) == 2039);
-  //ASSERT(PerftWithDebugOutput(b, 3) == 97862);
-  //ASSERT(PerftWithDebugOutput(b, 4) == 4085603);
+  ASSERT(Perft(b, 3) == 97862);
+  //ASSERT(Perft(b, 4) == 4085603);
   //ASSERT(Perft(b, 5) == 193690690);
   //ASSERT(Perft(b, 6) == 8031647685);
-  //Board original = FenToBoard(fen);
-  //ASSERT(b == original);
+  Board original = FenToBoard(fen);
+  ASSERT(b == original);
+}
+
+TEST(PerftKiwipeteC3B1) {
+  string fen = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/5Q1p/PPPBBPPP/RN2K2R b KQkq - 1 1";
+  Board b = FenToBoard(fen);
+  ASSERT(Perft(b, 0) == 1);
+  ASSERT(Perft(b, 1) == 42);
+  ASSERT(Perft(b, 2) == 2038);
+  Board original = FenToBoard(fen);
+  ASSERT(b == original);
+}
+
+TEST(PerftKiwipeteC3B1A6B5) {
+  string fen = "r3k2r/p1ppqpb1/1n2pnp1/1b1PN3/1p2P3/5Q1p/PPPBBPPP/RN2K2R w KQkq - 2 2";
+  Board b = FenToBoard(fen);
+  ASSERT(Perft(b, 0) == 1);
+  ASSERT(Perft(b, 1) == 48);
+  Board original = FenToBoard(fen);
+  ASSERT(b == original);
 }
 
 TEST(PerftPosition3) {
@@ -195,7 +213,7 @@ TEST(FindUndoMoveBugsOpeningPosition) {
   ASSERT(!foundBugs);
 }
 
-TEST(FindUndoMoveBugsPosition2) {
+TEST(FindUndoMoveBugsKiwipete) {
   string fen = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1";
   Board b = FenToBoard(fen);
   bool foundBugs = FindUndoMoveInconsistencies(b, 3);

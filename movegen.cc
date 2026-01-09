@@ -207,21 +207,19 @@ void GenerateCastleMoves(const Board& board, vector<Move>& moves) {
     if (e1Attacked) {
       return;
     }
-    if (board.irreversible.WhiteKingCastleAllowed()) {
-      if (board.color[7][5] == Empty && board.color[7][6] == Empty) {
-        bool f1Attacked = IsSquareUnderAttackByColor(board, f1, Black);
-        if (!f1Attacked) {
-          moves.push_back(whiteKingCastle);
-        }
-      }
+    if (board.irreversible.WhiteKingCastleAllowed() &&
+        board.color[7][5] == Empty &&
+        board.color[7][6] == Empty &&
+        !IsSquareUnderAttackByColor(board, f1, Black)) {
+      moves.push_back(whiteKingCastle);
     }
-    if (board.irreversible.WhiteQueenCastleAllowed()) {
-      if (board.color[7][3] == Empty && board.color[7][2] == Empty) {
-        bool d1Attacked = IsSquareUnderAttackByColor(board, d1, Black);
-        if (!d1Attacked) {
-          moves.push_back(whiteQueenCastle);
-        }
-      }
+    if (board.irreversible.WhiteQueenCastleAllowed() &&
+        board.color[7][3] == Empty &&
+        board.color[7][2] == Empty &&
+        board.color[7][1] == Empty &&
+        !IsSquareUnderAttackByColor(board, d1, Black) &&
+        !IsSquareUnderAttackByColor(board, c1, Black)) {
+      moves.push_back(whiteQueenCastle);
     }
   } else {
     if (!board.irreversible.BlackKingCastleAllowed() && !board.irreversible.BlackQueenCastleAllowed()) {
@@ -231,21 +229,18 @@ void GenerateCastleMoves(const Board& board, vector<Move>& moves) {
     if (e8Attacked) {
       return;
     }
-    if (board.irreversible.BlackKingCastleAllowed()) {
-      if (board.color[0][5] == Empty && board.color[0][6] == Empty) {
-        bool f8Attacked = IsSquareUnderAttackByColor(board, f8, White);
-        if (!f8Attacked) {
-          moves.push_back(blackKingCastle);
-        }
-      }
+    if (board.irreversible.BlackKingCastleAllowed() &&
+        board.color[0][5] == Empty &&
+        board.color[0][6] == Empty &&
+        !IsSquareUnderAttackByColor(board, f8, White)) {
+      moves.push_back(blackKingCastle);
     }
-    if (board.irreversible.BlackQueenCastleAllowed()) {
-      if (board.color[0][3] == Empty && board.color[0][2] == Empty) {
-        bool d8Attacked = IsSquareUnderAttackByColor(board, d8, White);
-        if (!d8Attacked) {
-          moves.push_back(blackQueenCastle);
-        }
-      }
+    if (board.irreversible.BlackQueenCastleAllowed() &&
+        board.color[0][3] == Empty &&
+        board.color[0][2] == Empty &&
+        board.color[0][1] == Empty &&
+        !IsSquareUnderAttackByColor(board, d8, White)) {
+      moves.push_back(blackQueenCastle);
     }
   }
 }

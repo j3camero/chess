@@ -1,5 +1,5 @@
 CC=$(CXX)
-CPPFLAGS = -Wall #-O3 -funroll-loops
+CPPFLAGS = -Wall -O3 -funroll-loops
 
 all: perft-benchmark randombot runtest
 

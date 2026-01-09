@@ -227,3 +227,11 @@ TEST(MovingIntoCheckIsIllegal) {
   // TODO: make unit test for full-on legal move generation (not pseudo legal).
   ASSERT(true);
 }
+
+TEST(MovegenKiwipeteC3B1A6B5) {
+  string fen = "r3k2r/p1ppqpb1/1n2pnp1/1b1PN3/1p2P3/5Q1p/PPPBBPPP/RN2K2R w KQkq - 2 2";
+  Board b = FenToBoard(fen);
+  const vector<Move> moves = GenerateLegalMoves(b);
+  ASSERT(!HasMove(moves, Move("e1c1")));
+  ASSERT(moves.size() == 48);
+}
