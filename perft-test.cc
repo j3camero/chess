@@ -220,6 +220,19 @@ TEST(PerftPosition5) {
   ASSERT(b == original);
 }
 
+TEST(PerftPosition6) {
+  string fen = "r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10";
+  Board b = FenToBoard(fen);
+  ASSERT(Perft(b, 0) == 1);
+  ASSERT(Perft(b, 1) == 46);
+  ASSERT(Perft(b, 2) == 2079);
+  ASSERT(Perft(b, 3) == 89890);
+  ASSERT(Perft(b, 4) == 3894594);
+  //ASSERT(Perft(b, 5) == 164075551);
+  Board original = FenToBoard(fen);
+  ASSERT(b == original);
+}
+
 TEST(PerftWithMemory) {
   string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
   Board b = FenToBoard(fen);
