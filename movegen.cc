@@ -210,7 +210,8 @@ void GenerateCastleMoves(const Board& board, vector<Move>& moves) {
     if (board.irreversible.WhiteKingCastleAllowed() &&
         board.color[7][5] == Empty &&
         board.color[7][6] == Empty &&
-        !IsSquareUnderAttackByColor(board, f1, Black)) {
+        !IsSquareUnderAttackByColor(board, f1, Black) &&
+        !IsSquareUnderAttackByColor(board, g1, Black)) {
       moves.push_back(whiteKingCastle);
     }
     if (board.irreversible.WhiteQueenCastleAllowed() &&
@@ -232,14 +233,16 @@ void GenerateCastleMoves(const Board& board, vector<Move>& moves) {
     if (board.irreversible.BlackKingCastleAllowed() &&
         board.color[0][5] == Empty &&
         board.color[0][6] == Empty &&
-        !IsSquareUnderAttackByColor(board, f8, White)) {
+        !IsSquareUnderAttackByColor(board, f8, White) &&
+        !IsSquareUnderAttackByColor(board, g8, White)) {
       moves.push_back(blackKingCastle);
     }
     if (board.irreversible.BlackQueenCastleAllowed() &&
         board.color[0][3] == Empty &&
         board.color[0][2] == Empty &&
         board.color[0][1] == Empty &&
-        !IsSquareUnderAttackByColor(board, d8, White)) {
+        !IsSquareUnderAttackByColor(board, d8, White) &&
+        !IsSquareUnderAttackByColor(board, c8, White)) {
       moves.push_back(blackQueenCastle);
     }
   }
