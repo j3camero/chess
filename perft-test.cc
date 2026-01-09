@@ -183,10 +183,12 @@ TEST(PerftPosition3) {
   ASSERT(Perft(b, 0) == 1);
   ASSERT(Perft(b, 1) == 14);
   ASSERT(Perft(b, 2) == 191);
-  //ASSERT(Perft(b, 3) == 1812);
-  //ASSERT(Perft(b, 4) == 43238);
-  //ASSERT(Perft(b, 5) == 193690690);
-  //ASSERT(Perft(b, 6) == 8031647685);
+  ASSERT(Perft(b, 3) == 2812);
+  ASSERT(Perft(b, 4) == 43238);
+  ASSERT(Perft(b, 5) == 674624);
+  ASSERT(Perft(b, 6) == 11030083);
+  ASSERT(Perft(b, 7) == 178633661);
+  //ASSERT(Perft(b, 8) == 3009794393);
   Board original = FenToBoard(fen);
   ASSERT(b == original);
 }
