@@ -41,6 +41,10 @@ randombot
 test-main
 test
 perft-benchmark
+perft-marcelk-suite
+
+# Chess EPD files
+*.epd
 
 # vscode auto-generated stuff
 .vscode/
