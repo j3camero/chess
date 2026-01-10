@@ -47892,7 +47892,7 @@ int main() {
              << "actual:   " << actual << endl;
         return 1;
       }
-      //cout << "depth " << depth << " pos " << i << " of " << n << " " << actual << " = " << expected<< endl;
+      cout << "depth " << depth << " pos " << i << " of " << n << " " << actual << " = " << expected<< endl;
     }
   }
   return 0;
