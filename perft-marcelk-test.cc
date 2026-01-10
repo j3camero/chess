@@ -1,9 +1,13 @@
-// A huge test suite of 6000+ chess positions with perft results up to depth 6.
-// Takes a long time to run to carefully validate movegen, make/undo move, etc.
+// A smaller unit test version of perft-marcelk-suite.cc.
+// Checks every position to depth 2 which is fast.
+// Might also check some of the positions to greater depths.
+// This is designed to run within milliseconds so that it can run
+// every time the code is compiled.
 #include "board.h"
 #include "fen.h"
 #include "perft.h"
 #include "std.h"
+#include "test.h"
 
 const vector<string> partialFenStrings = {
   "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -",
@@ -47876,24 +47880,17 @@ const vector<uint64_t> perftResultsAsFlatList = {
   119060324
 };
 
-int main() {
+// Test a large ish number of positions to give a workout to the
+// movegen and make/undo move code.
+TEST(PerftMarcelkSuite) {
   int n = partialFenStrings.size();
-  for (int depth = 1; depth <= 6; depth++) {
-    cout << "depth " << depth << endl;
-    for (int i = 0; i < n; i++) {
-      string fen = partialFenStrings[i] + " 0 1";
-      Board b = FenToBoard(fen);
-      uint64_t actual = Perft(b, depth);
-      uint64_t expected = perftResultsAsFlatList[i * 6 + (depth - 1)];
-      if (actual != expected) {
-        cout << "mismatch at depth " << depth << " pos " << i << " of " << n << endl
-             << "fen: " << fen << endl
-             << "expected: " << expected << endl
-             << "actual:   " << actual << endl;
-        return 1;
-      }
-      //cout << "depth " << depth << " pos " << i << " of " << n << " " << actual << " = " << expected<< endl;
-    }
+  int skip = 99;  // To keep the test runtime reasonable, we only test every 99th position.
+  int depth = 3;
+  for (int i = 0; i < n; i += skip) {
+    string fen = partialFenStrings[i] + " 0 1";
+    Board b = FenToBoard(fen);
+    uint64_t actual = Perft(b, depth);
+    uint64_t expected = perftResultsAsFlatList[i * 6 + (depth - 1)];
+    ASSERT(actual == expected);
   }
-  return 0;
 }

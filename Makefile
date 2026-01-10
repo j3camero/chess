@@ -56,7 +56,7 @@ test: attack.o attack-test.o \
 	makemove.o makemove-test.o \
   move.o move-test.o \
   movegen.o movegen-test.o \
-	perft.o perft-test.o \
+	perft.o perft-test.o perft-marcelk-test.o \
   point.o point-test.o \
   piece.o piece-test.o \
   piece-moves.o \
