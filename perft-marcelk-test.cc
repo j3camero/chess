@@ -47882,9 +47882,22 @@ const vector<uint64_t> perftResultsAsFlatList = {
 
 // Test a large ish number of positions to give a workout to the
 // movegen and make/undo move code.
-TEST(PerftMarcelkSuite) {
+TEST(PerftMarcelkSuiteDepth2) {
   int n = partialFenStrings.size();
-  int skip = 99;  // To keep the test runtime reasonable, we only test every 99th position.
+  int depth = 2;
+  for (int i = 0; i < n; i++) {
+    string fen = partialFenStrings[i] + " 0 1";
+    Board b = FenToBoard(fen);
+    uint64_t actual = Perft(b, depth);
+    uint64_t expected = perftResultsAsFlatList[i * 6 + (depth - 1)];
+    ASSERT(actual == expected);
+  }
+}
+
+// Test a smaller number of positions at depth 3 to keep the test runtime reasonable.
+TEST(PerftMarcelkSuiteDepth3) {
+  int n = partialFenStrings.size();
+  int skip = 99;
   int depth = 3;
   for (int i = 0; i < n; i += skip) {
     string fen = partialFenStrings[i] + " 0 1";
