@@ -38,11 +38,14 @@ void MakeMove(Board& b, const Move& m) {
   // Clear castling rights if any piece moves to or from any corner square.
   if (m.from == a1 || m.to == a1) {
     b.irreversible.ClearWhiteQueenCastle();
-  } else if (m.from == h1 || m.to == h1) {
+  }
+  if (m.from == h1 || m.to == h1) {
     b.irreversible.ClearWhiteKingCastle();
-  } else if (m.from == a8 || m.to == a8) {
+  }
+  if (m.from == a8 || m.to == a8) {
     b.irreversible.ClearBlackQueenCastle();
-  } else if (m.from == h8 || m.to == h8) {
+  }
+  if (m.from == h8 || m.to == h8) {
     b.irreversible.ClearBlackKingCastle();
   }
   // Special handling for pawn moves.

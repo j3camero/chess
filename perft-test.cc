@@ -261,3 +261,11 @@ TEST(FindUndoMoveBugsKiwipete) {
   bool foundBugs = FindUndoMoveInconsistencies(b, 3);
   ASSERT(!foundBugs);
 }
+
+TEST(PerftPosition7) {
+  //string fen = "rn2kbnr/p1q1ppp1/1ppp3p/8/4B1b1/2P4P/PPQPPP2/RNB1K1NR w KQkq - 0 1";
+  //Board b = FenToBoard(fen);
+  //bool foundBugs = FindUndoMoveInconsistencies(b, 6);
+  //ASSERT(!foundBugs);
+  //ASSERT(Perft(b, 6) == 622445426);
+}
