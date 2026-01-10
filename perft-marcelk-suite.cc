@@ -47878,11 +47878,11 @@ const vector<uint64_t> perftResultsAsFlatList = {
 
 int main() {
   int n = partialFenStrings.size();
-  for (int depth = 1; depth <= 6; depth++) {
-    cout << "depth " << depth << endl;
-    for (int i = 0; i < n; i++) {
-      string fen = partialFenStrings[i] + " 0 1";
-      Board b = FenToBoard(fen);
+  for (int i = 0; i < n; i++) {
+    cout << "position " << i << " of " << n << endl;
+    string fen = partialFenStrings[i] + " 0 1";
+    Board b = FenToBoard(fen);
+    for (int depth = 1; depth <= 6; depth++) {
       uint64_t actual = Perft(b, depth);
       uint64_t expected = perftResultsAsFlatList[i * 6 + (depth - 1)];
       if (actual != expected) {
@@ -47892,7 +47892,7 @@ int main() {
              << "actual:   " << actual << endl;
         return 1;
       }
-      cout << "depth " << depth << " pos " << i << " of " << n << " " << actual << " = " << expected<< endl;
+      cout << "depth " << depth << " [" << actual << " = " << expected << "]" << endl;
     }
   }
   return 0;
