@@ -1,9 +1,31 @@
+#include "board.h"
+#include "fen.h"
+#include "makemove.h"
+#include "movegen.h"
 #include "std.h"
 #include "string-util.h"
 
+// The chess board.
+Board b;
+
+void ResetBoard() {
+  string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+  b = FenToBoard(fen);
+}
+
 // Command is "go". Output a randomly chosen legal move.
 void Go(const string& command) {
-  cout << "bestmove e2e4" << endl;
+  vector<Move> moves = GenerateLegalMoves(b);
+  if (moves.empty()) {
+    return;
+  }
+  random_device rd;
+  mt19937 gen(rd());
+  uniform_int_distribution<size_t> dist(0, moves.size() - 1);
+  size_t randomIndex = dist(gen);
+  Move randomMove = moves[randomIndex];
+  string moveString = randomMove.ToString();
+  cout << "bestmove " << moveString << endl;
 }
 
 // Command is "isready". Answer with "readyok".
@@ -14,6 +36,23 @@ void IsReady(const string& command) {
 // Command is "position". Set up a board position.
 void Position(const string& command) {
   // startpos moves || fen
+  vector<string> tokens = StringUtil::Split(command);
+  if (tokens[1] == "startpos") {
+    ResetBoard();
+    if (tokens[2] == "moves") {
+      for (size_t i = 3; i < tokens.size(); i++) {
+        string chessMoveInUciNotation = tokens[i];
+        Move move(chessMoveInUciNotation);
+        MakeMove(b, move);
+      }
+    }
+  } else if (tokens[1] == "fen") {
+    string fen = command.substr(13);
+    b = FenToBoard(fen);
+  } else {
+    // Unknown type of position command. Reset the board and hope for the best.
+    ResetBoard();
+  }
 }
 
 // Command is "quit". Exit the program.
@@ -29,7 +68,7 @@ void Uci(const string& command) {
 
 // Command is "ucinewgame". Reset the board.
 void UciNewGame(const string& command) {
-  // Reset the board here.
+  ResetBoard();
   cout << "isready" << endl;
 }
 
@@ -52,11 +91,13 @@ void Dispatch(const string& line) {
 }
 
 int main(int argc, char **argv) {
+  ResetBoard();
   // Register UCI commands.
   commands["exit"] = Quit;
   commands["isready"] = IsReady;
   commands["quit"] = Quit;
   commands["uci"] = Uci;
+  commands["ucinewgame"] = UciNewGame;
   // Process the input line-by-line.
   string line;
   while (getline(cin, line)) {

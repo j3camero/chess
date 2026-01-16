@@ -1,3 +1,4 @@
+#include "board.h"
 #include "check.h"
 #include "fen.h"
 #include "makemove.h"

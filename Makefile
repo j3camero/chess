@@ -1,64 +1,54 @@
 CC=$(CXX)
 CPPFLAGS = -Wall -O3 -funroll-loops
 
-all: perft-benchmark \
-  perft-marcelk-suite \
-  randombot \
-  runtest
+BINARY_TARGETS = perft-benchmark \
+                 perft-marcelk-suite \
+								 randombot \
+								 runtest \
+								 test
+
+CHESS_RULES = attack.o \
+              board.o \
+							check.o \
+							color.o \
+							fen.o \
+							irreversible.o \
+							makemove.o \
+							move.o \
+							movegen.o \
+							perft.o \
+							point.o \
+							piece.o \
+							piece-moves.o \
+							string-util.o
+
+UNIT_TESTS = attack-test.o \
+	           board-test.o \
+						 check-test.o \
+						 color-test.o \
+						 fen-test.o \
+						 irreversible-test.o \
+						 makemove-test.o \
+						 move-test.o \
+						 movegen-test.o \
+						 perft-marcelk-test.o \
+						 perft-test.o \
+						 point-test.o \
+						 piece-test.o \
+						 string-util-test.o
+
+all: $(BINARY_TARGETS)
 
 clean:
-	rm -rf *.o *.s *~ perft-benchmark perft-marcelk-suite randombot test
+	rm -rf *.o *.s *~ $(BINARY_TARGETS)
 
-perft-benchmark: attack.o \
-	board.o \
-	check.o \
-  color.o \
-  fen.o \
-  irreversible.o \
-	makemove.o \
-  move.o \
-  movegen.o \
-	perft.o \
-	perft-benchmark.o \
-  point.o \
-  piece.o \
-  piece-moves.o \
-  string-util.o
+perft-benchmark: perft-benchmark.o $(CHESS_RULES)
 
-perft-marcelk-suite: attack.o \
-	board.o \
-	check.o \
-  color.o \
-  fen.o \
-  irreversible.o \
-	makemove.o \
-  move.o \
-  movegen.o \
-	perft.o \
-	perft-marcelk-suite.o \
-  point.o \
-  piece.o \
-  piece-moves.o \
-  string-util.o
+perft-marcelk-suite: perft-marcelk-suite.o $(CHESS_RULES)
 
-randombot: randombot.o \
-           string-util.o
+randombot: randombot.o $(CHESS_RULES)
 
 runtest: test
 	./test
 
-test: attack.o attack-test.o \
-	board.o board-test.o \
-	check.o check-test.o \
-  color.o color-test.o \
-  fen.o fen-test.o \
-  irreversible.o irreversible-test.o \
-	makemove.o makemove-test.o \
-  move.o move-test.o \
-  movegen.o movegen-test.o \
-	perft.o perft-test.o perft-marcelk-test.o \
-  point.o point-test.o \
-  piece.o piece-test.o \
-  piece-moves.o \
-  string-util.o string-util-test.o \
-  test.o
+test: test.o $(CHESS_RULES) $(UNIT_TESTS)
