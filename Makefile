@@ -7,7 +7,7 @@ all: perft-benchmark \
   runtest
 
 clean:
-	rm -rf *.o *.s *~ randombot test
+	rm -rf *.o *.s *~ perft-benchmark perft-marcelk-suite randombot test
 
 perft-benchmark: attack.o \
 	board.o \
