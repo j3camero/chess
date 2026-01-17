@@ -35,20 +35,31 @@ void IsReady(const string& command) {
 
 // Command is "position". Set up a board position.
 void Position(const string& command) {
-  // startpos moves || fen
   vector<string> tokens = StringUtil::Split(command);
-  if (tokens[1] == "startpos") {
+  if (tokens[1] == "fen") {
+    string fen = command.substr(13);
+    b = FenToBoard(fen);
+  } else if (tokens[1] == "startpos") {
     ResetBoard();
     if (tokens[2] == "moves") {
       for (size_t i = 3; i < tokens.size(); i++) {
         string chessMoveInUciNotation = tokens[i];
-        Move move(chessMoveInUciNotation);
-        MakeMove(b, move);
+        vector<Move> moves = GenerateLegalMoves(b);
+        bool isLegalMove = false;
+        for (const Move& m : moves) {
+          if (m.ToString() == chessMoveInUciNotation) {
+            isLegalMove = true;
+            MakeMove(b, m);
+            break;
+          }
+        }
+        if (!isLegalMove) {
+          // Illegal move found in the moves list. Stop processing further moves. Reset the board.
+          ResetBoard();
+          break;
+        }
       }
     }
-  } else if (tokens[1] == "fen") {
-    string fen = command.substr(13);
-    b = FenToBoard(fen);
   } else {
     // Unknown type of position command. Reset the board and hope for the best.
     ResetBoard();
@@ -96,6 +107,7 @@ int main(int argc, char **argv) {
   commands["exit"] = Quit;
   commands["go"] = Go;
   commands["isready"] = IsReady;
+  commands["position"] = Position;
   commands["quit"] = Quit;
   commands["uci"] = Uci;
   commands["ucinewgame"] = UciNewGame;
