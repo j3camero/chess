@@ -94,6 +94,7 @@ int main(int argc, char **argv) {
   ResetBoard();
   // Register UCI commands.
   commands["exit"] = Quit;
+  commands["go"] = Go;
   commands["isready"] = IsReady;
   commands["quit"] = Quit;
   commands["uci"] = Uci;
