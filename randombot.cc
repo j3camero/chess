@@ -63,13 +63,13 @@ void Quit(const string& command) {
 // Command is "uci". Print basic info about this chess engine.
 void Uci(const string& command) {
   cout << "id name randombot" << endl;
-  cout << "id author Jeff Cameron jcameron.ca" << endl;
+  cout << "id author jeff" << endl;
+  cout << "isready" << endl;
 }
 
-// Command is "ucinewgame". Reset the board.
+// Command is "ucinewgame". Reset the board. No stdout output required.
 void UciNewGame(const string& command) {
   ResetBoard();
-  cout << "isready" << endl;
 }
 
 // UCI commands are registered in this map.
