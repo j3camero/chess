@@ -64,7 +64,7 @@ void Quit(const string& command) {
 void Uci(const string& command) {
   cout << "id name randombot" << endl;
   cout << "id author jeff" << endl;
-  cout << "isready" << endl;
+  cout << "uciok" << endl;
 }
 
 // Command is "ucinewgame". Reset the board. No stdout output required.
