@@ -1,7 +1,8 @@
 CC=$(CXX)
 CPPFLAGS = -Wall -O3 -funroll-loops
 
-BINARY_TARGETS = perft-benchmark \
+BINARY_TARGETS = material-count-depth-1 \
+                 perft-benchmark \
                  perft-marcelk-suite \
 								 randombot \
 								 runtest \
@@ -41,6 +42,8 @@ all: $(BINARY_TARGETS)
 
 clean:
 	rm -rf *.o *.s *~ $(BINARY_TARGETS)
+
+material-count-depth-1: material-count-depth-1.o material-count.o $(CHESS_RULES)
 
 perft-benchmark: perft-benchmark.o $(CHESS_RULES)
 
