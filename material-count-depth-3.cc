@@ -50,15 +50,16 @@ void Go(const string& command) {
     return;
   }
   int bestMoveIndex = -1;
-  int bestMaterialCount = -1000;
-  int depth = 2;
+  int alpha = -1000;
+  int beta = -alpha;
+  int depth = 3;
   for (size_t i = 0; i < moves.size(); i++) {
     Irreversible irr = b.irreversible;
     MakeMove(b, moves[i]);
-    int materialCount = -AlphaBeta(b, depth - 1, -1000, 1000);
+    int score = -AlphaBeta(b, depth - 1, -beta, -alpha);
     UndoMove(b, moves[i], irr);
-    if (materialCount > bestMaterialCount) {
-      bestMaterialCount = materialCount;
+    if (score > alpha) {
+      alpha = score;
       bestMoveIndex = i;
     }
   }

@@ -42,6 +42,9 @@ test-main
 test
 perft-benchmark
 perft-marcelk-suite
+material-count-depth-1
+material-count-depth-2
+material-count-depth-3
 
 # Chess EPD files
 *.epd

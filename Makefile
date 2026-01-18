@@ -3,15 +3,16 @@ CPPFLAGS = -Wall -O3 -funroll-loops
 
 BINARY_TARGETS = material-count-depth-1 \
                  material-count-depth-2 \
+                 material-count-depth-3 \
                  perft-benchmark \
                  perft-marcelk-suite \
-								 randombot \
-								 runtest \
-								 test
+                 randombot \
+				 runtest \
+				 test
 
 CHESS_RULES = attack.o \
               board.o \
-							check.o \
+              check.o \
 							color.o \
 							fen.o \
 							irreversible.o \
@@ -25,8 +26,8 @@ CHESS_RULES = attack.o \
 							string-util.o
 
 UNIT_TESTS = attack-test.o \
-	           board-test.o \
-						 check-test.o \
+	         board-test.o \
+             check-test.o \
 						 color-test.o \
 						 fen-test.o \
 						 irreversible-test.o \
@@ -45,13 +46,10 @@ clean:
 	rm -rf *.o *.s *~ $(BINARY_TARGETS)
 
 material-count-depth-1: material-count-depth-1.o material-count.o $(CHESS_RULES)
-
 material-count-depth-2: material-count-depth-2.o material-count.o $(CHESS_RULES)
-
+material-count-depth-3: material-count-depth-3.o material-count.o $(CHESS_RULES)
 perft-benchmark: perft-benchmark.o $(CHESS_RULES)
-
 perft-marcelk-suite: perft-marcelk-suite.o $(CHESS_RULES)
-
 randombot: randombot.o $(CHESS_RULES)
 
 runtest: test
