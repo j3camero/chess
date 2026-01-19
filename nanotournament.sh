@@ -1,18 +1,17 @@
 cutechess-cli \
--engine name=stockfish3 cmd=stockfish proto=uci tc=3 \
--engine name=stockfish2 cmd=stockfish proto=uci tc=2 \
 -engine name=stockfish1 cmd=stockfish proto=uci tc=1 \
--engine name=sf10kn cmd=stockfish proto=uci nodes=10000 tc=60 \
--engine name=sf5kn cmd=stockfish proto=uci nodes=5000 tc=60 \
--engine name=sf2kn cmd=stockfish proto=uci nodes=2000 tc=60 \
--engine name=sf1kn cmd=stockfish proto=uci nodes=1000 tc=60 \
--engine name=sf500n cmd=stockfish proto=uci nodes=500 tc=60 \
--engine name=sf200n cmd=stockfish proto=uci nodes=200 tc=60 \
--engine name=sf100n cmd=stockfish proto=uci nodes=100 tc=60 \
--engine name=lc3 cmd=lc0 proto=uci tc=3 \
+-engine name=sf1000 cmd=stockfish proto=uci nodes=1000 tc=60 \
+-engine name=sf900 cmd=stockfish proto=uci nodes=900 tc=60 \
+-engine name=sf800 cmd=stockfish proto=uci nodes=800 tc=60 \
+-engine name=sf700 cmd=stockfish proto=uci nodes=700 tc=60 \
+-engine name=sf600 cmd=stockfish proto=uci nodes=600 tc=60 \
+-engine name=sf500 cmd=stockfish proto=uci nodes=500 tc=60 \
+-engine name=sf400 cmd=stockfish proto=uci nodes=400 tc=60 \
+-engine name=sf300 cmd=stockfish proto=uci nodes=300 tc=60 \
+-engine name=sf200 cmd=stockfish proto=uci nodes=200 tc=60 \
+-engine name=sf100 cmd=stockfish proto=uci nodes=100 tc=60 \
 -engine name=lc2 cmd=lc0 proto=uci tc=2 \
 -engine name=lc1 cmd=lc0 proto=uci tc=1 \
--engine name=gnuchess3 cmd=gnuchess proto=xboard tc=3 \
 -engine name=gnuchess2 cmd=gnuchess proto=xboard tc=2 \
 -engine name=gnuchess1 cmd=gnuchess proto=xboard tc=1 \
 -engine name=material-count-depth-3 cmd=./material-count-depth-3 proto=uci tc=60 \
