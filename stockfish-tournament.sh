@@ -1,0 +1,27 @@
+cutechess-cli \
+-engine name=sf2000 cmd=stockfish proto=uci nodes=2000 tc=60 \
+-engine name=sf1900 cmd=stockfish proto=uci nodes=1900 tc=60 \
+-engine name=sf1800 cmd=stockfish proto=uci nodes=1800 tc=60 \
+-engine name=sf1700 cmd=stockfish proto=uci nodes=1700 tc=60 \
+-engine name=sf1600 cmd=stockfish proto=uci nodes=1600 tc=60 \
+-engine name=sf1500 cmd=stockfish proto=uci nodes=1500 tc=60 \
+-engine name=sf1400 cmd=stockfish proto=uci nodes=1400 tc=60 \
+-engine name=sf1300 cmd=stockfish proto=uci nodes=1300 tc=60 \
+-engine name=sf1200 cmd=stockfish proto=uci nodes=1200 tc=60 \
+-engine name=sf1100 cmd=stockfish proto=uci nodes=1100 tc=60 \
+-engine name=sf1000 cmd=stockfish proto=uci nodes=1000 tc=60 \
+-engine name=sf900 cmd=stockfish proto=uci nodes=900 tc=60 \
+-engine name=sf800 cmd=stockfish proto=uci nodes=800 tc=60 \
+-engine name=sf700 cmd=stockfish proto=uci nodes=700 tc=60 \
+-engine name=sf600 cmd=stockfish proto=uci nodes=600 tc=60 \
+-engine name=sf500 cmd=stockfish proto=uci nodes=500 tc=60 \
+-engine name=sf400 cmd=stockfish proto=uci nodes=400 tc=60 \
+-engine name=sf300 cmd=stockfish proto=uci nodes=300 tc=60 \
+-engine name=sf200 cmd=stockfish proto=uci nodes=200 tc=60 \
+-engine name=sf100 cmd=stockfish proto=uci nodes=100 tc=60 \
+-games 2 \
+-openings file=balsa/Balsa_v110221.pgn \
+-ratinginterval 1 \
+-repeat \
+-rounds 10 \
+;
