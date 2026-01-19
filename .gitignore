@@ -53,3 +53,4 @@ material-count-depth-5
 
 # vscode auto-generated stuff
 .vscode/
+.DS_Store
