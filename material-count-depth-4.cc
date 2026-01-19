@@ -47,7 +47,7 @@ void Go(const string& command) {
   int bestMoveIndex = -1;
   int alpha = -1000;
   int beta = -alpha;
-  int depth = 3;
+  int depth = 4;
   for (size_t i = 0; i < moves.size(); i++) {
     Irreversible irr = b.irreversible;
     MakeMove(b, moves[i]);
