@@ -1,5 +1,5 @@
 cutechess-cli \
--each cmd=stockfish proto=uci tc=60 \
+-each cmd=stockfish proto=uci tc=1 \
 -engine name=n1000 nodes=1000 \
 -engine name=n900 nodes=900 \
 -engine name=n800 nodes=800 \
@@ -17,7 +17,7 @@ cutechess-cli \
 -engine name=d1 depth=1 \
 -games 2 \
 -openings file=balsa/Balsa_v110221.pgn \
--ratinginterval 1 \
+-ratinginterval 100 \
 -repeat \
 -rounds 100 \
 ;
