@@ -1,18 +1,27 @@
 cutechess-cli \
--each proto=uci tc=5 \
--engine name=stockfish2k cmd=stockfish nodes=2000 \
--engine name=stockfish1k cmd=stockfish nodes=1000 \
--engine name=stockfish100 cmd=stockfish nodes=100 \
--engine name=material-count-depth-4 cmd=./material-count-depth-4 \
--engine name=material-count-depth-3 cmd=./material-count-depth-3 \
--engine name=material-count-depth-2 cmd=./material-count-depth-2 \
--engine name=material-count-depth-1 cmd=./material-count-depth-1 \
--engine name=randombot cmd=./randombot \
+-engine name=stockfish3 cmd=stockfish proto=uci tc=3 \
+-engine name=stockfish2 cmd=stockfish proto=uci tc=2 \
+-engine name=stockfish1 cmd=stockfish proto=uci tc=1 \
+-engine name=sf10kn cmd=stockfish proto=uci nodes=10000 tc=60 \
+-engine name=sf5kn cmd=stockfish proto=uci nodes=5000 tc=60 \
+-engine name=sf2kn cmd=stockfish proto=uci nodes=2000 tc=60 \
+-engine name=sf1kn cmd=stockfish proto=uci nodes=1000 tc=60 \
+-engine name=sf500n cmd=stockfish proto=uci nodes=500 tc=60 \
+-engine name=sf200n cmd=stockfish proto=uci nodes=200 tc=60 \
+-engine name=sf100n cmd=stockfish proto=uci nodes=100 tc=60 \
+-engine name=lc3 cmd=lc0 proto=uci tc=3 \
+-engine name=lc2 cmd=lc0 proto=uci tc=2 \
+-engine name=lc1 cmd=lc0 proto=uci tc=1 \
+-engine name=gnuchess3 cmd=gnuchess proto=xboard tc=3 \
+-engine name=gnuchess2 cmd=gnuchess proto=xboard tc=2 \
+-engine name=gnuchess1 cmd=gnuchess proto=xboard tc=1 \
+-engine name=material-count-depth-3 cmd=./material-count-depth-3 proto=uci tc=60 \
+-engine name=material-count-depth-2 cmd=./material-count-depth-2 proto=uci tc=60 \
+-engine name=material-count-depth-1 cmd=./material-count-depth-1 proto=uci tc=60 \
+-engine name=randombot cmd=./randombot proto=uci tc=60 \
 -games 2 \
 -openings file=balsa/Balsa_v110221.pgn \
--rounds 1 \
+-ratinginterval 1 \
+-repeat \
+-rounds 10 \
 ;
-#-engine name=stockfish10k cmd=stockfish nodes=10000 \
-#-engine name=stockfish5k cmd=stockfish nodes=5000 \
-#-engine name=stockfish4k cmd=stockfish nodes=4000 \
-#-engine name=stockfish3k cmd=stockfish nodes=3000 \
