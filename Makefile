@@ -5,6 +5,7 @@ BINARY_TARGETS = material-count-depth-1 \
                  material-count-depth-2 \
                  material-count-depth-3 \
                  material-count-depth-4 \
+                 material-count-depth-5 \
                  perft-benchmark \
                  perft-marcelk-suite \
                  randombot \
@@ -53,6 +54,8 @@ material-count-depth-2: material-count-depth-2.o material-count.o $(CHESS_RULES)
 material-count-depth-3: material-count-depth-3.o material-count.o $(CHESS_RULES)
 
 material-count-depth-4: material-count-depth-4.o material-count.o $(CHESS_RULES)
+
+material-count-depth-5: material-count-depth-5.o material-count.o $(CHESS_RULES)
 
 perft-benchmark: perft-benchmark.o $(CHESS_RULES)
 
