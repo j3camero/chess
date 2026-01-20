@@ -1,15 +1,27 @@
 cutechess-cli \
 -each cmd=stockfish proto=uci tc=1 \
--engine name=n1000 nodes=1000 \
--engine name=n900 nodes=900 \
--engine name=n800 nodes=800 \
--engine name=n700 nodes=700 \
--engine name=n600 nodes=600 \
--engine name=n500 nodes=500 \
--engine name=n400 nodes=400 \
--engine name=n300 nodes=300 \
--engine name=n200 nodes=200 \
--engine name=n100 nodes=100 \
+-engine name=s1 \
+-engine name=n5000 proto=uci nodes=5000 \
+-engine name=n4000 proto=uci nodes=4000 \
+-engine name=n3000 proto=uci nodes=3000 \
+-engine name=n2000 proto=uci nodes=2000 \
+-engine name=n1000 proto=uci nodes=1000 \
+-engine name=n900 proto=uci nodes=900 \
+-engine name=n800 proto=uci nodes=800 \
+-engine name=n700 proto=uci nodes=700 \
+-engine name=n600 proto=uci nodes=600 \
+-engine name=n500 proto=uci nodes=500 \
+-engine name=n400 proto=uci nodes=400 \
+-engine name=n300 proto=uci nodes=300 \
+-engine name=n200 proto=uci nodes=200 \
+-engine name=n100 proto=uci nodes=100 \
+-engine name=d12 depth=12 \
+-engine name=d11 depth=11 \
+-engine name=d10 depth=10 \
+-engine name=d9 depth=9 \
+-engine name=d8 depth=8 \
+-engine name=d7 depth=7 \
+-engine name=d6 depth=6 \
 -engine name=d5 depth=5 \
 -engine name=d4 depth=4 \
 -engine name=d3 depth=3 \
@@ -19,5 +31,5 @@ cutechess-cli \
 -openings file=balsa/Balsa_v110221.pgn \
 -ratinginterval 100 \
 -repeat \
--rounds 100 \
+-rounds 10 \
 ;

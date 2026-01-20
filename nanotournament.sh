@@ -1,23 +1,23 @@
 cutechess-cli \
--engine name=stockfish1 cmd=stockfish proto=uci tc=1 \
--engine name=sf1000 cmd=stockfish proto=uci nodes=1000 tc=60 \
--engine name=sf900 cmd=stockfish proto=uci nodes=900 tc=60 \
--engine name=sf800 cmd=stockfish proto=uci nodes=800 tc=60 \
--engine name=sf700 cmd=stockfish proto=uci nodes=700 tc=60 \
--engine name=sf600 cmd=stockfish proto=uci nodes=600 tc=60 \
--engine name=sf500 cmd=stockfish proto=uci nodes=500 tc=60 \
--engine name=sf400 cmd=stockfish proto=uci nodes=400 tc=60 \
--engine name=sf300 cmd=stockfish proto=uci nodes=300 tc=60 \
--engine name=sf200 cmd=stockfish proto=uci nodes=200 tc=60 \
--engine name=sf100 cmd=stockfish proto=uci nodes=100 tc=60 \
--engine name=lc2 cmd=lc0 proto=uci tc=2 \
--engine name=lc1 cmd=lc0 proto=uci tc=1 \
--engine name=gnuchess2 cmd=gnuchess proto=xboard tc=2 \
--engine name=gnuchess1 cmd=gnuchess proto=xboard tc=1 \
--engine name=material-count-depth-3 cmd=./material-count-depth-3 proto=uci tc=60 \
--engine name=material-count-depth-2 cmd=./material-count-depth-2 proto=uci tc=60 \
--engine name=material-count-depth-1 cmd=./material-count-depth-1 proto=uci tc=60 \
--engine name=randombot cmd=./randombot proto=uci tc=60 \
+-each tc=1 \
+-engine name=stockfish cmd=stockfish proto=uci \
+-engine name=lc0 cmd=lc0 proto=uci \
+-engine name=gnuchess cmd=gnuchess proto=xboard \
+-engine name=stockfish-depth-10 cmd=stockfish proto=uci depth=10 \
+-engine name=stockfish-depth-9 cmd=stockfish proto=uci depth=9 \
+-engine name=stockfish-depth-8 cmd=stockfish proto=uci depth=8 \
+-engine name=stockfish-depth-7 cmd=stockfish proto=uci depth=7 \
+-engine name=stockfish-depth-6 cmd=stockfish proto=uci depth=6 \
+-engine name=stockfish-depth-5 cmd=stockfish proto=uci depth=5 \
+-engine name=stockfish-depth-4 cmd=stockfish proto=uci depth=4 \
+-engine name=stockfish-depth-3 cmd=stockfish proto=uci depth=3 \
+-engine name=stockfish-depth-2 cmd=stockfish proto=uci depth=2 \
+-engine name=stockfish-depth-1 cmd=stockfish proto=uci depth=1 \
+-engine name=material-count-depth-4 cmd=./material-count-depth-4 proto=uci \
+-engine name=material-count-depth-3 cmd=./material-count-depth-3 proto=uci \
+-engine name=material-count-depth-2 cmd=./material-count-depth-2 proto=uci \
+-engine name=material-count-depth-1 cmd=./material-count-depth-1 proto=uci \
+-engine name=randombot cmd=./randombot proto=uci \
 -games 2 \
 -openings file=balsa/Balsa_v110221.pgn \
 -ratinginterval 1 \
