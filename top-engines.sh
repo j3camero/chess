@@ -1,5 +1,5 @@
 cutechess-cli \
--each tc=5 timemargin=10 \
+-each tc=30 timemargin=10 \
 -engine name=stockfish cmd=stockfish proto=uci \
 -engine name=caissa cmd=~/Caissa/build/bin/caissa proto=uci \
 -engine name=viridithas cmd=~/viridithas/viridithas-19.0.1-linux-x86-64-v4 proto=uci \
