@@ -1,7 +1,19 @@
 cutechess-cli \
--each tc=1 \
+-each tc=5 timemargin=10 \
 -engine name=stockfish cmd=stockfish proto=uci \
--engine name=gnuchess cmd=gnuchess proto=xboard \
+-engine name=fruit cmd=fruit proto=uci \
+-engine name=toga2 cmd=toga2 proto=uci \
+-engine name=fairymax cmd=fairymax proto=xboard \
+-engine name=glaurung cmd=glaurung proto=uci \
+-engine name=hoichess cmd=hoichess proto=xboard \
+-engine name=fairy-stockfish cmd=fairy-stockfish proto=uci \
+-engine name=crafty cmd=crafty proto=xboard \
+-engine name=sjeng cmd=sjeng proto=xboard \
+-engine name=phalanx cmd=phalanx proto=xboard \
+-engine name=sjaakii cmd=sjaakii proto=uci \
+-engine name=caissa cmd=~/Caissa/build/bin/caissa proto=uci \
+-engine name=viridithas cmd=~/viridithas/viridithas-19.0.1-linux-x86-64-v4 proto=uci \
+-engine name=starzix cmd=~/starzix/starzix-6.1-avx2 proto=uci \
 -engine name=stockfish-depth-10 cmd=stockfish proto=uci depth=10 \
 -engine name=stockfish-depth-9 cmd=stockfish proto=uci depth=9 \
 -engine name=stockfish-depth-8 cmd=stockfish proto=uci depth=8 \
@@ -12,15 +24,9 @@ cutechess-cli \
 -engine name=stockfish-depth-3 cmd=stockfish proto=uci depth=3 \
 -engine name=stockfish-depth-2 cmd=stockfish proto=uci depth=2 \
 -engine name=stockfish-depth-1 cmd=stockfish proto=uci depth=1 \
--engine name=material-count-depth-4 cmd=./material-count-depth-4 proto=uci \
--engine name=material-count-depth-3 cmd=./material-count-depth-3 proto=uci \
--engine name=material-count-depth-2 cmd=./material-count-depth-2 proto=uci \
--engine name=material-count-depth-1 cmd=./material-count-depth-1 proto=uci \
--engine name=randombot cmd=./randombot proto=uci \
 -games 2 \
 -openings file=balsa/Balsa_v110221.pgn \
 -ratinginterval 1 \
 -repeat \
 -rounds 10 \
 ;
-#-engine name=lc0 cmd=lc0 proto=uci \

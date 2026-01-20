@@ -50,6 +50,8 @@ material-count-depth-5
 
 # Chess EPD files
 *.epd
+game.*
+log.*
 
 # vscode auto-generated stuff
 .vscode/
