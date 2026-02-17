@@ -1,14 +1,15 @@
 cutechess-cli \
--each tc=1 \
--engine name=stockfish cmd=stockfish proto=uci \
--engine name=gnuchess cmd=gnuchess proto=xboard \
--engine name=stockfish-depth-10 cmd=stockfish proto=uci depth=10 \
--engine name=stockfish-depth-9 cmd=stockfish proto=uci depth=9 \
--engine name=stockfish-depth-8 cmd=stockfish proto=uci depth=8 \
--engine name=stockfish-depth-7 cmd=stockfish proto=uci depth=7 \
--engine name=stockfish-depth-6 cmd=stockfish proto=uci depth=6 \
--engine name=stockfish-depth-5 cmd=stockfish proto=uci depth=5 \
--engine name=stockfish-depth-4 cmd=stockfish proto=uci depth=4 \
+-each tc=1 timemargin=10 \
+-engine name=fruit cmd=fruit proto=uci \
+-engine name=toga2 cmd=toga2 proto=uci \
+-engine name=fairymax cmd=fairymax proto=xboard \
+-engine name=glaurung cmd=glaurung proto=uci \
+-engine name=hoichess cmd=hoichess proto=xboard \
+-engine name=fairy-stockfish cmd=fairy-stockfish proto=uci \
+-engine name=crafty cmd=crafty proto=xboard \
+-engine name=sjeng cmd=sjeng proto=xboard \
+-engine name=phalanx cmd=phalanx proto=xboard \
+-engine name=sjaakii cmd=sjaakii proto=uci \
 -engine name=stockfish-depth-3 cmd=stockfish proto=uci depth=3 \
 -engine name=stockfish-depth-2 cmd=stockfish proto=uci depth=2 \
 -engine name=stockfish-depth-1 cmd=stockfish proto=uci depth=1 \
