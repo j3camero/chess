@@ -47,6 +47,10 @@ material-count-depth-2
 material-count-depth-3
 material-count-depth-4
 material-count-depth-5
+pext
+
+# Assembly language
+*.s
 
 # Chess EPD files
 *.epd
@@ -56,3 +60,6 @@ log.*
 # vscode auto-generated stuff
 .vscode/
 .DS_Store
+
+# Node modules
+node_modules/
