@@ -63,3 +63,9 @@ log.*
 
 # Node modules
 node_modules/
+
+# Compressed files
+*.zst
+
+# Move ordering data analysis
+moveprob.csv
