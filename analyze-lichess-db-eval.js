@@ -14,12 +14,23 @@ function TallyOneChessPosition(fen, bestMoveUci) {
   const legalMoves = chessPosition.moves({ verbose: true });
   for (const move of legalMoves) {
     const uciMoveNotation = move.from + move.to + (move.promotion || '');
+    let specialMoveType = '';
+    if (move.isKingsideCastle()) {
+      specialMoveType = 'CASTLE';
+    }
+    if (move.isQueensideCastle()) {
+      specialMoveType = 'CASTLE';
+    }
+    if (move.isEnPassant()) {
+      specialMoveType = 'EP';
+    }
     const allFields = [move.color,
                        move.piece,
                        move.from,
                        move.to,
                        move.captured || '',
-                       move.promotion || ''];
+                       move.promotion || '',
+                       specialMoveType];
     const moveKey = allFields.join('');
     moveCsv[moveKey] = allFields.join(',');
     denom[moveKey] = (denom[moveKey] || 0) + 1;
@@ -31,7 +42,7 @@ function TallyOneChessPosition(fen, bestMoveUci) {
 
 function CalculateConditionalProbabilitiesForAllMoves() {
   const writeStream = fs.createWriteStream('moveprob.csv', { flags: 'w' });
-  writeStream.write('color,piece,from,to,capture,promotion,count,best,prob\n');
+  writeStream.write('color,piece,from,to,capture,promotion,castle,count,best,prob\n');
   for (const moveKey in denom) {
     const d = denom[moveKey];
     const n = numer[moveKey] || 0;
@@ -80,10 +91,12 @@ rl.on('line', (line) => {
     const elapsedTime = currentTime - startTime;
     const goal = 354637151;
     const progress = lineCount / goal;
+    const percent = 100 * progress;
+    const formattedPercent = percent.toFixed(2) + '%';
     const estimatedRuntime = elapsedTime * goal / lineCount;
     const estimatedFinish = startTime + estimatedRuntime;
     const eta = new Date(estimatedFinish);
-    console.log(lineCount, '/', goal, 'ETA', eta.toISOString());
+    console.log(lineCount, '/', goal, formattedPercent, 'ETA', eta.toISOString());
   }
 });
 
