@@ -27,14 +27,14 @@ function TallyOneChessPosition(fen, bestMoveUci) {
     let isCastleMove = '';
     if (move.isKingsideCastle()) {
       isCastleMove = 'CASTLE';
-      const alternateKingCastleStrings = ['e8h8', 'e1h1'];
+      const alternateKingCastleStrings = ['e8h8', 'e1h1', '0-0', 'O-O'];
       if (alternateKingCastleStrings.includes(bestMoveUci)) {
         bestMoveUci = uciMoveNotation;
       }
     }
     if (move.isQueensideCastle()) {
       isCastleMove = 'CASTLE';
-      const alternateKingCastleStrings = ['e8a8', 'e1a1'];
+      const alternateKingCastleStrings = ['e8a8', 'e1a1', '0-0-0', 'O-O-O'];
       if (alternateKingCastleStrings.includes(bestMoveUci)) {
         bestMoveUci = uciMoveNotation;
       }
