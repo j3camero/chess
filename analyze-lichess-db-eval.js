@@ -4,6 +4,7 @@ const readline = require('readline');
 const { decompressStream } = require('@skhaz/zstd'); // or require('zstd-napi') and use its decompression method
 
 const filePath = 'lichess_db_eval.jsonl.zst';
+const skipHowManyFirstLines = 0;
 
 const numer = {};
 const denom = {};
@@ -20,17 +21,23 @@ function TallyOneChessPosition(fen, bestMoveUci) {
     return;
   }
   const legalMoves = chessPosition.moves({ verbose: true });
+  let foundMatchingBestMove = false;
   for (const move of legalMoves) {
     const uciMoveNotation = move.from + move.to + (move.promotion || '');
-    let specialMoveType = '';
+    let isCastleMove = '';
     if (move.isKingsideCastle()) {
-      specialMoveType = 'CASTLE';
+      isCastleMove = 'CASTLE';
+      const alternateKingCastleStrings = ['e8h8', 'e1h1'];
+      if (alternateKingCastleStrings.includes(bestMoveUci)) {
+        bestMoveUci = uciMoveNotation;
+      }
     }
     if (move.isQueensideCastle()) {
-      specialMoveType = 'CASTLE';
-    }
-    if (move.isEnPassant()) {
-      specialMoveType = 'EP';
+      isCastleMove = 'CASTLE';
+      const alternateKingCastleStrings = ['e8a8', 'e1a1'];
+      if (alternateKingCastleStrings.includes(bestMoveUci)) {
+        bestMoveUci = uciMoveNotation;
+      }
     }
     const allFields = [move.color,
                        move.piece,
@@ -38,18 +45,26 @@ function TallyOneChessPosition(fen, bestMoveUci) {
                        move.to,
                        move.captured || '',
                        move.promotion || '',
-                       specialMoveType];
+                       move.isEnPassant() ? 'EP' : '',
+                       isCastleMove];
     const moveKey = allFields.join('');
     moveCsv[moveKey] = allFields.join(',');
     denom[moveKey] = (denom[moveKey] || 0) + 1;
     if (uciMoveNotation === bestMoveUci) {
       numer[moveKey] = (numer[moveKey] || 0) + 1;
+      foundMatchingBestMove = true;
     }
+  }
+  if (!foundMatchingBestMove) {
+    console.log('WARNING: no matching best move');
+    console.log('FEN:', fen);
+    console.log('bestMoveUci:', bestMoveUci);
+    throw 'No matching best move';
   }
 }
 
-function CalculateConditionalProbabilitiesForAllMoves() {
-  const writeStream = fs.createWriteStream('moveprob.csv', { flags: 'w' });
+function CalculateConditionalProbabilitiesForAllMoves(filenameSuffix) {
+  const writeStream = fs.createWriteStream(`moveprob-${filenameSuffix}.csv`, { flags: 'w' });
   writeStream.write('color,piece,from,to,capture,promotion,castle,count,best,prob\n');
   for (const moveKey in denom) {
     const d = denom[moveKey];
@@ -79,6 +94,10 @@ let lineCount = 0;
 
 // Listen for the 'line' event
 rl.on('line', (line) => {
+  lineCount++;
+  if (lineCount < skipHowManyFirstLines) {
+    return;
+  }
   const chessPosition = JSON.parse(line);
   const fen = chessPosition.fen;
   let bestMove = 'NONE';
@@ -92,9 +111,8 @@ rl.on('line', (line) => {
     }
   }
   TallyOneChessPosition(fen, bestMove);
-  lineCount++;
   if (lineCount % 10000 === 0) {
-    CalculateConditionalProbabilitiesForAllMoves();
+    CalculateConditionalProbabilitiesForAllMoves(lineCount);
     const currentTime = Date.now();
     const elapsedTime = currentTime - startTime;
     const goal = 354637151;
@@ -111,7 +129,7 @@ rl.on('line', (line) => {
 // Listen for the 'end' event when finished reading all lines
 rl.on('end', () => {
   console.log(`Finished reading ${lineCount} lines.`);
-  CalculateConditionalProbabilitiesForAllMoves();
+  CalculateConditionalProbabilitiesForAllMoves('final');
 });
 
 // Handle potential errors
