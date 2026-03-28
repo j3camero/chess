@@ -9,6 +9,7 @@ const skipHowManyFirstLines = 0;
 const numer = {};
 const denom = {};
 const moveCsv = {};
+let impossibleCastlingRightsPositionCount = 0;
 
 function TallyOneChessPosition(fen, bestMoveUci) {
   let chessPosition;
@@ -18,6 +19,10 @@ function TallyOneChessPosition(fen, bestMoveUci) {
     console.log('Error parsing chess position');
     console.log('FEN:', fen);
     console.log('ERROR:', error);
+    return;
+  }
+  if (PositionHasImpossibleCastlingRights(chessPosition)) {
+    impossibleCastlingRightsPositionCount++;
     return;
   }
   const legalMoves = chessPosition.moves({ verbose: true });
@@ -77,6 +82,61 @@ function CalculateConditionalProbabilitiesForAllMoves(filenameSuffix) {
   writeStream.end();
 }
 
+// Detects weird Chess960 positions and other impossible positions.
+function PositionHasImpossibleCastlingRights(chessPosition) {
+  const turn = chessPosition.turn();
+  const rights = chessPosition.getCastlingRights(turn);
+  if (!('k' in rights)) {
+    throw 'King castle rights missing.';
+  }
+  if (!('q' in rights)) {
+    throw 'Queen castle rights missing.';
+  }
+  if (rights['k']) {
+    if (turn === 'w') {
+      const e1 = chessPosition.get('e1');
+      if (!e1 || e1.color !== 'w' || e1.type !== 'k') {
+        return true;
+      }
+      const h1 = chessPosition.get('h1');
+      if (!h1 || h1.color !== 'w' || h1.type !== 'r') {
+        return true;
+      }
+    } else if (turn === 'b') {
+      const e8 = chessPosition.get('e8');
+      if (!e8 || e8.color !== 'b' || e8.type !== 'k') {
+        return true;
+      }
+      const h8 = chessPosition.get('h8');
+      if (!h8 || h8.color !== 'b' || h8.type !== 'r') {
+        return true;
+      }
+    }
+  }
+  if (rights['q']) {
+    if (turn === 'w') {
+      const e1 = chessPosition.get('e1');
+      if (!e1 || e1.color !== 'w' || e1.type !== 'k') {
+        return true;
+      }
+      const a1 = chessPosition.get('a1');
+      if (!a1 || a1.color !== 'w' || a1.type !== 'r') {
+        return true;
+      }
+    } else if (turn === 'b') {
+      const e8 = chessPosition.get('e8');
+      if (!e8 || e8.color !== 'b' || e8.type !== 'k') {
+        return true;
+      }
+      const a8 = chessPosition.get('a8');
+      if (!a8 || a8.color !== 'b' || a8.type !== 'r') {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 // Create a readable stream from the compressed file
 const fileStream = fs.createReadStream(filePath);
 
@@ -112,7 +172,6 @@ rl.on('line', (line) => {
   }
   TallyOneChessPosition(fen, bestMove);
   if (lineCount % 10000 === 0) {
-    CalculateConditionalProbabilitiesForAllMoves(lineCount);
     const currentTime = Date.now();
     const elapsedTime = currentTime - startTime;
     const goal = 354637151;
@@ -122,7 +181,13 @@ rl.on('line', (line) => {
     const estimatedRuntime = elapsedTime * goal / lineCount;
     const estimatedFinish = startTime + estimatedRuntime;
     const eta = new Date(estimatedFinish);
-    console.log(lineCount, '/', goal, formattedPercent, 'ETA', eta.toISOString());
+    console.log(lineCount, '/', goal, formattedPercent,
+                'ETA', eta.toISOString(),
+                'skipcount', impossibleCastlingRightsPositionCount);
+  }
+  if (lineCount % 100000 === 0) {
+    CalculateConditionalProbabilitiesForAllMoves(lineCount);
+    console.log('Saved progress to file');
   }
 });
 
