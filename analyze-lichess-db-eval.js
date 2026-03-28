@@ -10,7 +10,15 @@ const denom = {};
 const moveCsv = {};
 
 function TallyOneChessPosition(fen, bestMoveUci) {
-  const chessPosition = new Chess(fen);
+  let chessPosition;
+  try {
+    chessPosition = new Chess(fen);
+  } catch (error) {
+    console.log('Error parsing chess position');
+    console.log('FEN:', fen);
+    console.log('ERROR:', error);
+    return;
+  }
   const legalMoves = chessPosition.moves({ verbose: true });
   for (const move of legalMoves) {
     const uciMoveNotation = move.from + move.to + (move.promotion || '');
